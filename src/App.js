@@ -25,13 +25,13 @@ function App() {
           <AuthProvider>
           <Header />
           <Routes>
-            <Route path="/" element={<SignupPage />} />
+            <Route path="/" element={<PrivateRoute />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/ask" element={<AskQuesPage />} />
-            <Route path="/questions" element={<PrivateRoute />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/:username" element={<ProfilePage />} />
             <Route path="/edit_profile" element={<EditProfilePage />} />
-            <Route path="/question" element={<QuestionPage />} />
+            <Route path="/question/:slug" element={<QuestionPage />} />
             <Route path="/edit_answer" element={<EditAnswerPage />} />
           </Routes>
           </AuthProvider>

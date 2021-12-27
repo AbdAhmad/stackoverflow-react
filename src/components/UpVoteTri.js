@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const UpVoteTri = (props) => {
+const UpVoteTri = () => {
 
     const triangleUp = {
         width: "0",
@@ -12,7 +12,7 @@ const UpVoteTri = (props) => {
 
     return (
         <div>
-            <Link to={`/${props.login}`}><div style={triangleUp} className="triangle-up"></div></Link>
+            <div style={triangleUp} className="triangle-up"></div>
         </div>
     )
 }

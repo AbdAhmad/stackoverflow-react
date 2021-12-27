@@ -18,7 +18,7 @@ const AskQuesPage = () => {
     //     setTitle(e.target.)
     // }
 
-    const handleSubmit = (e) => {   
+    const handleSubmit = e => {   
         e.preventDefault()
         questionSubmit()
     }
@@ -32,7 +32,7 @@ const AskQuesPage = () => {
             },
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
-        const data = response.json();
+        const data = await response.json();
         console.log(data)
     }
 

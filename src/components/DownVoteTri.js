@@ -12,7 +12,7 @@ const DownVoteTri = (props) => {
 
     return (
         <div>
-            <Link to={`/${props.signup}`}><div style={triangleDown} className="triangle-down"></div></Link>
+            <div style={triangleDown} className="triangle-down"></div>
         </div>
     )
 }

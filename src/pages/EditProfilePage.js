@@ -6,7 +6,6 @@ const EditProfilePage = () => {
 
     const {user, authTokens} = useContext(AuthContext)
 
-
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [location, setLocation] = useState('')
@@ -20,10 +19,9 @@ const EditProfilePage = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
-         
-            body:JSON.stringify({'user': user['user_id'], 'name':fullName, 'email':email, 'location':location, 'bio':bio})
+            
+            body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
-        console.log(user['user_id']);
         const data = response.json();
         console.log(data)
         

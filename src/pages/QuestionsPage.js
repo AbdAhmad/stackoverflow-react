@@ -34,8 +34,12 @@ const QuestionsPage = () => {
         alignItems: "center"
     }
 
-    const [questions, setQuestions] = useState([])
-    const [questionOrder, setQuestionOrder] = useState('')
+    useEffect(() => {
+        getQuestions()
+    }, [])
+
+    let [questions, setQuestions] = useState([])
+    let [questionOrder, setQuestionOrder] = useState('')
 
     let getQuestions = async () => {
         let response = await fetch('http://127.0.0.1:8000/question/',{
@@ -44,38 +48,13 @@ const QuestionsPage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        let data = await response.json()
-       
-        setQuestionOrder(data['marked'])
-        // data.map((question) => {
-        //     console.log(question)
-        // })
-        setQuestions(data['questions_list'])
-
-        questions.map((question) => {
-            
-            question[4].split().forEach((tag) => {
-                console.log(tag.split())
-                [tag].map((t) => {
-                    console.log(t)
-                })
-                
-            })
-           
-            // question[4].split().map((tag) => {
-            //     tag.map((t) => {
-            //         console.log(t)
-            //     })
-            
-        })
         
+        let data = await response.json()
+        setQuestions(data)
+     
     }
 
-    useEffect(() => {
-        getQuestions()
-    }, [])
     
-
     return (
        
         <Container >
@@ -97,22 +76,23 @@ const QuestionsPage = () => {
                 <Row style={{marginTop: "1%"}}>
                 <Col>
                     <div style={VAVDivStyle} className="text-center">
-                        <div style={VAVStyle}>{question[2]}<br/>Votes</div>
-                        <div style={VAVStyle}>{question[1]}<br/>Answers</div>
-                        <div style={VAVStyle}>{question[3]}<br/>Views</div>    
+                        <div style={VAVStyle}>{question.votes}<br/>Votes</div>
+                        <div style={VAVStyle}>{question.ans_count}<br/>Answers</div>
+                        <div style={VAVStyle}>{question.views}<br/>Views</div> 
                     </div>
                 </Col>
                 <Col md={8}>
                     <div style={{display: "flex"}}>
-                        <h5><Link key={index} style={{textDecoration: "none"}} to="/question">{question[0]}</Link></h5>
+                        <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                     </div>
-                    <div style={{display: "flex"}}>
-                        {question[4].split().map((tag) => (
+                    {question.tags.split(/\s+/).map((tag) => (
+                        <div style={{display: "inline-block"}}>
                             <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
-                        ))}
-                    </div>
+                        </div> 
+                        ))
+                    }
                     <div style={{float: "right", paddingRight: "2%"}}>
-                        <ObjectInfo/>
+                        <ObjectInfo user={question.user} time={question.created_at} />
                     </div>
                 </Col>
                 <hr/>
