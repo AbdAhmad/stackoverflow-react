@@ -6,6 +6,7 @@ import {
     useParams
 } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
+import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
 
 
 const QuestionsPage = () => {
@@ -129,7 +130,11 @@ const QuestionsPage = () => {
                 </ul>
             </nav>
             :
-            null   
+            <>
+            <MagnifyingGlass style={{height: '100px'}} />
+            <h4>We couldn't find anything for <strong>{search}</strong></h4>
+            <h5>Try different or less specific keywords</h5>
+            </>
         }
         <Card>
       
