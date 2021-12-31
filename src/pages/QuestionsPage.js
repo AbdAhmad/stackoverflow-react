@@ -61,6 +61,10 @@ const QuestionsPage = () => {
         })
         let data = await response.json()
         let questions = data['questions']
+        questions.map((ques) => {
+            console.log(ques.created_at)
+        })
+
         let viewBy = data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
@@ -131,7 +135,7 @@ const QuestionsPage = () => {
             </nav>
             :
             <>
-            <MagnifyingGlass style={{height: '100px'}} />
+            <MagnifyingGlass />
             <h4>We couldn't find anything for <strong>{search}</strong></h4>
             <h5>Try different or less specific keywords</h5>
             </>
