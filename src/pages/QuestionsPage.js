@@ -34,9 +34,11 @@ const QuestionsPage = () => {
         alignItems: "center"
     }
 
+
     useEffect(() => {
         getQuestions()
     }, [])
+
 
     let [questions, setQuestions] = useState([])
     let [questionOrder, setQuestionOrder] = useState('')
@@ -48,10 +50,28 @@ const QuestionsPage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        
         let data = await response.json()
-        setQuestions(data)
-     
+        let questions = data['questions']
+        let viewBy = data['question_order']
+        setQuestions(questions)
+        setQuestionOrder(viewBy)
+    }
+
+    
+    let viewQuesByLatest = async () => {
+        let response = await fetch('http://127.0.0.1:8000/question?q=latest',{
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens?.access}`
+            },
+        })
+        console.log(response)
+        let data = await response.json()
+        console.log(data)
+        let questions = data['questions']
+        let viewBy = data['question_order']
+        setQuestions(questions)
+        setQuestionOrder(viewBy)
     }
 
     
@@ -63,12 +83,32 @@ const QuestionsPage = () => {
             <h3>Questions</h3>
             <Link to="/ask"><Button variant="primary">Ask</Button></Link>
         </div>
+
         <nav style={navStyle}>
-            <ul  className="pagination pagination-sm"> 
-                <li className="page-item active"><Link className="page-link" to="?q=latest">Latest</Link></li>
-                <li className="page-item"><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
+       
+            <ul className="pagination pagination-sm"> 
+                { 
+                    questionOrder === 'latest' ? 
+                    <React.Fragment>
+                        <div onClick={viewQuesByLatest}>
+                            <li className="page-item active"><Link className="page-link" to="?q=latest">Latest</Link></li>
+                        </div>
+                        <li className="page-item"><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <div onClick={viewQuesByLatest}>
+                            <li className="page-item"><Link className="page-link" to="?q=latest">Latest</Link></li>
+                        </div>    
+                        <div onClick={getQuestions}>                    
+                            <li className="page-item active"><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
+                        </div>
+                    </React.Fragment>
+                }
             </ul>
+     
         </nav>
+        
         <Card>
       
             {questions.map((question, index) => (

@@ -23,17 +23,18 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <AuthProvider>
-          <Header />
-          <Routes>
-            <Route path="/" element={<PrivateRoute />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/ask" element={<AskQuesPage />} />
-            <Route path="/profile/:username" element={<ProfilePage />} />
-            <Route path="/edit_profile" element={<EditProfilePage />} />
-            <Route path="/question/:slug" element={<QuestionPage />} />
-            <Route path="/edit_answer" element={<EditAnswerPage />} />
-          </Routes>
+            <Header />
+            <Routes>
+              <Route path="/questions" element={<PrivateRoute />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/ask" element={<AskQuesPage />} />
+              <Route path="/update_question/:slug" element={<AskQuesPage />} />
+              <Route path="/profile/:username" element={<ProfilePage />} />
+              <Route path="/edit_profile" element={<EditProfilePage />} />
+              <Route path="/question/:slug" element={<QuestionPage />} />
+              <Route path="/edit_answer" element={<EditAnswerPage />} />
+            </Routes>
           </AuthProvider>
         </BrowserRouter>
       </div>
