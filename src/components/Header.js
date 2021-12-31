@@ -1,28 +1,20 @@
 import React, {useContext, useState} from 'react'
 import { Nav, Navbar, Form, Button, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
 
-    let {user, authTokens, logoutUser} = useContext(AuthContext)
+    let {user, authTokens, logoutUser, getQuesBySearch} = useContext(AuthContext)
+
+    let navigate = useNavigate()
 
     const [searchQues, setSearchQues] = useState('')
     console.log(searchQues)
 
-    let getQuesBySearch = async () => {
-            let response = await fetch(`http://127.0.0.1:8000/question?search=${searchQues}`,{
-                headers:{
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authTokens?.access}`
-                },
-            })
-            let data = await response.json()
-            console.log(data)
-            let questions = data['questions']
-            let viewBy = data['question_order']
-            // setQuestions(questions)
-            // setQuestionOrder(viewBy)
-    }
+    // const handleSubmit = () => {
+    //     navigate(`/questions/${searchQues}`)
+    // }
 
     return (
         <div  style={{marginBottom: "7.5%"}}>
@@ -37,10 +29,9 @@ const Header = () => {
             </button>
             <div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <Form onSubmit={getQuesBySearch} class="d-flex">
-                    <input style={{width: "800px"}} onChange={e => setSearchQues(e.target.value)} class="form-control search me-2" autocomplete="off" type="search" placeholder="Search Question" name="search" aria-label="Search" />
+                <Form action={`/questions/${searchQues}`} class="d-flex">
+                    <input style={{width: "800px"}} onChange={e => setSearchQues(e.target.value)} class="form-control search me-2" autocomplete="off" type="search" placeholder="Search Question" aria-label="Search" />
                 </Form>
-
                 {user ?
                     <>
                         <li class="nav-item">

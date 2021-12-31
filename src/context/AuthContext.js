@@ -46,13 +46,30 @@ export const AuthProvider = ({children}) => {
     }
 
 
+    // let getQuesBySearch = async () => {
+    //     let response = await fetch(`http://127.0.0.1:8000/question?search=${searchQues}`,{
+    //         headers:{
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${authTokens?.access}`
+    //         },
+    //     })
+    //     let data = await response.json()
+    //     console.log(data)
+    //     let questions = data['questions']
+    //     let viewBy = data['question_order']
+    //     // setQuestions(questions)
+    //     // setQuestionOrder(viewBy)
+// }
+
+
     let contextData = {
-        user:user,
-        authTokens:authTokens,
-        setAuthTokens:setAuthTokens,
-        setUser:setUser,
-        loginUser:loginUser,
-        logoutUser:logoutUser,
+        user: user,
+        authTokens: authTokens,
+        setAuthTokens: setAuthTokens,
+        setUser: setUser,
+        loginUser: loginUser,
+        logoutUser: logoutUser,
+        // getQuesBySearch: getQuesBySearch
     }
 
     useEffect(()=> {

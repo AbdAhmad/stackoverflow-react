@@ -68,7 +68,6 @@ const ProfilePage = () => {
     }
 
 
-
     useEffect(() => {
         getProfile()
         permission()

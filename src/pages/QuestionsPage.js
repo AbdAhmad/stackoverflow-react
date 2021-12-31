@@ -3,6 +3,7 @@ import { Button, Card, Row, Col, Container } from 'react-bootstrap'
 import ObjectInfo from '../components/ObjectInfo';
 import {
     Link, 
+    useParams
 } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
 
@@ -10,6 +11,8 @@ import AuthContext from '../context/AuthContext'
 const QuestionsPage = () => {
 
     const {authTokens} = useContext(AuthContext)
+
+    const {search} = useParams()
 
     const myStyle = {
         display: "flex", 
@@ -36,12 +39,17 @@ const QuestionsPage = () => {
 
 
     useEffect(() => {
-        getQuestions()
+        if(search){
+            getSearchedQues()
+        }else{
+            getQuestions()
+        }
     }, [])
 
-
+ 
     let [questions, setQuestions] = useState([])
     let [questionOrder, setQuestionOrder] = useState('')
+    let [areQuestions, setAreQuestions] = useState(false)
 
     let getQuestions = async () => {
         let response = await fetch('http://127.0.0.1:8000/question/',{
@@ -55,8 +63,30 @@ const QuestionsPage = () => {
         let viewBy = data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
+        setAreQuestions(true)
     }
 
+
+    let getSearchedQues = async () => {
+        let response = await fetch(`http://127.0.0.1:8000/searched_ques/${search}`,{
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens?.access}`
+            },
+        })
+        if(response.status === 200){
+            let data = await response.json()
+            let questions = data['questions']
+            console.log(questions)
+            let viewBy = data['question_order']
+            setQuestions(questions)
+            setQuestionOrder(viewBy)
+            setAreQuestions(true)
+        }
+        
+    }
+
+    // useEffect(getQuestions, [])
     
     let viewQuesByLatest = async () => {
         let response = await fetch('http://127.0.0.1:8000/question?q=latest',{
@@ -65,13 +95,14 @@ const QuestionsPage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        console.log(response)
+
         let data = await response.json()
         console.log(data)
         let questions = data['questions']
         let viewBy = data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
+        setAreQuestions(true)
     }
 
     
@@ -84,31 +115,22 @@ const QuestionsPage = () => {
             <Link to="/ask"><Button variant="primary">Ask</Button></Link>
         </div>
 
-        <nav style={navStyle}>
-       
-            <ul className="pagination pagination-sm"> 
-                { 
-                    questionOrder === 'latest' ? 
-                    <React.Fragment>
-                        <div onClick={viewQuesByLatest}>
-                            <li className="page-item active"><Link className="page-link" to="?q=latest">Latest</Link></li>
-                        </div>
-                        <li className="page-item"><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
-                    </React.Fragment>
-                    :
-                    <React.Fragment>
-                        <div onClick={viewQuesByLatest}>
-                            <li className="page-item"><Link className="page-link" to="?q=latest">Latest</Link></li>
-                        </div>    
-                        <div onClick={getQuestions}>                    
-                            <li className="page-item active"><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
-                        </div>
-                    </React.Fragment>
-                }
-            </ul>
-     
-        </nav>
-        
+        { areQuestions ?
+            <nav style={navStyle}>
+                <ul className="pagination pagination-sm"> 
+                    <>
+                    <div onClick={viewQuesByLatest}>
+                        <li className={`page-item ${questionOrder === 'latest'? 'active': null}`}><Link className="page-link" to="?q=latest">Latest</Link></li>
+                    </div>
+                    <div onClick={getQuestions}>
+                        <li className={`page-item ${questionOrder !== 'latest'? 'active': null}`}><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
+                    </div>
+                    </>
+                </ul>
+            </nav>
+            :
+            null   
+        }
         <Card>
       
             {questions.map((question, index) => (

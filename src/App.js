@@ -26,6 +26,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/questions" element={<PrivateRoute />} />
+              <Route path='/questions/:search' element={<QuestionsPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/ask" element={<AskQuesPage />} />
