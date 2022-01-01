@@ -75,7 +75,7 @@ const SearchedQuesPage = () => {
             :
             <Card>
       
-            {searchedQuestions.map((question, index) => (
+            { searchedQuestions.map((question, index) => (
                
                 <Row style={{marginTop: "1%"}}>
                     <Col>

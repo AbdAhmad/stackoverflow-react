@@ -9,6 +9,7 @@ const ProfilePage = () => {
     const [hasPermission, setHasPermission] = useState(false)
 
     let {username} = useParams()
+    console.log(username)
 
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
@@ -38,14 +39,6 @@ const ProfilePage = () => {
             setQuestions(data['questions'])
             setAnswers(data['answers'])
         }
-        else{
-            setFullName(null)
-            setEmail(null)
-            setLocation(null)
-            setBio(null)
-            setQuestions(null)
-            setAnswers(null)
-        }
     }
 
     const permission = () => {
@@ -53,6 +46,11 @@ const ProfilePage = () => {
             setHasPermission(true)
         }
     }
+
+    useEffect(() => {
+        getProfile()
+        permission()
+    }, [])
 
 
     const deleteQues = questionSlug => {
@@ -77,26 +75,19 @@ const ProfilePage = () => {
     }
 
 
-    useEffect(() => {
-        getProfile()
-        permission()
-    }, [])
-
     return (
         <React.Fragment>
             <Card style={{width: "90%", marginLeft: "5%"}}>
-            <Card.Body>
-                <Card.Title><h3><i>{fullName ? fullName: "This user has no Full Name"}</i></h3></Card.Title>
-                <br/>
-                <Card.Text >
-                <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
-                <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
-                <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
-                </Card.Text>
-                <br/>
-                
-                {
-                    hasPermission ?
+                <Card.Body>
+                    <Card.Title><h3><i>{fullName ? fullName: "This user has no Full Name"}</i></h3></Card.Title>
+                    <br/>
+                    <Card.Text >
+                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
+                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
+                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
+                    </Card.Text>
+                    <br/>
+                    { hasPermission ?
                         <Link style={{textDecoration: "none"}} to='/edit_profile'>
                         <div className="d-grid gap-2">
                         <Button variant="outline-secondary" size="lg">
@@ -106,55 +97,58 @@ const ProfilePage = () => {
                         </Link>
                         : 
                         null
-                }
+                    }
 
-            </Card.Body>
-            <br/>
-            <Container>
-                <Row>
-                    <Col>
-                    <h5>{questions.length} {questions.length > 1 ? 'Questions' : 'Question'}</h5>
-                    {questions.map((question) => (
-                        <React.Fragment>
-                        <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
+                </Card.Body>
+                <br/>
+                <Container>
+                    <Row>
+
+                        {/* Questions Column */}
+
+                        <Col>
+                        <h5>{questions.length} {questions.length > 1 ? 'Questions' : 'Question'}</h5>
                         
-                        {
-                            hasPermission ? 
+                        { questions.map((question) => (
+
                             <React.Fragment>
-                            <Link to={`/update_question/${question.slug}/`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
-                            <div onClick={() => deleteQues(question.slug)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
+                                <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
+                                
+                                { hasPermission ? 
+                                
+                                    <React.Fragment>
+                                    <Link to={`/update_question/${question.slug}/`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
+                                    <div onClick={() => deleteQues(question.slug)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
+                                    </React.Fragment>
+                                    :
+                                    null 
+                                }
                             </React.Fragment>
-                            :
-                            null 
-                        }
+                        ))}
+                        </Col>
 
-                        </React.Fragment>
-                    ))}
-                    </Col>
-                    
-                    <Col>
-                  
-                    <h5>{answers.length} {answers.length > 1 ? 'Answers' : 'Answer'}</h5>
+                        {/* Answers Column */}
 
-                    {answers.map((answer) => (
-                        <React.Fragment>
-                            <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
-                            {
-                                hasPermission ? 
+                        <Col>
+                            <h5>{answers.length} {answers.length > 1 ? 'Answers' : 'Answer'}</h5>
+                            { answers.map((answer) => (
                                 <React.Fragment>
-                                <Link to=""><Button variant='outline-success btn-sm'>Edit</Button></Link>
-                                <div onClick={() => deleteAns(answer.id)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
-                                <br/>
-                                </React.Fragment>
-                                :
-                                null 
-                            }
-                        </React.Fragment>  
-                    ))}
-
-                    </Col>
-                </Row>
-            </Container>
+                                    <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
+                                    {
+                                        hasPermission ? 
+                                        <React.Fragment>
+                                        <Link to=""><Button variant='outline-success btn-sm'>Edit</Button></Link>
+                                        <div onClick={() => deleteAns(answer.id)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
+                                        <br/>
+                                        </React.Fragment>
+                                        :
+                                        null 
+                                    }
+                                </React.Fragment>  
+                            ))}
+                        </Col>
+                    </Row>
+                </Container>
             </Card>
         </React.Fragment>
     )

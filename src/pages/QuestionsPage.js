@@ -78,12 +78,10 @@ const QuestionsPage = () => {
     return (
        
         <Container >
-            
             <div style={myStyle}>
                 <h3>Questions</h3>
                 <Link to="/ask"><Button variant="primary">Ask</Button></Link>
             </div>
-
             <nav style={navStyle}>
                 <ul className="pagination pagination-sm"> 
                     <React.Fragment>
@@ -96,10 +94,9 @@ const QuestionsPage = () => {
                     </React.Fragment>
                 </ul>
             </nav>
-        
             <Card>
         
-                {questions.map((question, index) => (
+                { questions.map((question, index) => (
                 
                     <Row style={{marginTop: "1%"}}>
                         <Col>
@@ -114,7 +111,7 @@ const QuestionsPage = () => {
                                 <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                             </div>
                             
-                            {question.tags.split(/\s+/).map((tag) => (
+                            { question.tags.split(/\s+/).map((tag) => (
 
                                 <div style={{display: "inline-block"}}>
                                     <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
