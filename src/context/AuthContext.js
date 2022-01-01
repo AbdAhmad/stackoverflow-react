@@ -7,22 +7,22 @@ const AuthContext = createContext()
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
-    let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
-    let [loading, setLoading] = useState(true)
+    const [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
+    const [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
 
-    let loginUser = async ( e )=> {
+    const loginUser = async (e) => {
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch('http://127.0.0.1:8000/api/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
-        let data = await response.json()
+        const data = await response.json()
 
         if(response.status === 200){
             setAuthTokens(data)
@@ -30,13 +30,14 @@ export const AuthProvider = ({children}) => {
             localStorage.setItem('authTokens', JSON.stringify(data))
             console.log('Logged In')
             navigate('/questions')
-        }else{
+        }
+        else{
             alert('Something went wrong!')
         }
     }
 
 
-    let logoutUser = () => {
+    const logoutUser = () => {
         console.log('logged out')
         setAuthTokens(null)
         setUser(null)
@@ -46,7 +47,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    let contextData = {
+    const contextData = {
         user: user,
         authTokens: authTokens,
         setAuthTokens: setAuthTokens,

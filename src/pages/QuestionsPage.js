@@ -79,56 +79,56 @@ const QuestionsPage = () => {
        
         <Container >
             
-        <div style={myStyle}>
-            <h3>Questions</h3>
-            <Link to="/ask"><Button variant="primary">Ask</Button></Link>
-        </div>
+            <div style={myStyle}>
+                <h3>Questions</h3>
+                <Link to="/ask"><Button variant="primary">Ask</Button></Link>
+            </div>
 
             <nav style={navStyle}>
                 <ul className="pagination pagination-sm"> 
-                    <>
+                    <React.Fragment>
                     <div onClick={viewQuesByLatest}>
                         <li className={`page-item ${questionOrder === 'latest'? 'active': null}`}><Link className="page-link" to="?q=latest">Latest</Link></li>
                     </div>
                     <div onClick={getQuestions}>
                         <li className={`page-item ${questionOrder !== 'latest'? 'active': null}`}><Link className="page-link" to="?q=mostviewed">Most viewed</Link></li>
                     </div>
-                    </>
+                    </React.Fragment>
                 </ul>
             </nav>
         
-        <Card>
-      
-            {questions.map((question, index) => (
-               
-                <Row style={{marginTop: "1%"}}>
-                <Col>
-                    <div style={VAVDivStyle} className="text-center">
-                        <div style={VAVStyle}>{question.votes}<br/>Votes</div>
-                        <div style={VAVStyle}>{question.ans_count}<br/>Answers</div>
-                        <div style={VAVStyle}>{question.views}<br/>Views</div> 
-                    </div>
-                </Col>
-                <Col md={8}>
-                    <div style={{display: "flex"}}>
-                        <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
-                    </div>
-                    {question.tags.split(/\s+/).map((tag) => (
-                        <div style={{display: "inline-block"}}>
-                            <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
-                        </div> 
-                        ))
-                    }
-                    <div style={{float: "right", paddingRight: "2%"}}>
-                        <CreatedInfo user={question.user} time={question.created_at} />
-                    </div>
-                </Col>
-                <hr/>
-                </Row>
+            <Card>
+        
+                {questions.map((question, index) => (
+                
+                    <Row style={{marginTop: "1%"}}>
+                        <Col>
+                            <div style={VAVDivStyle} className="text-center">
+                                <div style={VAVStyle}>{question.votes}<br/>Votes</div>
+                                <div style={VAVStyle}>{question.ans_count}<br/>Answers</div>
+                                <div style={VAVStyle}>{question.views}<br/>Views</div> 
+                            </div>
+                        </Col>
+                        <Col md={8}>
+                            <div style={{display: "flex"}}>
+                                <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                            </div>
+                            
+                            {question.tags.split(/\s+/).map((tag) => (
 
-            ))}
-
-        </Card>
+                                <div style={{display: "inline-block"}}>
+                                    <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
+                                </div> 
+                                ))
+                            }
+                            <div style={{float: "right", paddingRight: "2%"}}>
+                                <CreatedInfo user={question.user} time={question.created_at} />
+                            </div>
+                        </Col>
+                        <hr/>
+                    </Row>
+                ))}
+            </Card>
         </Container>
     )
 }

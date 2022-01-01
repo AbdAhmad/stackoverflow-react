@@ -46,17 +46,16 @@ const ProfilePage = () => {
             setQuestions(null)
             setAnswers(null)
         }
-
     }
 
-    let permission = () => {
+    const permission = () => {
         if(username === user['username']){
             setHasPermission(true)
         }
     }
 
 
-    let deleteQues = questionSlug => {
+    const deleteQues = questionSlug => {
         fetch(`http://127.0.0.1:8000/question/${questionSlug}`, {
             method: 'DELETE',
             headers:{
@@ -67,7 +66,7 @@ const ProfilePage = () => {
     }
 
 
-    let deleteAns = answerId => {
+    const deleteAns = answerId => {
         fetch(`http://127.0.0.1:8000/answer/${answerId}`, {
             method: 'DELETE',
             headers:{
@@ -84,7 +83,7 @@ const ProfilePage = () => {
     }, [])
 
     return (
-        <>
+        <React.Fragment>
             <Card style={{width: "90%", marginLeft: "5%"}}>
             <Card.Body>
                 <Card.Title><h3><i>{fullName ? fullName: "This user has no Full Name"}</i></h3></Card.Title>
@@ -157,7 +156,7 @@ const ProfilePage = () => {
                 </Row>
             </Container>
             </Card>
-        </>
+        </React.Fragment>
     )
 }
 

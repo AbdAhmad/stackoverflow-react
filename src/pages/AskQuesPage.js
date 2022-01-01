@@ -9,7 +9,6 @@ const AskQuesPage = () => {
     const {authTokens} = useContext(AuthContext)
 
     const {slug} = useParams();
-    console.log('outside')
 
     useEffect(() => {
         console.log('inside')
@@ -82,7 +81,7 @@ const AskQuesPage = () => {
 
 
     return (
-        <>
+        <React.Fragment>
             <h3 style={{display: "flex", marginLeft: "5%"}}>Ask a public question</h3>
             <Card style={{width: "90%", marginLeft: "5%", display: "flex", marginTop: "20px"}}>
             <Form onSubmit={handleSubmit}>
@@ -116,7 +115,7 @@ const AskQuesPage = () => {
             </Card.Body>
             </Form>
             </Card>
-        </>
+        </React.Fragment>
     )
 }
 

@@ -84,7 +84,7 @@ const EditProfilePage = () => {
 
 
     return (
-        <>
+        <React.Fragment>
             <Card style={{width: "90%", marginLeft: "5%"}}>
             <br/>
             <Card.Title><h3>Complete Your Profile</h3></Card.Title>
@@ -107,7 +107,7 @@ const EditProfilePage = () => {
                 </div>
             </Form>
             </Card>
-        </>
+        </React.Fragment>
     )
 }
 
