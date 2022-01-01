@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Col, Button, Form, Container  } from 'react-bootstrap'
+import { Row, Col, Button, Form, Container  } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
 import { Link } from 'react-router-dom'

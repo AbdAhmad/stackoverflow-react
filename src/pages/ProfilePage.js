@@ -29,14 +29,24 @@ const ProfilePage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
+        if(response.status === 200){
+            const data = await response.json();
+            setFullName(data['profile'].full_name)
+            setEmail(data['profile'].email)
+            setLocation(data['profile'].location)
+            setBio(data['profile'].bio)
+            setQuestions(data['questions'])
+            setAnswers(data['answers'])
+        }
+        else{
+            setFullName(null)
+            setEmail(null)
+            setLocation(null)
+            setBio(null)
+            setQuestions(null)
+            setAnswers(null)
+        }
 
-        const data = await response.json();
-        setFullName(data['profile'].full_name)
-        setEmail(data['profile'].email)
-        setLocation(data['profile'].location)
-        setBio(data['profile'].bio)
-        setQuestions(data['questions'])
-        setAnswers(data['answers'])
     }
 
     let permission = () => {
@@ -108,6 +118,7 @@ const ProfilePage = () => {
                     {questions.map((question) => (
                         <React.Fragment>
                         <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
+                        
                         {
                             hasPermission ? 
                             <React.Fragment>

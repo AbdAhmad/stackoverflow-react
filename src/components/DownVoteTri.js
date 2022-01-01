@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-const DownVoteTri = (props) => {
+const DownVoteTri = () => {
 
     const triangleDown = {
         width: "0",

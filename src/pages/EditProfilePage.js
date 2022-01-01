@@ -66,7 +66,7 @@ const EditProfilePage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },            
         })
-        if(response.status == 200){
+        if(response.status === 200){
             setUpdate(true)
         }
         const data = await response.json();

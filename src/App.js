@@ -4,11 +4,11 @@ import Header from './components/Header';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import AskQuesPage from './pages/AskQuesPage';
-import QuestionsPage from './pages/QuestionsPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import QuestionPage from './pages/QuestionPage';
 import EditAnswerPage from './pages/EditAnswerPage';
+import SearchedQuesPage from './pages/SearchedQuesPage';
 import {
   BrowserRouter,
   Route,
@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './utils/PrivateRoute'
+import QuestionsPage from './pages/QuestionsPage';
 
 
 function App() {
@@ -25,16 +26,23 @@ function App() {
           <AuthProvider>
             <Header />
             <Routes>
-              <Route path="/questions" element={<PrivateRoute />} />
-              <Route path='/questions/:search' element={<QuestionsPage />} />
+
+              {/* Public Routes */}
+
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/ask" element={<AskQuesPage />} />
-              <Route path="/update_question/:slug" element={<AskQuesPage />} />
-              <Route path="/profile/:username" element={<ProfilePage />} />
-              <Route path="/edit_profile" element={<EditProfilePage />} />
-              <Route path="/question/:slug" element={<QuestionPage />} />
-              <Route path="/edit_answer" element={<EditAnswerPage />} />
+
+              {/* Private Routes */}
+
+              <Route path="/questions" element={<PrivateRoute><QuestionsPage /></PrivateRoute>} />
+              <Route path='/questions/:search' element={<PrivateRoute><SearchedQuesPage /></PrivateRoute>} />
+              <Route path="/ask" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
+              <Route path="/update_question/:slug" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
+              <Route path="/profile/:username" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+              <Route path="/edit_profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
+              <Route path="/question/:slug" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
+              <Route path="/edit_answer" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
+            
             </Routes>
           </AuthProvider>
         </BrowserRouter>

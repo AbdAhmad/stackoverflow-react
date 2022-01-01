@@ -1,20 +1,13 @@
 import React, {useContext, useState} from 'react'
-import { Nav, Navbar, Form, Button, Container } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
 
-    let {user, authTokens, logoutUser, getQuesBySearch} = useContext(AuthContext)
-
-    let navigate = useNavigate()
+    let {user, logoutUser} = useContext(AuthContext)
 
     const [searchQues, setSearchQues] = useState('')
     console.log(searchQues)
-
-    // const handleSubmit = () => {
-    //     navigate(`/questions/${searchQues}`)
-    // }
 
     return (
         <div  style={{marginBottom: "7.5%"}}>
