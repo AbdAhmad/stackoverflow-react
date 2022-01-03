@@ -1,5 +1,12 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from "react-router-dom";
+
 import Header from './components/Header';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
@@ -9,17 +16,12 @@ import EditProfilePage from './pages/EditProfilePage';
 import QuestionPage from './pages/QuestionPage';
 import EditAnswerPage from './pages/EditAnswerPage';
 import SearchedQuesPage from './pages/SearchedQuesPage';
-import {
-  BrowserRouter,
-  Route,
-  Routes
-} from "react-router-dom";
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './utils/PrivateRoute'
 import QuestionsPage from './pages/QuestionsPage';
 
 
-function App() {
+export default function App() {
   return (
       <div className="App">
         <BrowserRouter>
@@ -50,4 +52,4 @@ function App() {
   );
 }
 
-export default App;
+// export default App;

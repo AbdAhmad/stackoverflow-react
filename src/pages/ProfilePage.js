@@ -111,9 +111,9 @@ const ProfilePage = () => {
                         <Col>
                         <h5>{questions.length} {questions.length > 1 ? 'Questions' : 'Question'}</h5>
                         
-                        { questions.map((question) => (
+                        { questions.map(question => (
 
-                            <React.Fragment>
+                            <React.Fragment key={question.id}>
                                 <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
                                 
                                 { isOwner ? 
@@ -132,8 +132,8 @@ const ProfilePage = () => {
 
                         <Col>
                             <h5>{answers.length} {answers.length > 1 ? 'Answers' : 'Answer'}</h5>
-                            { answers.map((answer) => (
-                                <React.Fragment>
+                            { answers.map(answer => (
+                                <React.Fragment key={answer.id}>
                                     <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
                                     {
                                         isOwner ? 

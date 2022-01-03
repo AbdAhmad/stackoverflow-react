@@ -75,9 +75,9 @@ const SearchedQuesPage = () => {
             :
             <Card>
       
-            { searchedQuestions.map((question, index) => (
+            { searchedQuestions.map(question => (
                
-                <Row style={{marginTop: "1%"}}>
+                <Row style={{marginTop: "1%"}} key={question.id}>
                     <Col>
                         <div style={VAVDivStyle} className="text-center">
                             <div style={VAVStyle}>{question.votes}<br/>Votes</div>
@@ -87,12 +87,12 @@ const SearchedQuesPage = () => {
                     </Col>
                     <Col md={8}>
                         <div style={{display: "flex"}}>
-                            <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                         </div>
 
-                        {question.tags.split(/\s+/).map((tag) => (
+                        {question.tags.split(/\s+/).map((tag, index) => (
 
-                        <div style={{display: "inline-block"}}>
+                        <div style={{display: "inline-block"}} key={index}>
                             <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
                         </div> 
                             ))

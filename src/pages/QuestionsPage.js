@@ -11,28 +11,7 @@ const QuestionsPage = () => {
 
     const {authTokens} = useContext(AuthContext)
 
-    const myStyle = {
-        display: "flex", 
-        justifyContent: "space-between",
-        marginTop: "4%"
-    }
 
-    const navStyle = {
-        marginTop: "1%", 
-        marginLeft: "42.5%"
-    }
-
-    const VAVStyle = {
-        flex: "0.3"
-    }
-
-    const VAVDivStyle = {
-        height: "120px", 
-        display: "flex", 
-        flexDirection: "row", 
-        justifyContent: "center", 
-        alignItems: "center"
-    }
 
 
     useEffect(() => {
@@ -74,6 +53,30 @@ const QuestionsPage = () => {
         setQuestionOrder(viewBy)
     }
 
+    const myStyle = {
+        display: "flex", 
+        justifyContent: "space-between",
+        marginTop: "4%"
+    }
+
+    const navStyle = {
+        marginTop: "1%", 
+        marginLeft: "42.5%"
+    }
+
+    const VAVStyle = {
+        flex: "0.3"
+    }
+
+    const VAVDivStyle = {
+        height: "120px", 
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: "center", 
+        alignItems: "center",
+
+    }
+
     
     return (
        
@@ -96,24 +99,24 @@ const QuestionsPage = () => {
             </nav>
             <Card>
         
-                { questions.map((question, index) => (
+                { questions.map(question => (
                 
-                    <Row style={{marginTop: "1%"}}>
+                    <Row style={{marginTop: "1%"}} key={question.id}>
                         <Col>
                             <div style={VAVDivStyle} className="text-center">
-                                <div style={VAVStyle}>{question.votes}<br/>Votes</div>
-                                <div style={VAVStyle}>{question.ans_count}<br/>Answers</div>
+                                <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                                <div style={{color: question.ans_count > 0 ? "green": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
                                 <div style={VAVStyle}>{question.views}<br/>Views</div> 
                             </div>
                         </Col>
                         <Col md={8}>
                             <div style={{display: "flex"}}>
-                                <h5><Link key={index} style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                                <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                             </div>
                             
-                            { question.tags.split(/\s+/).map((tag) => (
+                            { question.tags.split(/\s+/).map((tag, index) => (
 
-                                <div style={{display: "inline-block"}}>
+                                <div style={{display: "inline-block"}} key={index}>
                                     <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
                                 </div> 
                                 ))

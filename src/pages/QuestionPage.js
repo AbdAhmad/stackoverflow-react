@@ -110,9 +110,9 @@ const QuestionPage = () => {
 
         { question.map((ques) => (
 
-            <React.Fragment>
+            <React.Fragment key={ques.id}>
                 <h2>{ques.title}</h2>
-                <p style={{display: "flex"}} class="p-2">Viewed {ques.views} times</p>
+                <p style={{display: "flex"}} className="p-2">Viewed {ques.views} times</p>
                 <hr/>
                 <Row>
                     <Col xs={2}>
@@ -138,9 +138,9 @@ const QuestionPage = () => {
 
                     <Col>
 
-                        {ques.tags.split(/\s+/).map((tag) => (
+                        {ques.tags.split(/\s+/).map((tag, index) => (
 
-                            <div style={{display: "inline-block"}}>
+                            <div style={{display: "inline-block"}} key={index}>
                                 <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
                             </div> 
                             ))
@@ -161,8 +161,8 @@ const QuestionPage = () => {
         {/* Answers */}
 
             <h3 style={{display: "flex"}}>1 Answer</h3>
-            { answers.map((ans) => (
-                <React.Fragment>
+            { answers.map(ans => (
+                <React.Fragment key={ans.id}>
                     <Row>
                         <Col xs={2}>
                             <div style={{flex: "0.1", display: "flex"}}>
@@ -185,9 +185,7 @@ const QuestionPage = () => {
                         </Col>
                     </Row>
                 </React.Fragment>
-                ))
-                }
-
+                ))}
             <hr/>
 
             {/* Post Your Answer */}

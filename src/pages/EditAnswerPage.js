@@ -9,13 +9,12 @@ import CreatedInfo from '../components/CreatedInfo'
 
 const EditAnswerPage = () => {
 
-    const {user, authTokens} = useContext(AuthContext)
+    const {authTokens} = useContext(AuthContext)
 
     const {pk} = useParams()
 
     const [answer, setAnswer] = useState('')
     const [question, setQuestion] = useState([])
-    const [updatedAnswer, setUpdatedAnswer] = useState('')
 
     const getAnswer = async () => {
         const response = await fetch(`http://127.0.0.1:8000/answer/${pk}`, {
