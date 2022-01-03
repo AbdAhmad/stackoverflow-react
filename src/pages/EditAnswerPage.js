@@ -1,51 +1,111 @@
-import React from 'react'
+import React, {useEffect, useContext, useState} from 'react'
 import { Row, Col, Button, Form, Container  } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
-import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
+import CreatedInfo from '../components/CreatedInfo'
+
 
 const EditAnswerPage = () => {
 
+    const {user, authTokens} = useContext(AuthContext)
+
+    const {pk} = useParams()
+
+    const [answer, setAnswer] = useState('')
+    const [question, setQuestion] = useState([])
+    const [updatedAnswer, setUpdatedAnswer] = useState('')
+
+    const getAnswer = async () => {
+        const response = await fetch(`http://127.0.0.1:8000/answer/${pk}`, {
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens?.access}`
+            },
+        })
+        const data = await response.json()
+        console.log(data['answer'].answer)
+        setAnswer(data['answer'].answer)
+        setQuestion([data['question']])
+    }
+
+    const updateAnswer = async (e) => {
+        e.preventDefault()
+        const response = await fetch(`http://127.0.0.1:8000/answer/${pk}/`, {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens?.access}`
+            },
+            body: JSON.stringify({'answer': answer})
+        })
+
+        console.log(response)
+    }
+
+    useEffect(() => {
+        getAnswer()
+    }, [])
+
     return (
         <Container>
-            <h2 style={{display: "flex"}}>Iterating through a series using an if loop to sort data into different buckets</h2>
-            <p style={{display: "flex"}} class="p-2">Asked Nov 1, 2021, 4:38 p.m. Viewed 321 times</p>
+
+            {/* Question */}
+
+            { question.map((ques) => (
+
+            <React.Fragment>
+            <h2 style={{display: "flex"}}>{ques.title}</h2>
+            <p style={{display: "flex"}} class="p-2">Viewed {ques.views} times</p>
             <hr/>
             <Row>
                 <Col xs={2}>
                     <div style={{flex: "0.1", display: "flex"}}>
                         <div>
-                            <UpVoteTri login={'login'} />
-                            <div style={{width: "100%", textAlign: "center"}} className="pt-1 pb-1">0</div>
-                            <DownVoteTri signup={'signup'} />
+                            <UpVoteTri />
+                            <div style={{width: "100%", textAlign: "center"}} className="pt-1 pb-1">{ques.views}</div>
+                            <DownVoteTri />
                         </div>
                     </div>
                 </Col>
                 <Col xs={10}>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>{ques.body}</p>
                 </Col>
             </Row>
             <Row>
+
+                {/* Question tags */}
+
                 <Col>
-                    <div style={{display: "flex"}}>
-                        <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">Python</button>
-                        <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">Javascript</button>
-                        <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">Django</button>
-                    </div>
+                {ques.tags.split(/\s+/).map((tag) => (
+
+                    <div style={{display: "inline-block"}}>
+                        <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
+                    </div> 
+                    ))
+                }
                 </Col>
                 <Col>
                     <div style={{float: "right", paddingRight: "2%"}}>
-                        <small>Asked on <strong> 29 Aug by <Link style={{textDecoration: "none"}} to="#">Abdulla</Link></strong></small>
+                        <CreatedInfo user={ques.user} time={ques.created_at}/>
                     </div>
                 </Col>
             </Row>
             <hr/>
-            <Form.Group style={{padding: "10px"}} className="mb-3">
-                <Form.Control placeholder="Your Answer" as="textarea" rows={8} />
-            </Form.Group>
-            <div className="d-grid gap-2">
-                <Button variant="outline-success" size="lg">Update Answer</Button>
-            </div>
+            </React.Fragment>
+            ))}
+
+            {/* Answer */}
+  
+            <Form onSubmit={updateAnswer}>
+                <Form.Group style={{padding: "10px"}} className="mb-3">
+                    <Form.Control value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} />
+                </Form.Group>
+                <div className="d-grid gap-2">
+                    <Button variant="outline-success" type='submit' size="lg">Update Answer</Button>
+                </div>
+            </Form>
         </Container>
     )
 }

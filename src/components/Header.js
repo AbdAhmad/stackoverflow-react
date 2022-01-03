@@ -11,36 +11,36 @@ const Header = () => {
 
     return (
         <div  style={{marginBottom: "7.5%"}}>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <div class="container-fluid">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div className="container-fluid">
             <Link to='/questions' class="navbar-brand">
-                <svg aria-hidden="true" class="native svg-icon iconLogoGlyphMd" width="32" height="37" viewBox="0 0 32 37"><path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"></path><path d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z" fill="#F48024"></path></svg>
-                <span class="-img _glyph">stack <b>overflow</b></span>
+                <svg aria-hidden="true" className="native svg-icon iconLogoGlyphMd" width="32" height="37" viewBox="0 0 32 37"><path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"></path><path d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z" fill="#F48024"></path></svg>
+                <span className="-img _glyph">stack <b>overflow</b></span>
             </Link>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+            <div className="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
                 <Form action={`/questions/${searchQues}`} class="d-flex">
                     <input style={{width: "800px"}} onChange={e => setSearchQues(e.target.value)} class="form-control search me-2" autocomplete="off" type="search" placeholder="Search Question" aria-label="Search" />
                 </Form>
                 {user ?
                     <React.Fragment>
-                        <li class="nav-item">
-                            <Link class="nav-link" to={`/profile/${user['username']}`}><button class="btn btn-success">{user['username']}</button></Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`/profile/${user['username']}`}><button className="btn btn-success">{user['username']}</button></Link>
                         </li>
-                        <li class="nav-item">
-                            <Link class="nav-link" to="/login"><button onClick={logoutUser} class="btn btn-outline-primary">Log out</button></Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login"><button onClick={logoutUser} className="btn btn-outline-primary">Log out</button></Link>
                         </li>   
                     </React.Fragment>
                     :
                     <React.Fragment>
-                        <li class="nav-item">
-                            <Link class="nav-link" to="/signup"><button class="btn btn-success">Sign up</button></Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/signup"><button className="btn btn-success">Sign up</button></Link>
                         </li>
-                        <li class="nav-item">
-                            <Link class="nav-link" to="/login"><button class="btn btn-primary">Log In</button></Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login"><button className="btn btn-primary">Log In</button></Link>
                         </li>
                     </React.Fragment>
                 }

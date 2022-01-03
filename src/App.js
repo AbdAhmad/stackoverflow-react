@@ -41,7 +41,7 @@ function App() {
               <Route path="/profile/:username" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
               <Route path="/edit_profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
               <Route path="/question/:slug" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
-              <Route path="/edit_answer" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
+              <Route path="/edit_answer/:pk" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
             
             </Routes>
           </AuthProvider>

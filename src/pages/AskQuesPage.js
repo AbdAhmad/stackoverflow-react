@@ -10,13 +10,15 @@ const AskQuesPage = () => {
 
     const {slug} = useParams();
 
+    const [title, setTitle] = useState('')
+    const [body, setBody] = useState('')
+    const [tags, setTags] = useState('')
+
     useEffect(() => {
-        console.log('inside')
         if(slug){
             getQuestion()
         }
     }, [])
-
 
 
     const getQuestion = async () => {
@@ -33,14 +35,6 @@ const AskQuesPage = () => {
         setTags(questionData.tags)
     }
 
-
-    const myStyle = {
-        display: "flex"
-    }
-
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
-    const [tags, setTags] = useState('')
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -80,12 +74,19 @@ const AskQuesPage = () => {
     }
 
 
+    const myStyle = {
+        display: "flex"
+    }
+
     return (
         <React.Fragment>
             <h3 style={{display: "flex", marginLeft: "5%"}}>Ask a public question</h3>
             <Card style={{width: "90%", marginLeft: "5%", display: "flex", marginTop: "20px"}}>
                 <Form onSubmit={handleSubmit}>
                     <Card.Body>
+
+                        {/* Title Field */}
+
                         <Card.Title style={myStyle}>Title</Card.Title>
                         <Card.Text style={myStyle}>
                             Be specific and imagine you’re asking a question to another person.
@@ -93,6 +94,9 @@ const AskQuesPage = () => {
                         <Form.Group className="mb-4">
                             <Form.Control type="text" value={title} name="title" onChange={e => setTitle(e.target.value)}  placeholder="e.g. is there an R function for finding the index of an element in a vector?" />
                         </Form.Group>
+
+                        {/* Body Field */}
+
                         <Card.Title style={myStyle}>Body</Card.Title>
                         <Card.Text style={myStyle}>
                             Include all the information someone would need to answer your question.
@@ -100,6 +104,9 @@ const AskQuesPage = () => {
                         <Form.Group className="mb-4">
                             <Form.Control name="body" value={body} onChange={e => setBody(e.target.value)} as="textarea" rows={5} />
                         </Form.Group>
+
+                        {/* Tags Field */}
+
                         <Card.Title style={myStyle}>Tags</Card.Title>
                         <Card.Text style={myStyle}>
                             Add up to 5 tags to describe what your question is about
@@ -107,6 +114,9 @@ const AskQuesPage = () => {
                         <Form.Group className="mb-4">
                             <Form.Control type="text" value={tags} name="tags" onChange={e => setTags(e.target.value)} placeholder="e.g.  python  javacript  django" />
                         </Form.Group>
+
+                        {/* Button */}
+
                         <div className="d-grid gap-2">
                             <Button variant="outline-primary" type='submit' size="lg">Post Your Question</Button>
                         </div>

@@ -6,10 +6,9 @@ import AuthContext from '../context/AuthContext'
 const ProfilePage = () => {
 
     const {user, authTokens} = useContext(AuthContext)
-    const [hasPermission, setHasPermission] = useState(false)
+    const [isOwner, setIsOwner] = useState(false)
 
     let {username} = useParams()
-    console.log(username)
 
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
@@ -41,15 +40,15 @@ const ProfilePage = () => {
         }
     }
 
-    const permission = () => {
+    const owner = () => {
         if(username === user['username']){
-            setHasPermission(true)
+            setIsOwner(true)
         }
     }
 
     useEffect(() => {
         getProfile()
-        permission()
+        owner()
     }, [])
 
 
@@ -87,7 +86,10 @@ const ProfilePage = () => {
                         <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
                     </Card.Text>
                     <br/>
-                    { hasPermission ?
+
+                    {/* Update Profile Button */}
+
+                    { isOwner ?
                         <Link style={{textDecoration: "none"}} to='/edit_profile'>
                         <div className="d-grid gap-2">
                         <Button variant="outline-secondary" size="lg">
@@ -114,8 +116,7 @@ const ProfilePage = () => {
                             <React.Fragment>
                                 <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
                                 
-                                { hasPermission ? 
-                                
+                                { isOwner ? 
                                     <React.Fragment>
                                     <Link to={`/update_question/${question.slug}/`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
                                     <div onClick={() => deleteQues(question.slug)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
@@ -135,9 +136,9 @@ const ProfilePage = () => {
                                 <React.Fragment>
                                     <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
                                     {
-                                        hasPermission ? 
+                                        isOwner ? 
                                         <React.Fragment>
-                                        <Link to=""><Button variant='outline-success btn-sm'>Edit</Button></Link>
+                                        <Link to={`/edit_answer/${answer.id}`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
                                         <div onClick={() => deleteAns(answer.id)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
                                         <br/>
                                         </React.Fragment>
