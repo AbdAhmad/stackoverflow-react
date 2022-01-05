@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState} from 'react'
 import { Card, Button, Container, Row, Col } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
 const ProfilePage = () => {
 
     const {user, authTokens} = useContext(AuthContext)
     const [isOwner, setIsOwner] = useState(false)
+    const navigate = useNavigate()
 
     let {username} = useParams()
 
@@ -60,6 +61,8 @@ const ProfilePage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
+        navigate(`/profile/${user['username']}`)
+
     }
 
 
@@ -71,6 +74,7 @@ const ProfilePage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
+        navigate(`/profile/${user['username']}`)
     }
 
 

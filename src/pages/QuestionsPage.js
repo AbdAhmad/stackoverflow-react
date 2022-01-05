@@ -11,13 +11,9 @@ const QuestionsPage = () => {
 
     const {authTokens} = useContext(AuthContext)
 
-
-
-
     useEffect(() => {
         getQuestions()
     }, [])
-
  
     let [questions, setQuestions] = useState([])
     let [questionOrder, setQuestionOrder] = useState('')

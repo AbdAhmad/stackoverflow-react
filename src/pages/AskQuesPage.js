@@ -1,18 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card, Button, Form } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 
 const AskQuesPage = () => {
 
     const {authTokens} = useContext(AuthContext)
 
+    const navigate = useNavigate()
+
     const {slug} = useParams();
 
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [tags, setTags] = useState('')
+    const [questionSlug, setQuestionSlug] = useState('')
 
     useEffect(() => {
         if(slug){
@@ -33,6 +36,7 @@ const AskQuesPage = () => {
         setTitle(questionData.title)
         setBody(questionData.body)
         setTags(questionData.tags)
+        setQuestionSlug(questionData.slug)
     }
 
 
@@ -56,7 +60,8 @@ const AskQuesPage = () => {
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
         const data = await response.json();
-        console.log(data)
+        const questionSlug = data.slug
+        navigate(`/question/${questionSlug}`)
     }
 
 
@@ -69,8 +74,8 @@ const AskQuesPage = () => {
             },
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
-        const data = await response.json();
-        console.log(data)
+        navigate(`/update_question/${questionSlug}`)
+        
     }
 
 

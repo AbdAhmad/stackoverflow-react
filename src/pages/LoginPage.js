@@ -1,9 +1,19 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { Card, Form, Button } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
-    let {loginUser} = useContext(AuthContext)
+    let {loginUser, user} = useContext(AuthContext)
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(user){
+            navigate('/questions')
+        }
+
+    })
 
     return (
         <div>

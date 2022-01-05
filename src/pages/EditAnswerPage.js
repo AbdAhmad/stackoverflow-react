@@ -2,7 +2,7 @@ import React, {useEffect, useContext, useState} from 'react'
 import { Row, Col, Button, Form, Container  } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo'
 
@@ -12,6 +12,8 @@ const EditAnswerPage = () => {
     const {authTokens} = useContext(AuthContext)
 
     const {pk} = useParams()
+
+    const navigate = useNavigate()
 
     const [answer, setAnswer] = useState('')
     const [question, setQuestion] = useState([])
@@ -39,8 +41,7 @@ const EditAnswerPage = () => {
             },
             body: JSON.stringify({'answer': answer})
         })
-
-        console.log(response)
+        navigate(`/question/${question[0].slug}`)
     }
 
     useEffect(() => {

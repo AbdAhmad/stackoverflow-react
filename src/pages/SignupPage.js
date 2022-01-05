@@ -1,11 +1,28 @@
-import {React, useState} from 'react'
+import {React, useState, useContext, useEffect} from 'react'
 import { Form, Button, Card } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
 
 const SignupPage = () => {
+
+    const {user} = useContext(AuthContext)
+
+
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(user){
+            navigate('/questions')
+        }
+
+    })
+
+
 
 
     const handleSubmit = e => {
@@ -28,6 +45,7 @@ const SignupPage = () => {
 
         const data = await response.json()
         console.log(data)
+        navigate('/login')
     }
 
     return (

@@ -50,6 +50,7 @@ export default function App() {
               <Route path="/question/:slug" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
               <Route path="/edit_answer/:pk" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
               <Route path="*" element={<PrivateRoute><PageNotFound /></PrivateRoute>} />
+              
             </Routes>
           </AuthProvider>
         </BrowserRouter>
