@@ -19,6 +19,7 @@ import SearchedQuesPage from './pages/SearchedQuesPage';
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './utils/PrivateRoute'
 import QuestionsPage from './pages/QuestionsPage';
+import PageNotFound from './pages/PageNotFound';
 
 
 export default function App() {
@@ -48,7 +49,7 @@ export default function App() {
               <Route path="/edit_profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
               <Route path="/question/:slug" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
               <Route path="/edit_answer/:pk" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
-            
+              <Route path="*" element={<PrivateRoute><PageNotFound /></PrivateRoute>} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>
