@@ -12,13 +12,25 @@ const LoginPage = () => {
                     <Card.Title><h4>Log in</h4></Card.Title>
                     <br/>
                     <Card.Text>
+
+                    {/* Login Form */}
+
                     <Form onSubmit={loginUser}>
+
+                    {/* Username Field */}
+
                         <Form.Group className="mb-4">
                             <Form.Control name="username" type="text" placeholder="Username" />
                         </Form.Group>
+
+                    {/* Password Field */}
+
                         <Form.Group className="mb-4">
                             <Form.Control name="password" type="password" placeholder="Password" />
                         </Form.Group>
+
+                    {/* Login Button */}
+
                         <div className="d-grid gap-2">
                             <Button type="submit" variant="outline-primary" size="lg">
                                 Log in

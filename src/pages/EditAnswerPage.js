@@ -95,12 +95,18 @@ const EditAnswerPage = () => {
             </React.Fragment>
             ))}
 
-            {/* Answer */}
+            {/* Answer Form */}
   
-            <Form onSubmit={updateAnswer}>
+            <Form onSubmit={updateAnswer}>  
+
+                {/* Answer Field */}
+
                 <Form.Group style={{padding: "10px"}} className="mb-3">
                     <Form.Control value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} />
                 </Form.Group>
+
+                {/* Update Answer Button */}
+
                 <div className="d-grid gap-2">
                     <Button variant="outline-success" type='submit' size="lg">Update Answer</Button>
                 </div>

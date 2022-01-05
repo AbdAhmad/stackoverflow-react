@@ -86,26 +86,41 @@ const EditProfilePage = () => {
     return (
         <React.Fragment>
             <Card style={{width: "90%", marginLeft: "5%"}}>
-            <br/>
-            <Card.Title><h3>Complete Your Profile</h3></Card.Title>
-            <br/>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group style={{padding: "10px"}} className="mb-3">
-                    <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
-                </Form.Group>
-                <Form.Group style={{padding: "10px"}} className="mb-3">
-                    <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-                </Form.Group>
-                <Form.Group style={{padding: "10px"}} className="mb-3">
-                    <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
-                </Form.Group>
-                <Form.Group style={{padding: "10px"}} className="mb-3">
-                    <Form.Control placeholder="About me" value={bio} onChange={e => setBio(e.target.value)} as="textarea" rows={4} />
-                </Form.Group>
-                <div className="d-grid gap-2">
-                    <Button variant="outline-primary" type='submit' size="lg">Save</Button>
-                </div>
-            </Form>
+                <br/>
+                <Card.Title><h3>Complete Your Profile</h3></Card.Title>
+                <br/>
+                <Form onSubmit={handleSubmit}>
+
+                {/* Full Name Field */}
+
+                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                        <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
+                    </Form.Group>
+
+                {/* Email Field */}
+
+                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                        <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
+                    </Form.Group>
+
+                {/* Location Field */}
+
+                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                        <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
+                    </Form.Group>
+
+                {/* Bio Field */}
+
+                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                        <Form.Control placeholder="About me" value={bio} onChange={e => setBio(e.target.value)} as="textarea" rows={4} />
+                    </Form.Group>
+
+                {/* Submit Button */}
+
+                    <div className="d-grid gap-2">
+                        <Button variant="outline-primary" type='submit' size="lg">Save</Button>
+                    </div>
+                </Form>
             </Card>
         </React.Fragment>
     )

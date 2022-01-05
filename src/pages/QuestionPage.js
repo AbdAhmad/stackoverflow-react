@@ -38,9 +38,8 @@ const QuestionPage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        
-        const data = await response.json()
-        console.log(data)
+
+        console.log(response)
        
     }
 
@@ -52,9 +51,7 @@ const QuestionPage = () => {
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        
-        const data = await response.json()
-        console.log(data)
+        console.log(response)
     }
 
     const upVoteAns= async (ansId) => {
@@ -66,8 +63,7 @@ const QuestionPage = () => {
             },
         })
         
-        const data = await response.json()        
-        console.log(data)
+        console.log(response)
     }
 
     const downVoteAns = async (ansId) => {
@@ -79,8 +75,7 @@ const QuestionPage = () => {
             },
         })
         
-        const data = await response.json()
-        console.log(data)
+        console.log(response)
     }
 
 
@@ -160,7 +155,7 @@ const QuestionPage = () => {
 
         {/* Answers */}
 
-            <h3 style={{display: "flex"}}>1 Answer</h3>
+            <h3 style={{display: "flex"}}>{answers.length === 1 ? `${answers.length} Answer` : `${answers.length} Answers`}</h3>
             { answers.map(ans => (
                 <React.Fragment key={ans.id}>
                     <Row>

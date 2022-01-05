@@ -109,7 +109,7 @@ const ProfilePage = () => {
                         {/* Questions Column */}
 
                         <Col>
-                        <h5>{questions.length} {questions.length > 1 ? 'Questions' : 'Question'}</h5>
+                        <h5>{questions.length === 1 ? `${questions.length} Question` : `${questions.length} Questions`}</h5>
                         
                         { questions.map(question => (
 
@@ -131,7 +131,7 @@ const ProfilePage = () => {
                         {/* Answers Column */}
 
                         <Col>
-                            <h5>{answers.length} {answers.length > 1 ? 'Answers' : 'Answer'}</h5>
+                            <h5>{answers.length === 1 ? `${answers.length} Answer` : `${answers.length} Answers`}</h5>
                             { answers.map(answer => (
                                 <React.Fragment key={answer.id}>
                                     <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>

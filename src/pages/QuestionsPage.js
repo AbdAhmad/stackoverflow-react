@@ -98,7 +98,9 @@ const QuestionsPage = () => {
                 </ul>
             </nav>
             <Card>
-        
+
+                {/* Questions List */}
+
                 { questions.map(question => (
                 
                     <Row style={{marginTop: "1%"}} key={question.id}>
@@ -113,6 +115,8 @@ const QuestionsPage = () => {
                             <div style={{display: "flex"}}>
                                 <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                             </div>
+                            
+                            {/* Question Tags */}
                             
                             { question.tags.split(/\s+/).map((tag, index) => (
 

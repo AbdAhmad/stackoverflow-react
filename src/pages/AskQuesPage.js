@@ -82,6 +82,9 @@ const AskQuesPage = () => {
         <React.Fragment>
             <h3 style={{display: "flex", marginLeft: "5%"}}>Ask a public question</h3>
             <Card style={{width: "90%", marginLeft: "5%", display: "flex", marginTop: "20px"}}>
+
+            {/* Ask Question Form */}
+
                 <Form onSubmit={handleSubmit}>
                     <Card.Body>
 
@@ -115,7 +118,7 @@ const AskQuesPage = () => {
                             <Form.Control type="text" value={tags} name="tags" onChange={e => setTags(e.target.value)} placeholder="e.g.  python  javacript  django" />
                         </Form.Group>
 
-                        {/* Button */}
+                        {/* Submit Button */}
 
                         <div className="d-grid gap-2">
                             <Button variant="outline-primary" type='submit' size="lg">Post Your Question</Button>

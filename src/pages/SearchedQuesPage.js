@@ -1,18 +1,47 @@
 import React, { useState, useEffect, useContext } from 'react'
+
 import { Button, Card, Row, Col, Container } from 'react-bootstrap'
+
 import {
     Link, 
     useParams
 } from "react-router-dom";
+
 import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo';
 import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
 
+
 const SearchedQuesPage = () => {
 
     const {authTokens} = useContext(AuthContext)
-
     const {search} = useParams()
+
+
+    useEffect(() => {
+        getSearchedQues()
+    }, [])
+
+ 
+    const [searchedQuestions, setSearchedQuestions] = useState([])
+
+
+    const getSearchedQues = async () => {
+        const response = await fetch(`http://127.0.0.1:8000/searched_ques/${search}`,{
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens?.access}`
+            },
+        })
+        if(response.status === 200){
+            const data = await response.json()
+            setSearchedQuestions(data)
+        }
+        else{
+            setSearchedQuestions(null)
+        }
+    }
+
 
     const myStyle = {
         display: "flex", 
@@ -33,37 +62,14 @@ const SearchedQuesPage = () => {
     }
 
 
-    useEffect(() => {
-        getSearchedQues()
-    }, [])
-
- 
-    const [searchedQuestions, setSearchedQuestions] = useState([])
-
-
-    const getSearchedQues = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/searched_ques/${search}`,{
-            headers:{
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        if(response.status === 200){
-            const data = await response.json()
-            const questions = await data['questions']
-            setSearchedQuestions(questions)
-        
-        }
-        else{
-            setSearchedQuestions(null)
-        }
-    }
     return (
         <Container >
             <div style={myStyle}>
                 <h3>Questions</h3>
                 <Link to="/ask"><Button variant="primary">Ask</Button></Link>
             </div>
+
+            {/* If Question(s) not found */}
 
             { !searchedQuestions ?
             
@@ -74,6 +80,8 @@ const SearchedQuesPage = () => {
             </React.Fragment>
             :
             <Card>
+
+            {/* If Question(s) found */}
       
             { searchedQuestions.map(question => (
                
@@ -89,6 +97,8 @@ const SearchedQuesPage = () => {
                         <div style={{display: "flex"}}>
                             <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                         </div>
+
+                        {/* Question Tags */}
 
                         {question.tags.split(/\s+/).map((tag, index) => (
 

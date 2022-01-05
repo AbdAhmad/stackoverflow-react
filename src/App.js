@@ -36,7 +36,11 @@ export default function App() {
 
               {/* Private Routes */}
 
-              <Route path="/questions" element={<PrivateRoute><QuestionsPage /></PrivateRoute>} />
+              <Route>
+                  {["/", "/questions"].map((path, index) => 
+                      <Route path={path} element={<PrivateRoute><QuestionsPage /></PrivateRoute>} key={index} />
+                  )}
+              </Route>
               <Route path='/questions/:search' element={<PrivateRoute><SearchedQuesPage /></PrivateRoute>} />
               <Route path="/ask" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
               <Route path="/update_question/:slug" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
