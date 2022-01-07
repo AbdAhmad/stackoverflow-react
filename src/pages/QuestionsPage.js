@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Button, Card, Row, Col, Container } from 'react-bootstrap'
+import { Button, Card, Row, Col, Container, Alert } from 'react-bootstrap'
 import CreatedInfo from '../components/CreatedInfo';
 import {
     Link
@@ -9,14 +9,15 @@ import AuthContext from '../context/AuthContext'
 
 const QuestionsPage = () => {
 
-    const {authTokens} = useContext(AuthContext)
+    const {authTokens, user, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     useEffect(() => {
         getQuestions()
     }, [])
  
-    let [questions, setQuestions] = useState([])
-    let [questionOrder, setQuestionOrder] = useState('')
+    const [questions, setQuestions] = useState([])
+    const [questionOrder, setQuestionOrder] = useState('')
+ 
 
     let getQuestions = async () => {
         let response = await fetch('http://127.0.0.1:8000/question/',{
@@ -31,7 +32,6 @@ const QuestionsPage = () => {
         setQuestions(questions)
         setQuestionOrder(viewBy)
     }
-
 
     // useEffect(getQuestions, [])
     
@@ -77,6 +77,13 @@ const QuestionsPage = () => {
     return (
        
         <Container >
+            { show ?
+
+            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+            : 
+            null
+            }
+        
             <div style={myStyle}>
                 <h3>Questions</h3>
                 <Link to="/ask"><Button variant="primary">Ask</Button></Link>
@@ -129,6 +136,7 @@ const QuestionsPage = () => {
                     </Row>
                 ))}
             </Card>
+            
         </Container>
     )
 }

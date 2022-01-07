@@ -23,6 +23,7 @@ import PageNotFound from './pages/PageNotFound';
 
 
 export default function App() {
+
   return (
       <div className="App">
         <BrowserRouter>
@@ -55,7 +56,7 @@ export default function App() {
           </AuthProvider>
         </BrowserRouter>
       </div>
-  );
-}
+    );
+  }
 
 // export default App;

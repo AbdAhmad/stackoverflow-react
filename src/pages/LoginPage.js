@@ -1,10 +1,11 @@
 import React, {useContext, useEffect} from 'react'
-import { Card, Form, Button } from 'react-bootstrap'
+import { Card, Form, Button, Alert } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
-    let {loginUser, user} = useContext(AuthContext)
+    
+    let {loginUser, user, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -12,11 +13,18 @@ const LoginPage = () => {
         if(user){
             navigate('/questions')
         }
-
     })
+
 
     return (
         <div>
+            { show ?
+
+            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+            : 
+            null
+            }
+      
             <Card style={{width: "90%", marginLeft: "5%"}}>
                 <Card.Body>
                     <Card.Title><h4>Log in</h4></Card.Title>
@@ -30,13 +38,13 @@ const LoginPage = () => {
                     {/* Username Field */}
 
                         <Form.Group className="mb-4">
-                            <Form.Control name="username" type="text" placeholder="Username" />
+                            <Form.Control name="username" type="text" placeholder="Username" required />
                         </Form.Group>
 
                     {/* Password Field */}
 
                         <Form.Group className="mb-4">
-                            <Form.Control name="password" type="password" placeholder="Password" />
+                            <Form.Control name="password" type="password" placeholder="Password" required />
                         </Form.Group>
 
                     {/* Login Button */}

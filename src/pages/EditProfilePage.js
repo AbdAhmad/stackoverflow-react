@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const EditProfilePage = () => {
 
-    const {user, authTokens} = useContext(AuthContext)
+    const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     
     const navigate = useNavigate()
 
@@ -27,7 +27,6 @@ const EditProfilePage = () => {
 
  
     const createProfile = async () => {
-        console.log('create')
         const response = await fetch('http://127.0.0.1:8000/profile/', {
             method: 'POST',
             headers:{
@@ -37,13 +36,17 @@ const EditProfilePage = () => {
             body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
         const data = await response.json();
-        console.log(data)
+        console.log(response)
+        if(response.status === 200){
+            setAlertType('success')
+            setAlertMsg('Profile updated')
+            handleVisibility()
+        }
         navigate(`/profile/${user['username']}`)
     }
 
 
     const updateProfile = async () => {
-        console.log('update')
         const response = await fetch(`http://127.0.0.1:8000/profile/${user['username']}/`, {
             method: 'PUT',
             headers:{
@@ -53,8 +56,11 @@ const EditProfilePage = () => {
             
             body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
-        const data = await response.json();
-        console.log(data)
+        if(response.status === 200){
+            setAlertType('success')
+            setAlertMsg('Profile updated')
+            handleVisibility()
+        }
         navigate(`/profile/${user['username']}`)
     }
 
@@ -70,7 +76,6 @@ const EditProfilePage = () => {
             setUpdate(true)
         }
         const data = await response.json();
-        console.log(data)
         setFullName(data['profile'].full_name)
         setEmail(data['profile'].email)
         setLocation(data['profile'].location)

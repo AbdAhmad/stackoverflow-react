@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState} from 'react'
-import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { Card, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
 const ProfilePage = () => {
 
-    const {user, authTokens} = useContext(AuthContext)
+    const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     const [isOwner, setIsOwner] = useState(false)
     const navigate = useNavigate()
 
@@ -53,33 +53,50 @@ const ProfilePage = () => {
     }, [])
 
 
-    const deleteQues = questionSlug => {
-        fetch(`http://127.0.0.1:8000/question/${questionSlug}`, {
+    const deleteQues = async questionSlug => {
+        const response = await fetch(`http://127.0.0.1:8000/question/${questionSlug}`, {
             method: 'DELETE',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
+        console.log(response)
+        if(response.status === 204){
+            setAlertType('success')
+            setAlertMsg('Question deleted')
+            handleVisibility()
+        }
         navigate(`/profile/${user['username']}`)
-
     }
 
 
-    const deleteAns = answerId => {
-        fetch(`http://127.0.0.1:8000/answer/${answerId}`, {
+    const deleteAns = async answerId => {
+        const response = await fetch(`http://127.0.0.1:8000/answer/${answerId}`, {
             method: 'DELETE',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
+        console.log(response)
+        if(response.status === 204){
+            setAlertType('success')
+            setAlertMsg('Answer deleted')
+            handleVisibility()
+        }
         navigate(`/profile/${user['username']}`)
     }
 
 
     return (
         <React.Fragment>
+            { show ?
+        
+                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                : 
+                null
+            }
             <Card style={{width: "90%", marginLeft: "5%"}}>
                 <Card.Body>
                     <Card.Title><h3><i>{fullName ? fullName: "This user has no Full Name"}</i></h3></Card.Title>
@@ -113,7 +130,7 @@ const ProfilePage = () => {
                         {/* Questions Column */}
 
                         <Col>
-                        <h5>{questions.length === 1 ? `${questions.length} Question` : `${questions.length} Questions`}</h5>
+                        <h5>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
                         
                         { questions.map(question => (
 
@@ -135,7 +152,7 @@ const ProfilePage = () => {
                         {/* Answers Column */}
 
                         <Col>
-                            <h5>{answers.length === 1 ? `${answers.length} Answer` : `${answers.length} Answers`}</h5>
+                            <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                             { answers.map(answer => (
                                 <React.Fragment key={answer.id}>
                                     <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>

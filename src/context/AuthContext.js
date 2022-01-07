@@ -11,6 +11,10 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     const [loading, setLoading] = useState(true)
 
+    const [show, setShow] = useState(false)
+    const [alertType, setAlertType] = useState('')
+    const[alertMsg, setAlertMsg] = useState('')
+
     const navigate = useNavigate()
 
     const loginUser = async (e) => {
@@ -28,32 +32,51 @@ export const AuthProvider = ({children}) => {
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
-            console.log('Logged In')
+            setAlertType('success')
+            setAlertMsg(`Welcome ${jwt_decode(data.access).username}`)
+            handleVisibility()
             navigate('/questions')
         }
         else{
-            alert('Something went wrong!')
+            setAlertType('danger')
+            setAlertMsg('Wrong credentials')
+            handleVisibility()
         }
     }
 
 
     const logoutUser = () => {
-        console.log('logged out')
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        
+        setAlertType('success')
+        setAlertMsg('You have been logged out')
+        handleVisibility()
         navigate('/login')
+    }
+
+    const handleVisibility = () => {
+        setShow(true)
+        setTimeout(() => {
+            setShow(false)
+        }, 3000);
     }
 
 
     const contextData = {
         user: user,
+        setUser: setUser,
         authTokens: authTokens,
         setAuthTokens: setAuthTokens,
-        setUser: setUser,
         loginUser: loginUser,
         logoutUser: logoutUser,
+        show: show,
+        setShow: setShow,
+        alertType: alertType,
+        setAlertType: setAlertType,
+        alertMsg: alertMsg,
+        setAlertMsg: setAlertMsg,
+        handleVisibility: handleVisibility
     }
     
 

@@ -6,7 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 const AskQuesPage = () => {
 
-    const {authTokens} = useContext(AuthContext)
+    const {authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -60,6 +60,10 @@ const AskQuesPage = () => {
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
         const data = await response.json();
+        console.log(data)
+        setAlertType('success')
+        setAlertMsg('Question posted')
+        handleVisibility()
         const questionSlug = data.slug
         navigate(`/question/${questionSlug}`)
     }
@@ -74,8 +78,13 @@ const AskQuesPage = () => {
             },
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
-        navigate(`/update_question/${questionSlug}`)
-        
+        console.log(response)
+        if(response.status === 200){
+            setAlertType('success')
+            setAlertMsg('Question updated')
+            handleVisibility()
+            navigate(`/question/${questionSlug}`)
+        }
     }
 
 

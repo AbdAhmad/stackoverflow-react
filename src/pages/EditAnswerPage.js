@@ -9,7 +9,7 @@ import CreatedInfo from '../components/CreatedInfo'
 
 const EditAnswerPage = () => {
 
-    const {authTokens} = useContext(AuthContext)
+    const {authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const {pk} = useParams()
 
@@ -41,6 +41,11 @@ const EditAnswerPage = () => {
             },
             body: JSON.stringify({'answer': answer})
         })
+        if(response.status === 200){
+            setAlertType('success')
+            setAlertMsg('Answer Updated')
+            handleVisibility()
+        }
         navigate(`/question/${question[0].slug}`)
     }
 
@@ -103,7 +108,7 @@ const EditAnswerPage = () => {
                 {/* Answer Field */}
 
                 <Form.Group style={{padding: "10px"}} className="mb-3">
-                    <Form.Control value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} />
+                    <Form.Control value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
                 </Form.Group>
 
                 {/* Update Answer Button */}
