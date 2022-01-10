@@ -1,11 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Card, Form, Button } from 'react-bootstrap'
+import { Card, Form, Button, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
+import '../App.css'
+import '../css/editProfilePage.css'
+
 const EditProfilePage = () => {
 
-    const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {user, authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     
     const navigate = useNavigate()
 
@@ -35,8 +38,6 @@ const EditProfilePage = () => {
             },
             body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
-        const data = await response.json();
-        console.log(response)
         if(response.status === 200){
             setAlertType('success')
             setAlertMsg('Profile updated')
@@ -68,7 +69,6 @@ const EditProfilePage = () => {
     const getProfile = async () => {
         const response = await fetch(`http://127.0.0.1:8000/profile/${user['username']}`, {
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },            
         })
@@ -85,12 +85,13 @@ const EditProfilePage = () => {
 
     useEffect(() => {
         getProfile()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
     return (
-        <React.Fragment>
-            <Card style={{width: "90%", marginLeft: "5%"}}>
+        <Container>
+            
                 <br/>
                 <Card.Title><h3>Complete Your Profile</h3></Card.Title>
                 <br/>
@@ -98,25 +99,25 @@ const EditProfilePage = () => {
 
                 {/* Full Name Field */}
 
-                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                    <Form.Group className="mb-3">
                         <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
                     </Form.Group>
 
                 {/* Email Field */}
 
-                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                    <Form.Group className="mb-3">
                         <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
                     </Form.Group>
 
                 {/* Location Field */}
 
-                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                    <Form.Group className="mb-3">
                         <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
                     </Form.Group>
 
                 {/* Bio Field */}
 
-                    <Form.Group style={{padding: "10px"}} className="mb-3">
+                    <Form.Group className="mb-3">
                         <Form.Control placeholder="About me" value={bio} onChange={e => setBio(e.target.value)} as="textarea" rows={4} />
                     </Form.Group>
 
@@ -126,8 +127,8 @@ const EditProfilePage = () => {
                         <Button variant="outline-primary" type='submit' size="lg">Save</Button>
                     </div>
                 </Form>
-            </Card>
-        </React.Fragment>
+            
+        </Container>
     )
 }
 

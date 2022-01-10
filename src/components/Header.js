@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import { Form } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
 const Header = () => {
@@ -9,11 +9,6 @@ const Header = () => {
 
     const [searchQues, setSearchQues] = useState('')
 
-    const navigate = useNavigate()
-
-    const profile = () => {
-        navigate(`/profile/${user['username']}`)
-    }
 
     return (
         <div  style={{marginBottom: "7.5%"}}>
@@ -72,7 +67,6 @@ const Header = () => {
                         </li>
                     </React.Fragment>
                 }
-
                 </ul>
             </div>
             </div>

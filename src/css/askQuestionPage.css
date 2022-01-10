@@ -1,0 +1,13 @@
+.askQuesH3 {
+    display: flex;
+    margin-left: 5%;
+}
+
+.askCard {
+    display: flex; 
+    margin-top: 20px;
+}
+
+.cardTitleText {
+    display: flex;
+}

@@ -1,0 +1,38 @@
+.p-2 {
+    display: flex;
+}
+
+.pt-1 {
+    width: 100%;
+    text-align: center;
+}
+
+.body {
+    white-space: pre-wrap; 
+    word-break: break-word;
+}
+
+.info-div {
+    float: right; 
+    padding-right: 2%;
+}
+
+.tag {
+    margin-left: 1px;
+}
+
+.btn-div {
+    display: inline-block;
+}
+
+.mb-3 {
+    padding: 10px;
+}
+
+.votes-first-div {
+    flex: 0.1; display: flex;
+}
+
+.btn-div {
+    display: "inline-block"
+}

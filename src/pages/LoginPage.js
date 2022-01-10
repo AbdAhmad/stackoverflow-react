@@ -1,23 +1,23 @@
-import React, {useContext, useEffect} from 'react'
-import { Card, Form, Button, Alert } from 'react-bootstrap'
+import React, {useContext} from 'react'
+import { Card, Form, Button, Alert, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
+import '../App.css'
+
 const LoginPage = () => {
     
-    let {loginUser, user, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    let {loginUser, user, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if(user){
-            navigate('/questions')
-        }
-    })
+    if(user){
+        navigate('/questions')
+    }
 
 
     return (
-        <div>
+        <Container>
             { show ?
 
             <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
@@ -25,7 +25,7 @@ const LoginPage = () => {
             null
             }
       
-            <Card style={{width: "90%", marginLeft: "5%"}}>
+            
                 <Card.Body>
                     <Card.Title><h4>Log in</h4></Card.Title>
                     <br/>
@@ -58,8 +58,8 @@ const LoginPage = () => {
                     </Card.Text>
                     Don't have an account? <Card.Link style={{textDecoration: "none"}} href="/">Sign up</Card.Link>
                 </Card.Body>
-            </Card>
-        </div>
+            
+        </Container>
     )
 }
 

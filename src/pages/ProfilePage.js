@@ -1,68 +1,79 @@
-import React, { useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState, useCallback} from 'react'
 import { Card, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
+
+import '../App.css'
+import '../css/profilePage.css'
+
 const ProfilePage = () => {
 
     const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
-    const [isOwner, setIsOwner] = useState(false)
+    const [isAuthorized, setIsAuthorized] = useState(false)
     const navigate = useNavigate()
 
-    let {username} = useParams()
+    const { username } = useParams()
+    console.log('outside authorized')
 
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [location, setLocation] = useState('')
     const [bio, setBio] = useState('')
+
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
 
-    const profileInfoStyle = {
-        fontSize: "20px", 
-        fontStyle: "italic"
-    }
 
-    const getProfile = async () => {
+    const getProfile = useCallback(async () => {
         const response = await fetch(`http://127.0.0.1:8000/profile/${username}`, {
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         if(response.status === 200){
             const data = await response.json();
-            setFullName(data['profile'].full_name)
-            setEmail(data['profile'].email)
-            setLocation(data['profile'].location)
-            setBio(data['profile'].bio)
-            setQuestions(data['questions'])
-            setAnswers(data['answers'])
+            const userInfo = data['profile']
+            const userQuestions = data['questions']
+            const userAnswers = data['answers']
+            console.log(userAnswers)
+            setFullName(userInfo.full_name)
+            setEmail(userInfo.email)
+            setLocation(userInfo.location)
+            setBio(userInfo.bio)
+            setQuestions(userQuestions)
+            setAnswers(userAnswers)
         }
-    }
+        else{
+            navigate('/page-not-found')
+        }
+    }, [username])
 
-    const owner = () => {
+
+    const authorized = useCallback(() => {
         if(username === user['username']){
-            setIsOwner(true)
+            console.log('inside authorized')
+            setIsAuthorized(true)
         }
-    }
+    }, [username])
+
 
     useEffect(() => {
         getProfile()
-        owner()
-    }, [])
+        authorized()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getProfile, authorized])
 
 
     const deleteQues = async questionSlug => {
         const response = await fetch(`http://127.0.0.1:8000/question/${questionSlug}`, {
             method: 'DELETE',
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        console.log(response)
         if(response.status === 204){
+            getProfile()
             setAlertType('success')
             setAlertMsg('Question deleted')
             handleVisibility()
@@ -75,12 +86,11 @@ const ProfilePage = () => {
         const response = await fetch(`http://127.0.0.1:8000/answer/${answerId}`, {
             method: 'DELETE',
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
-        console.log(response)
         if(response.status === 204){
+            getProfile()
             setAlertType('success')
             setAlertMsg('Answer deleted')
             handleVisibility()
@@ -90,28 +100,28 @@ const ProfilePage = () => {
 
 
     return (
-        <React.Fragment>
+        <Container>
             { show ?
         
                 <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
                 : 
                 null
             }
-            <Card style={{width: "90%", marginLeft: "5%"}}>
+            
                 <Card.Body>
-                    <Card.Title><h3><i>{fullName ? fullName: "This user has no Full Name"}</i></h3></Card.Title>
+                    <Card.Title><h3><i>{ fullName }</i></h3></Card.Title>
                     <br/>
                     <Card.Text >
-                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
-                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
-                        <p style={{display: "flex"}} className="card-text"><i style={profileInfoStyle} className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
+                        <p className="card-text"><i className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
+                        <p className="card-text"><i className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
+                        <p className="card-text"><i className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
                     </Card.Text>
                     <br/>
 
                     {/* Update Profile Button */}
 
-                    { isOwner ?
-                        <Link style={{textDecoration: "none"}} to='/edit_profile'>
+                    { isAuthorized ?
+                        <Link className='link' to='/edit_profile'>
                         <div className="d-grid gap-2">
                         <Button variant="outline-secondary" size="lg">
                             <i>Update Your Profile</i>
@@ -124,7 +134,7 @@ const ProfilePage = () => {
 
                 </Card.Body>
                 <br/>
-                <Container>
+            
                     <Row>
 
                         {/* Questions Column */}
@@ -135,13 +145,13 @@ const ProfilePage = () => {
                         { questions.map(question => (
 
                             <React.Fragment key={question.id}>
-                                <Link style={{textDecoration: "none"}} to={`/question/${question.slug}/`}>{question.title}</Link>
+                                <Link className='link' to={`/question/${question.slug}/`}>{question.title}</Link>
                                 
-                                { isOwner ? 
+                                { isAuthorized ? 
                                     <React.Fragment>
                                     <Link to={`/update_question/${question.slug}/`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
                                     <div onClick={() => deleteQues(question.slug)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
-                                    </React.Fragment>
+                                    </React.Fragment>   
                                     :
                                     null 
                                 }
@@ -155,9 +165,9 @@ const ProfilePage = () => {
                             <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                             { answers.map(answer => (
                                 <React.Fragment key={answer.id}>
-                                    <Link style={{textDecoration: "none"}} to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
+                                    <Link className='link' to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
                                     {
-                                        isOwner ? 
+                                        isAuthorized ? 
                                         <React.Fragment>
                                         <Link to={`/edit_answer/${answer.id}`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
                                         <div onClick={() => deleteAns(answer.id)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
@@ -170,9 +180,9 @@ const ProfilePage = () => {
                             ))}
                         </Col>
                     </Row>
-                </Container>
-            </Card>
-        </React.Fragment>
+                
+            
+        </Container>
     )
 }
 

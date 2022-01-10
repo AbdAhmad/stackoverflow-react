@@ -6,29 +6,48 @@ import { useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo'
 
+import '../App.css'
+import '../css/editAnswerPage.css'
+
 
 const EditAnswerPage = () => {
 
-    const {authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const {pk} = useParams()
 
     const navigate = useNavigate()
 
+    const [quesTitle, setQuesTitle] = useState('')
+    const [quesBody, setQuesBody] = useState('')
+    const [quesTags, setQuesTags] = useState('')
+    const [quesUser,setQuesUser] = useState('')
+    const [quesSlug, setQuesSlug] = useState('')
+    const [quesCreatedAt, setQuesCreatedAt] = useState('')
+    const [quesViews, setQuesViews] = useState(0)
+    const [quesVotes, setQuesVotes] = useState(0)
+
     const [answer, setAnswer] = useState('')
-    const [question, setQuestion] = useState([])
 
     const getAnswer = async () => {
         const response = await fetch(`http://127.0.0.1:8000/answer/${pk}`, {
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         const data = await response.json()
-        console.log(data['answer'].answer)
+        const quesData = data['question']
+        setQuesTitle(quesData.title)
+        setQuesBody(quesData.body)
+        setQuesTags(quesData.tags)
+        setQuesUser(quesData.user)
+        setQuesSlug(quesData.slug)
+        setQuesCreatedAt(quesData.created_at)
+        setQuesViews(quesData.views)
+        setQuesVotes(quesData.votes)
+
         setAnswer(data['answer'].answer)
-        setQuestion([data['question']])
+        
     }
 
     const updateAnswer = async (e) => {
@@ -46,11 +65,12 @@ const EditAnswerPage = () => {
             setAlertMsg('Answer Updated')
             handleVisibility()
         }
-        navigate(`/question/${question[0].slug}`)
+        navigate(`/question/${quesSlug}`)
     }
 
     useEffect(() => {
         getAnswer()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -58,48 +78,46 @@ const EditAnswerPage = () => {
 
             {/* Question */}
 
-            { question.map((ques) => (
-
             <React.Fragment>
-            <h2 style={{display: "flex"}}>{ques.title}</h2>
-            <p style={{display: "flex"}} class="p-2">Viewed {ques.views} times</p>
-            <hr/>
-            <Row>
-                <Col xs={2}>
-                    <div style={{flex: "0.1", display: "flex"}}>
-                        <div>
-                            <UpVoteTri />
-                            <div style={{width: "100%", textAlign: "center"}} className="pt-1 pb-1">{ques.views}</div>
-                            <DownVoteTri />
+                <h2 className='h2-p'>{quesTitle}</h2>
+                <p className="h2-p">Viewed {quesViews} times</p>
+                <hr/>
+                <Row>
+                    <Col xs={2}>
+                        <div className='h2-p' style={{flex: "0.1"}}>
+                            <div>
+                                <UpVoteTri />
+                                <div className="votes">{quesVotes}</div>
+                                <DownVoteTri />
+                            </div>
                         </div>
-                    </div>
-                </Col>
-                <Col xs={10}>
-                    <p>{ques.body}</p>
-                </Col>
-            </Row>
-            <Row>
+                    </Col>
+                    <Col xs={10}>
+                        <span>{quesBody}</span>
+                    </Col>
+                </Row>
+                <Row>
 
-                {/* Question tags */}
+                    {/* Question tags */}
 
-                <Col>
-                {ques.tags.split(/\s+/).map((tag) => (
+                    <Col>
+                    {quesTags.split(/\s+/).map((tag) => (
 
-                    <div style={{display: "inline-block"}}>
-                        <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
-                    </div> 
-                    ))
-                }
-                </Col>
-                <Col>
-                    <div style={{float: "right", paddingRight: "2%"}}>
-                        <CreatedInfo user={ques.user} time={ques.created_at}/>
-                    </div>
-                </Col>
-            </Row>
-            <hr/>
+                        <div style={{display: "inline-block"}}>
+                            <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
+                        </div> 
+                        ))
+                    }
+                    </Col>
+                    <Col>
+                        <div className='createdComponent'>
+                            <CreatedInfo user={quesUser} time={quesCreatedAt}/>
+                        </div>
+                    </Col>
+                </Row>
+                <hr/>
             </React.Fragment>
-            ))}
+        
 
             {/* Answer Form */}
   
@@ -107,7 +125,7 @@ const EditAnswerPage = () => {
 
                 {/* Answer Field */}
 
-                <Form.Group style={{padding: "10px"}} className="mb-3">
+                <Form.Group className="mb-3">
                     <Form.Control value={answer} onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
                 </Form.Group>
 

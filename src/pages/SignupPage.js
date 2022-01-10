@@ -1,7 +1,9 @@
-import {React, useState, useContext, useEffect} from 'react'
-import { Form, Button, Card, Alert } from 'react-bootstrap'
+import {React, useState, useContext} from 'react'
+import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+
+import '../App.css'
 
 const SignupPage = () => {
 
@@ -17,18 +19,10 @@ const SignupPage = () => {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if(user){
-            navigate('/questions')
-        }
-
-    })
-
-
-    const handleSubmit = e => {
-        e.preventDefault()
-        signUp() 
+    if(user){
+        navigate('/questions')
     }
+
 
     const handleVisibility = () => {
         setShow(true)
@@ -37,17 +31,18 @@ const SignupPage = () => {
         }, 3000);
     }
 
-    const signUp = async () => {
+    const signUp = async (e) => {
+        e.preventDefault()
         const response = await fetch('http://localhost:8000/register/',{
             method: "POST",
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                confirmPassword: confirmPassword
-            }),
             headers: {
                 "Content-type": "application/json"
-            }
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password,
+                "confirmPassword": confirmPassword
+            }),
         })
         const data = await response.json()
         if(response.status === 400){
@@ -65,19 +60,18 @@ const SignupPage = () => {
     }
 
     return (
-        <div>
+        <Container>
             { show ?
 
                 <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
                 : 
                 null
             }
-            <Card style={{width: "90%", marginLeft: "5%"}}>
                 <Card.Body>
                     <Card.Title><h4>Sign up</h4></Card.Title>
                     <br/>
                     <Card.Text>
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={signUp}>
                             <Form.Group className="mb-4">
                                 <Form.Control onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" required />
                             </Form.Group>
@@ -94,8 +88,7 @@ const SignupPage = () => {
                     </Card.Text>
                     Already have an account? <Card.Link style={{textDecoration: "none"}} href="login">Log in</Card.Link>
                 </Card.Body>
-            </Card>
-        </div>
+        </Container>
     )
 }
 

@@ -1,0 +1,17 @@
+.h2-p {
+    display: flex;
+}
+
+.votes {
+    width: 100%;
+    text-align: center;
+}
+
+.createdComponent {
+    float: right; 
+    padding-right: 2%;
+}
+
+.mb-3 {
+    padding: 10px;
+}

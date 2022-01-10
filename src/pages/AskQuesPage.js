@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Button, Form } from 'react-bootstrap'
+import { Card, Button, Form, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
 import { useParams, useNavigate } from 'react-router-dom'
+
+import '../App.css'
+import '../css/askQuestionPage.css'
 
 
 const AskQuesPage = () => {
@@ -21,13 +24,13 @@ const AskQuesPage = () => {
         if(slug){
             getQuestion()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
     const getQuestion = async () => {
         const response = await fetch(`http://127.0.0.1:8000/question/${slug}`, {
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
@@ -78,7 +81,6 @@ const AskQuesPage = () => {
             },
             body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
         })
-        console.log(response)
         if(response.status === 200){
             setAlertType('success')
             setAlertMsg('Question updated')
@@ -88,14 +90,10 @@ const AskQuesPage = () => {
     }
 
 
-    const myStyle = {
-        display: "flex"
-    }
-
     return (
-        <React.Fragment>
-            <h3 style={{display: "flex", marginLeft: "5%"}}>Ask a public question</h3>
-            <Card style={{width: "90%", marginLeft: "5%", display: "flex", marginTop: "20px"}}>
+        <Container>
+            <h3>Ask a public question</h3>
+            
 
             {/* Ask Question Form */}
 
@@ -104,32 +102,32 @@ const AskQuesPage = () => {
 
                         {/* Title Field */}
 
-                        <Card.Title style={myStyle}>Title</Card.Title>
-                        <Card.Text style={myStyle}>
+                        <Card.Title className='cardTitleText'>Title</Card.Title>
+                        <Card.Text className='cardTitleText'>
                             Be specific and imagine you’re asking a question to another person.
                         </Card.Text>
                         <Form.Group className="mb-4">
-                            <Form.Control type="text" value={title} name="title" onChange={e => setTitle(e.target.value)}  placeholder="e.g. is there an R function for finding the index of an element in a vector?" />
+                            <Form.Control type="text" value={title} name="title" onChange={e => setTitle(e.target.value)}  placeholder="e.g. is there an R function for finding the index of an element in a vector?" required />
                         </Form.Group>
 
                         {/* Body Field */}
 
-                        <Card.Title style={myStyle}>Body</Card.Title>
-                        <Card.Text style={myStyle}>
+                        <Card.Title className='cardTitleText'>Body</Card.Title>
+                        <Card.Text className='cardTitleText'>
                             Include all the information someone would need to answer your question.
                         </Card.Text>
                         <Form.Group className="mb-4">
-                            <Form.Control name="body" value={body} onChange={e => setBody(e.target.value)} as="textarea" rows={5} />
+                            <Form.Control name="body" value={body} onChange={e => setBody(e.target.value)} as="textarea" rows={5} required />
                         </Form.Group>
 
                         {/* Tags Field */}
 
-                        <Card.Title style={myStyle}>Tags</Card.Title>
-                        <Card.Text style={myStyle}>
+                        <Card.Title className='cardTitleText'>Tags</Card.Title>
+                        <Card.Text className='cardTitleText'>
                             Add up to 5 tags to describe what your question is about
                         </Card.Text>
                         <Form.Group className="mb-4">
-                            <Form.Control type="text" value={tags} name="tags" onChange={e => setTags(e.target.value)} placeholder="e.g.  python  javacript  django" />
+                            <Form.Control type="text" value={tags} name="tags" onChange={e => setTags(e.target.value)} placeholder="e.g.  python  javacript  django" required/>
                         </Form.Group>
 
                         {/* Submit Button */}
@@ -139,8 +137,8 @@ const AskQuesPage = () => {
                         </div>
                     </Card.Body>
                 </Form>
-            </Card>
-        </React.Fragment>
+            
+        </Container>
     )
 }
 

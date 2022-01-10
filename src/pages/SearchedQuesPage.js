@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { Button, Card, Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 
 import {
     Link, 
@@ -11,6 +11,9 @@ import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo';
 import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
 
+import '../App.css'
+import '../css/questionsPage.css'
+
 
 const SearchedQuesPage = () => {
 
@@ -20,6 +23,7 @@ const SearchedQuesPage = () => {
 
     useEffect(() => {
         getSearchedQues()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
  
@@ -29,7 +33,6 @@ const SearchedQuesPage = () => {
     const getSearchedQues = async () => {
         const response = await fetch(`http://127.0.0.1:8000/searched_ques/${search}`,{
             headers:{
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authTokens?.access}`
             },
         })
@@ -43,38 +46,17 @@ const SearchedQuesPage = () => {
     }
 
 
-    const myStyle = {
-        display: "flex", 
-        justifyContent: "space-between",
-        marginTop: "4%"
-    }
-
-    const VAVStyle = {
-        flex: "0.3"
-    }
-
-    const VAVDivStyle = {
-        height: "120px", 
-        display: "flex", 
-        flexDirection: "row", 
-        justifyContent: "center", 
-        alignItems: "center"
-    }
-
 
     return (
-        <Container >
-            <div style={myStyle}>
-                <h3>Questions</h3>
-                <Link to="/ask"><Button variant="primary">Ask</Button></Link>
-            </div>
+        <Container>
+            <br/>
 
             {/* If Question(s) not found */}
 
             { !searchedQuestions ?
             
             <React.Fragment>
-                <MagnifyingGlass />
+                <div><MagnifyingGlass /></div>
                 <br/>
                 <br/>
                 <h4>We couldn't find anything for <strong>{search}</strong></h4>
@@ -82,7 +64,7 @@ const SearchedQuesPage = () => {
                 <h5>Browse our <Link style={{textDecoration: "none"}} to="/questions">questions</Link></h5>
             </React.Fragment>
             :
-            <Card>
+            <>
 
             {/* If Question(s) found */}
       
@@ -90,10 +72,10 @@ const SearchedQuesPage = () => {
                
                 <Row style={{marginTop: "1%"}} key={question.id}>
                     <Col>
-                        <div style={VAVDivStyle} className="text-center">
-                            <div style={VAVStyle}>{question.votes}<br/>Votes</div>
-                            <div style={VAVStyle}>{question.ans_count}<br/>Answers</div>
-                            <div style={VAVStyle}>{question.views}<br/>Views</div> 
+                        <div className="text-center VAVDivStyle">
+                            <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                            <div style={{color: question.ans_count > 0 ? "green": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
+                            <div style={{flex: "0.3"}}>{question.views}<br/>Views</div> 
                         </div>
                     </Col>
                     <Col md={8}>
@@ -105,19 +87,19 @@ const SearchedQuesPage = () => {
 
                         {question.tags.split(/\s+/).map((tag, index) => (
 
-                        <div style={{display: "inline-block"}} key={index}>
-                            <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
+                        <div className='quesTag' key={index}>
+                            <button className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
                         </div> 
                             ))
                         }
-                        <div style={{float: "right", paddingRight: "2%"}}>
+                        <div className='info-div'>
                             <CreatedInfo user={question.user} time={question.created_at} />
                         </div>
                     </Col>
                     <hr/>
                 </Row>
                 ))}
-            </Card>
+            </>
         }
         </Container>
     )
