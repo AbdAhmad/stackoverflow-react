@@ -14,7 +14,6 @@ const ProfilePage = () => {
     const navigate = useNavigate()
 
     const { username } = useParams()
-    console.log('outside authorized')
 
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
@@ -36,7 +35,6 @@ const ProfilePage = () => {
             const userInfo = data['profile']
             const userQuestions = data['questions']
             const userAnswers = data['answers']
-            console.log(userAnswers)
             setFullName(userInfo.full_name)
             setEmail(userInfo.email)
             setLocation(userInfo.location)
@@ -52,7 +50,6 @@ const ProfilePage = () => {
 
     const authorized = useCallback(() => {
         if(username === user['username']){
-            console.log('inside authorized')
             setIsAuthorized(true)
         }
     }, [username])
@@ -165,7 +162,7 @@ const ProfilePage = () => {
                             <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                             { answers.map(answer => (
                                 <React.Fragment key={answer.id}>
-                                    <Link className='link' to={`/answer/${answer.question_to_ans}/`}>{answer.answer}</Link>
+                                    <Link className='link' to={`/question/${answer.question_slug}/`}>{answer.answer}</Link>
                                     {
                                         isAuthorized ? 
                                         <React.Fragment>

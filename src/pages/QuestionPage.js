@@ -69,7 +69,6 @@ const QuestionPage = () => {
             },
             body: JSON.stringify({'answer': answer})
         })
-        console.log(response)
         if(response.status === 201){
             getQuestion()
             setAlertType('success')
