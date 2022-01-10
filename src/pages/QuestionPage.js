@@ -57,10 +57,14 @@ const QuestionPage = () => {
         }
     }
 
+    const clearAnswerTextField = () => document.getElementById('answer-field').value = '' 
+
 
     const answerSubmit = async (e) => {
-        e.preventDefault()
-        setAnswer('')
+        e.preventDefault()   
+
+        clearAnswerTextField()
+
         const response = await fetch(`http://127.0.0.1:8000/answer_create/${quesId}/`,{
             method: 'POST',
             headers:{
@@ -122,6 +126,7 @@ const QuestionPage = () => {
 
 
     const upVoteAns= async (ansId) => {
+        document.getElementsByClassName('answer-field').textContent = ''
         const response = await fetch(`http://127.0.0.1:8000/upvote_ans/${ansId}/`,{
             method: 'POST',
             headers:{
@@ -261,7 +266,7 @@ const QuestionPage = () => {
 
             <Form onSubmit={answerSubmit}>
                 <Form.Group className="mb-3">
-                    <Form.Control onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
+                    <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} enteredDate="" required />
                 </Form.Group>
                 <div className="d-grid gap-2">
                     <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
