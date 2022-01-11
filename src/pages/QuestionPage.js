@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { Row, Col, Button, Form, Alert, Container } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
@@ -167,6 +167,9 @@ const QuestionPage = () => {
     }
 
 
+
+
+
     useEffect(() => {
         getQuestion()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,51 +188,46 @@ const QuestionPage = () => {
             null
         }
 
-           
-
-                <h2>{quesTitle}</h2>
-                <p className="p-2">Viewed {quesViews} times</p>
-                <hr/>
-                <Row>
-                    <Col xs={2}>
-                        <div className='votes-first-div'>
-                            <div>
-                                <div onClick={upVoteQues}><UpVoteTri/></div>
-                                <div className="pt-1 pb-1">{quesVotes}</div>
-                                <div onClick={downVoteQues}><DownVoteTri/></div>
-                            </div>
+            <h2>{quesTitle}</h2>
+            <p className="p-2">Viewed {quesViews} times</p>
+            <hr/>
+            <Row>
+                <Col xs={2}>
+                    <div className='votes-first-div'>
+                        <div>
+                            <div onClick={upVoteQues}><UpVoteTri/></div>
+                            <div className="pt-1 pb-1">{quesVotes}</div>
+                            <div onClick={downVoteQues}><DownVoteTri/></div>
                         </div>
-                    </Col>
-                    <Col xs={10}>
+                    </div>
+                </Col>
+                <Col xs={10}>
 
-                    {/* Question body */}
+                {/* Question body */}
 
-                    <div className='body'>{quesBody}</div>
+                <div className='body'>{quesBody}</div>
+                </Col>
+            </Row>
+            <Row>
 
-                    </Col>
-                </Row>
-                <Row>
+            {/* Question tags */}
 
-                {/* Question tags */}
+                <Col>
 
-                    <Col>
+                    {quesTags.split(/\s+/).map((tag, index) => (
 
-                        {quesTags.split(/\s+/).map((tag, index) => (
-
-                            <div className='btn-div' key={index}>
-                                <button className="btn-block btn btn-outline-primary btn-sm tag">{tag}</button>
-                            </div> 
-                            ))
-                        }
-                    </Col>
-                    <Col>
-                        <div className='info-div'>
-                            <CreatedInfo user={quesUser} time={quesCreatedAt}/>
-                        </div>
-                    </Col>
-                </Row>
-            
-            
+                        <div className='btn-div' key={index}>
+                            <button className="btn-block btn btn-outline-primary btn-sm tag">{tag}</button>
+                        </div> 
+                        ))
+                    }
+                </Col>
+                <Col>
+                    <div className='info-div'>
+                        <CreatedInfo user={quesUser} time={quesCreatedAt}/>
+                    </div>
+                </Col>
+            </Row>
             <hr/>
 
         {/* Answers */}
@@ -266,7 +264,7 @@ const QuestionPage = () => {
 
             <Form onSubmit={answerSubmit}>
                 <Form.Group className="mb-3">
-                    <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} enteredDate="" required />
+                    <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
                 </Form.Group>
                 <div className="d-grid gap-2">
                     <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>

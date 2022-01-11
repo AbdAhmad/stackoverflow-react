@@ -12,7 +12,7 @@ import '../css/questionsPage.css'
 
 const QuestionsPage = () => {
 
-    const {authTokens, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const {authTokens, nFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
     const [questions, setQuestions] = useState([])
     const [questionOrder, setQuestionOrder] = useState('')
@@ -79,43 +79,38 @@ const QuestionsPage = () => {
 
             <br/>
 
-         
-
                 {/* Questions List */}
 
                 { questions.map(question => (
                 
-                    <Row style={{marginTop: "1%"}} key={question.id}>
-                        <Col>
-                            <div className="text-center VAVDivStyle">
-                                <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
-                                <div style={{color: question.ans_count > 0 ? "green": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
-                                <div style={{flex: "0.3"}}>{question.views}<br/>Views</div> 
-                            </div>
-                        </Col>
-                        <Col md={8}>
-                            <div style={{display: "flex"}}>
-                                <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
-                            </div>
-                            
-                            {/* Question Tags */}
-                            
-                            { question.tags.split(/\s+/).map((tag, index) => (
+                <Row style={{marginTop: "1%"}} key={question.id}>
+                    <Col>
+                        <div className="text-center VAVDivStyle">
+                            <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                            <div style={{color: question.ans_count > 0 ? "#CC6600": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
+                            <div style={{color: question.views > 999 ? "#4C0099": "black", flex: "0.3"}}>{nFormatter(question.views)}<br/>Views</div> 
+                        </div>
+                    </Col>
+                    <Col md={8}>
+                        <div>
+                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                        </div>
+                        
+                        {/* Question Tags */}
 
-                                <div className='quesTag' key={index}>
-                                    <button className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
-                                </div> 
-                                ))
-                            }
-                            <div className='info-div'>
-                                <CreatedInfo user={question.user} time={question.created_at} />
-                            </div>
-                        </Col>
-                        <hr/>
-                    </Row>
-                ))}
-      
-            
+                        <div>
+                        { question.tags.split(/\s+/).map(tag => (
+                                <button className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
+                            ))
+                        }
+                        </div> 
+                        <div className='info-div'>
+                            <CreatedInfo user={question.user} time={question.created_at} />
+                        </div>
+                    </Col>
+                    <hr/>
+                </Row>
+            ))}
         </Container>
     )
 }

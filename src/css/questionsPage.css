@@ -22,11 +22,10 @@
     padding-right: 2%
   }
   
-  .quesTag {
-    display: inline-block;
+  .tagDiv {
+    margin-left: -10px;
   }
   
   .tagButton {
     margin-left: 1px;
   }
-
