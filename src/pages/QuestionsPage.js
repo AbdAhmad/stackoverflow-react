@@ -5,6 +5,7 @@ import {
     Link
 } from "react-router-dom";
 import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
 
 import '../App.css'
 import '../css/questionsPage.css'
@@ -14,18 +15,19 @@ const QuestionsPage = () => {
 
     const {authTokens, nFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
+
+
     const [questions, setQuestions] = useState([])
     const [questionOrder, setQuestionOrder] = useState('')
  
     const getQuestions = async () => {
-        const response = await fetch('http://127.0.0.1:8000/question/',{
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        const data = await response.json()
-        const questions = await data['questions']
-        const viewBy = await data['question_order']
+        const response = await api.get(`${baseUrl}/question/`)
+        const data = response['data']
+        const questions = data['questions']
+        const viewBy = data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
     }
@@ -37,12 +39,8 @@ const QuestionsPage = () => {
 
     
     const latestQuestions = async () => {
-        const response = await fetch('http://127.0.0.1:8000/question?q=latest',{
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        const data = await response.json()
+        const response = await api.get(`${baseUrl}/question?q=latest`)
+        const data = await response['data']
         const questions = await data['questions']
         const viewBy = await data['question_order']
         setQuestions(questions)
@@ -99,8 +97,8 @@ const QuestionsPage = () => {
                         {/* Question Tags */}
 
                         <div>
-                        { question.tags.split(/\s+/).map(tag => (
-                                <button className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
+                        { question.tags.split(/\s+/).map((tag, index) => (
+                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
                             ))
                         }
                         </div> 

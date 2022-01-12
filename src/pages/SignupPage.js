@@ -7,15 +7,14 @@ import '../App.css'
 
 const SignupPage = () => {
 
-    const {user} = useContext(AuthContext)
+    const {user, loginUser, alertMsg, alertType, setAlertMsg, setAlertType, show, setShow, handleVisibility} = useContext(AuthContext)
+
+    const baseUrl = 'http://localhost:8000'
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const [show, setShow] = useState(false);
-    const [alertType, setAlertType] = useState('')
-    const [alertMsg, setAlertMsg] = useState('')
 
     const navigate = useNavigate()
 
@@ -24,16 +23,9 @@ const SignupPage = () => {
     }
 
 
-    const handleVisibility = () => {
-        setShow(true)
-        setTimeout(() => {
-            setShow(false)
-        }, 3000);
-    }
-
     const signUp = async (e) => {
         e.preventDefault()
-        const response = await fetch('http://localhost:8000/register/',{
+        const response = await fetch(`${baseUrl}/register/`,{
             method: "POST",
             headers: {
                 "Content-type": "application/json"
@@ -44,8 +36,8 @@ const SignupPage = () => {
                 "confirmPassword": confirmPassword
             }),
         })
-        const data = await response.json()
         if(response.status === 400){
+            const data = await response.json()
             setAlertType('danger')
             if (data['username']){
                 setAlertMsg(data['username'][0])
@@ -54,7 +46,7 @@ const SignupPage = () => {
             }
             handleVisibility()
         }else{
-            navigate('/login')
+            loginUser(e)
         }
         
     }
@@ -73,13 +65,13 @@ const SignupPage = () => {
                     <Card.Text>
                         <Form onSubmit={signUp}>
                             <Form.Group className="mb-4">
-                                <Form.Control onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" required />
+                                <Form.Control name='username' onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" required />
                             </Form.Group>
                             <Form.Group className="mb-4">
-                                <Form.Control onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" required />
+                                <Form.Control name='password' onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" required />
                             </Form.Group>
                             <Form.Group className="mb-4">
-                                <Form.Control onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" required />
+                                <Form.Control name='confirmPassword' onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" required />
                             </Form.Group>
                             <div className="d-grid gap-2">
                                 <Button variant="outline-primary" type="submit" size="lg">Sign up</Button>

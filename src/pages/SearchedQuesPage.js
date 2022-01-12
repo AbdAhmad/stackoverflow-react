@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
-
 import { Row, Col, Container } from 'react-bootstrap'
-
 import {
     Link, 
     useParams
 } from "react-router-dom";
 
 import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
 import CreatedInfo from '../components/CreatedInfo';
 import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
 
@@ -20,32 +19,24 @@ const SearchedQuesPage = () => {
     const {authTokens} = useContext(AuthContext)
     const {search} = useParams()
 
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
+ 
+    const [searchedQuestions, setSearchedQuestions] = useState([])
+
+    const getSearchedQues = async () => {
+        const response = await api.get(`${baseUrl}/searched_ques/${search}`)
+        if(response.status === 200){
+            const data = await response['data']
+            setSearchedQuestions(data)   
+        }
+    }
 
     useEffect(() => {
         getSearchedQues()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
- 
-    const [searchedQuestions, setSearchedQuestions] = useState([])
-
-
-    const getSearchedQues = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/searched_ques/${search}`,{
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        if(response.status === 200){
-            const data = await response.json()
-            setSearchedQuestions(data)
-        }
-        else{
-            setSearchedQuestions(null)
-        }
-    }
-
-
 
     return (
         <Container>
@@ -53,7 +44,7 @@ const SearchedQuesPage = () => {
 
             {/* If Question(s) not found */}
 
-            { !searchedQuestions ?
+            { searchedQuestions.length === 0 ?
             
             <React.Fragment>
                 <div><MagnifyingGlass /></div>
@@ -64,7 +55,7 @@ const SearchedQuesPage = () => {
                 <h5>Browse our <Link style={{textDecoration: "none"}} to="/questions">questions</Link></h5>
             </React.Fragment>
             :
-            <>
+            <React.Fragment>
 
             {/* If Question(s) found */}
       
@@ -99,7 +90,7 @@ const SearchedQuesPage = () => {
                     <hr/>
                 </Row>
                 ))}
-            </>
+            </React.Fragment>
         }
         </Container>
     )

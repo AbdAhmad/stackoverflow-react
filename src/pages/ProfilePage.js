@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, useCallback} from 'react'
 import { Card, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
 
 
 import '../App.css'
@@ -12,6 +13,10 @@ const ProfilePage = () => {
     const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     const [isAuthorized, setIsAuthorized] = useState(false)
     const navigate = useNavigate()
+
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
 
     const { username } = useParams()
 
@@ -25,13 +30,10 @@ const ProfilePage = () => {
 
 
     const getProfile = useCallback(async () => {
-        const response = await fetch(`http://127.0.0.1:8000/profile/${username}`, {
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
+        const response = await api.get(`${baseUrl}/profile/${username}/`)
+        console.log(response)
         if(response.status === 200){
-            const data = await response.json();
+            const data = await response['data']
             const userInfo = data['profile']
             const userQuestions = data['questions']
             const userAnswers = data['answers']
@@ -63,12 +65,7 @@ const ProfilePage = () => {
 
 
     const deleteQues = async questionSlug => {
-        const response = await fetch(`http://127.0.0.1:8000/question/${questionSlug}`, {
-            method: 'DELETE',
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
+        const response = await api.delete(`${baseUrl}/question/${questionSlug}`)
         if(response.status === 204){
             getProfile()
             setAlertType('success')
@@ -80,12 +77,7 @@ const ProfilePage = () => {
 
 
     const deleteAns = async answerId => {
-        const response = await fetch(`http://127.0.0.1:8000/answer/${answerId}`, {
-            method: 'DELETE',
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
+        const response = await api.delete(`${baseUrl}/answer/${answerId}`)
         if(response.status === 204){
             getProfile()
             setAlertType('success')

@@ -1,7 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Card, Form, Button, Container } from 'react-bootstrap'
-import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+
+import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
+
 
 import '../App.css'
 import '../css/editProfilePage.css'
@@ -11,6 +14,10 @@ const EditProfilePage = () => {
     const {user, authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     
     const navigate = useNavigate()
+
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
 
     const [update, setUpdate] = useState(false)
 
@@ -30,14 +37,13 @@ const EditProfilePage = () => {
 
  
     const createProfile = async () => {
-        const response = await fetch('http://127.0.0.1:8000/profile/', {
-            method: 'POST',
+        const formData = JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
+        const response = await api.post(`${baseUrl}/profile/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
-            body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
+
         if(response.status === 200){
             setAlertType('success')
             setAlertMsg('Profile updated')
@@ -48,15 +54,13 @@ const EditProfilePage = () => {
 
 
     const updateProfile = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/profile/${user['username']}/`, {
-            method: 'PUT',
+        const formData = JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
+        const response = await api.put(`${baseUrl}/profile/${user['username']}/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
-            
-            body:JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         })
+
         if(response.status === 200){
             setAlertType('success')
             setAlertMsg('Profile updated')
@@ -67,15 +71,11 @@ const EditProfilePage = () => {
 
 
     const getProfile = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/profile/${user['username']}`, {
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },            
-        })
+        const response = await api.get(`${baseUrl}/profile/${user['username']}/`)
         if(response.status === 200){
             setUpdate(true)
         }
-        const data = await response.json();
+        const data = await response['data']
         setFullName(data['profile'].full_name)
         setEmail(data['profile'].email)
         setLocation(data['profile'].location)
@@ -100,19 +100,19 @@ const EditProfilePage = () => {
                 {/* Full Name Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
+                        <Form.Control type="text" value={fullName} placeholder='Full Name' onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
                     </Form.Group>
 
                 {/* Email Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
+                        <Form.Control type="email" value={email} placeholder='Email' onChange={e => setEmail(e.target.value)} placeholder="Email" />
                     </Form.Group>
 
                 {/* Location Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
+                        <Form.Control type="text" value={location} placeholder='Location' onChange={e => setLocation(e.target.value)} placeholder="Location" />
                     </Form.Group>
 
                 {/* Bio Field */}

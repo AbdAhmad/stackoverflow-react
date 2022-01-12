@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card, Button, Form, Container } from 'react-bootstrap'
-import AuthContext from '../context/AuthContext'
 import { useParams, useNavigate } from 'react-router-dom'
+
+import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
 
 import '../App.css'
 import '../css/askQuestionPage.css'
@@ -10,6 +12,10 @@ import '../css/askQuestionPage.css'
 const AskQuesPage = () => {
 
     const {authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 
@@ -29,13 +35,9 @@ const AskQuesPage = () => {
 
 
     const getQuestion = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/question/${slug}`, {
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        const data = await response.json();
-        let questionData = data['question']
+        const response = await api.get(`${baseUrl}/question/${slug}/`)
+        const data = await response['data']
+        const questionData = data['question']
         setTitle(questionData.title)
         setBody(questionData.body)
         setTags(questionData.tags)
@@ -54,33 +56,33 @@ const AskQuesPage = () => {
 
 
     const createQuestion = async () => {
-        const response = await fetch('http://127.0.0.1:8000/question/', {
-            method: 'POST',
+        const formData = JSON.stringify({'title':title, 'body':body, 'tags':tags})
+        const response = await api.post(`${baseUrl}/question/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-            body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
+            }
         })
-        const data = await response.json();
-        console.log(data)
-        setAlertType('success')
-        setAlertMsg('Question posted')
-        handleVisibility()
-        const questionSlug = data.slug
-        navigate(`/question/${questionSlug}`)
+       
+        if(response.status === 201){
+            const data = await response['data']
+            const questionSlug = data.slug
+            setAlertType('success')
+            setAlertMsg('Question posted')
+            handleVisibility()
+            navigate(`/question/${questionSlug}`)
+        }
+
     }
 
 
     const updateQuestion = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/question/${slug}/`, {
-            method: 'PUT',
+        const formData = JSON.stringify({'title':title, 'body':body, 'tags':tags})
+        const response = await api.put(`${baseUrl}/question/${slug}/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-            body:JSON.stringify({'title':title, 'body':body, 'tags':tags})
+            }
         })
+
         if(response.status === 200){
             setAlertType('success')
             setAlertMsg('Question updated')

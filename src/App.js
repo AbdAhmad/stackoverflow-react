@@ -20,7 +20,7 @@ import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './utils/PrivateRoute'
 import QuestionsPage from './pages/QuestionsPage';
 import PageNotFound from './pages/PageNotFound';
-
+import Test from './pages/Test';
 
 export default function App() {
 
@@ -33,6 +33,7 @@ export default function App() {
 
               {/* Public Routes */}
 
+              <Route path='/test' element={<Test/>} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
 

@@ -15,6 +15,10 @@ const LoginPage = () => {
         navigate('/questions')
     }
 
+    const handleClick = (e) => {
+        loginUser(e)
+    }
+
 
     return (
         <Container>
@@ -33,7 +37,7 @@ const LoginPage = () => {
 
                     {/* Login Form */}
 
-                    <Form onSubmit={loginUser}>
+                    <Form onSubmit={handleClick}>
 
                     {/* Username Field */}
 

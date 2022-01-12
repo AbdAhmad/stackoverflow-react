@@ -5,6 +5,7 @@ import DownVoteTri from '../components/DownVoteTri'
 import { useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo'
+import useAxios from '../utils/useAxios'
 
 import '../App.css'
 import '../css/editAnswerPage.css'
@@ -12,9 +13,13 @@ import '../css/editAnswerPage.css'
 
 const EditAnswerPage = () => {
 
-    const {authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {authTokens, nFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const {pk} = useParams()
+
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 
@@ -30,12 +35,8 @@ const EditAnswerPage = () => {
     const [answer, setAnswer] = useState('')
 
     const getAnswer = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/answer/${pk}`, {
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
-        const data = await response.json()
+        const response = await api.get(`${baseUrl}/answer/${pk}`)
+        const data = await response['data']
         const quesData = data['question']
         setQuesTitle(quesData.title)
         setQuesBody(quesData.body)
@@ -52,13 +53,12 @@ const EditAnswerPage = () => {
 
     const updateAnswer = async (e) => {
         e.preventDefault()
-        const response = await fetch(`http://127.0.0.1:8000/answer/${pk}/`, {
-            method: 'PUT',
+        const formData = JSON.stringify({'answer': answer})
+        const response = await api.put(`${baseUrl}/answer/${pk}/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
-            body: JSON.stringify({'answer': answer})
+    
         })
         if(response.status === 200){
             setAlertType('success')
@@ -80,7 +80,7 @@ const EditAnswerPage = () => {
 
             <React.Fragment>
                 <h2 className='h2-p'>{quesTitle}</h2>
-                <p className="h2-p">Viewed {quesViews} times</p>
+                <p className="h2-p">Viewed {nFormatter(quesViews)} times</p>
                 <hr/>
                 <Row>
                     <Col xs={2}>

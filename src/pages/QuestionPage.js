@@ -5,13 +5,18 @@ import DownVoteTri from '../components/DownVoteTri'
 import CreatedInfo from '../components/CreatedInfo'
 import { useNavigate, useParams } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+import useAxios from '../utils/useAxios'
 
 import '../App.css'
 import '../css/questionPage.css'
 
 const QuestionPage = () => {
 
-    const {authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {authTokens, nFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+
+    const api = useAxios()
+
+    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 
@@ -32,13 +37,9 @@ const QuestionPage = () => {
 
 
     const getQuestion = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/question/${slug}`,{
-            headers:{
-                'Authorization': `Bearer ${authTokens?.access}`
-            },
-        })
+        const response = await api.get(`${baseUrl}/question/${slug}`)
         if(response.status === 200){
-            const data = await response.json()
+            const data = await response['data']
             const quesData = data['question']
             setQuesId(quesData.id)
             setQuesTitle(quesData.title)
@@ -60,18 +61,17 @@ const QuestionPage = () => {
     const clearAnswerTextField = () => document.getElementById('answer-field').value = '' 
 
 
-    const answerSubmit = async (e) => {
+    const answerCreate = async (e) => {
         e.preventDefault()   
 
         clearAnswerTextField()
 
-        const response = await fetch(`http://127.0.0.1:8000/answer_create/${quesId}/`,{
-            method: 'POST',
+        const formData = JSON.stringify({'answer': answer})
+
+        const response = await api.post(`${baseUrl}/answer_create/${quesId}/`, formData, {
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
-            body: JSON.stringify({'answer': answer})
         })
         if(response.status === 201){
             getQuestion()
@@ -84,11 +84,9 @@ const QuestionPage = () => {
 
 
     const upVoteQues = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/upvote_ques/${quesId}/`,{
-            method: 'POST',
+        const response = await api.post(`${baseUrl}/upvote_ques/${quesId}/`,{
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         if(response.status === 201){
@@ -105,11 +103,9 @@ const QuestionPage = () => {
 
 
     const downVoteQues = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/downvote_ques/${quesId}/`,{
-            method: 'POST',
+        const response = await api.post(`${baseUrl}/downvote_ques/${quesId}/`,{
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         if(response.status === 201){
@@ -126,12 +122,10 @@ const QuestionPage = () => {
 
 
     const upVoteAns= async (ansId) => {
-        document.getElementsByClassName('answer-field').textContent = ''
-        const response = await fetch(`http://127.0.0.1:8000/upvote_ans/${ansId}/`,{
+        const response = await api.post(`${baseUrl}/upvote_ans/${ansId}/`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         if(response.status === 201){
@@ -147,11 +141,9 @@ const QuestionPage = () => {
     }
 
     const downVoteAns = async (ansId) => {
-        const response = await fetch(`http://127.0.0.1:8000/downvote_ans/${ansId}/`,{
-            method: 'POST',
+        const response = await api.post(`${baseUrl}/downvote_ans/${ansId}/`,{
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authTokens?.access}`
             },
         })
         if(response.status === 201){
@@ -165,9 +157,6 @@ const QuestionPage = () => {
         }
         handleVisibility()
     }
-
-
-
 
 
     useEffect(() => {
@@ -189,7 +178,7 @@ const QuestionPage = () => {
         }
 
             <h2>{quesTitle}</h2>
-            <p className="p-2">Viewed {quesViews} times</p>
+            <p className="p-2">Viewed {nFormatter(quesViews)} times</p>
             <hr/>
             <Row>
                 <Col xs={2}>
@@ -262,7 +251,7 @@ const QuestionPage = () => {
 
             {/* Post Your Answer */}
 
-            <Form onSubmit={answerSubmit}>
+            <Form onSubmit={answerCreate}>
                 <Form.Group className="mb-3">
                     <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
                 </Form.Group>

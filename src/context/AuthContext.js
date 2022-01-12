@@ -59,14 +59,11 @@ export const AuthProvider = ({children}) => {
         setShow(true)
         setTimeout(() => {
             setShow(false)
-        }, 3000);
+        }, 2000);
     }
 
 
     function nFormatter(num) {
-        if (num >= 1000000000) {
-           return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
-        }
         if (num >= 1000000) {
            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
         }
