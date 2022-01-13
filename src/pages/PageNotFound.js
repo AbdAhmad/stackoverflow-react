@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as NotFound } from '../assets/NotFound.svg'
 
 const PageNotFound = () => {
+
+    document.title = 'Page not found'
+
     return (
         <Container>
             <div><NotFound /></div>

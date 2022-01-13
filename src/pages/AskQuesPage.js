@@ -26,6 +26,8 @@ const AskQuesPage = () => {
     const [tags, setTags] = useState('')
     const [questionSlug, setQuestionSlug] = useState('')
 
+    document.title = 'Ask a Question'
+
     useEffect(() => {
         if(slug){
             getQuestion()

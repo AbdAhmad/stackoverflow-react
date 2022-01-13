@@ -7,9 +7,11 @@ import '../App.css'
 
 const LoginPage = () => {
     
-    let {loginUser, user, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const {loginUser, user, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
     const navigate = useNavigate()
+
+    document.title = 'Log in'
 
     if(user){
         navigate('/questions')

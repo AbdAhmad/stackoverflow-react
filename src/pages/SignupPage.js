@@ -15,13 +15,13 @@ const SignupPage = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-
     const navigate = useNavigate()
 
     if(user){
         navigate('/questions')
     }
 
+    document.title = 'Sign up'
 
     const signUp = async (e) => {
         e.preventDefault()

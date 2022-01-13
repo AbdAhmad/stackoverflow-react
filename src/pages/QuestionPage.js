@@ -35,6 +35,7 @@ const QuestionPage = () => {
     const [answers, setAnswers] = useState([])
     const [answer, setAnswer] = useState('')
 
+    document.title = quesTitle
 
     const getQuestion = async () => {
         const response = await api.get(`${baseUrl}/question/${slug}`)

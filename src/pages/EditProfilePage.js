@@ -26,6 +26,8 @@ const EditProfilePage = () => {
     const [location, setLocation] = useState('')
     const [bio, setBio] = useState('')
 
+    document.title = 'Update Your Profile'
+
     const handleSubmit = e => {
         e.preventDefault()
         if(update){

@@ -34,6 +34,8 @@ const EditAnswerPage = () => {
 
     const [answer, setAnswer] = useState('')
 
+    document.title = quesTitle
+
     const getAnswer = async () => {
         const response = await api.get(`${baseUrl}/answer/${pk}`)
         const data = await response['data']

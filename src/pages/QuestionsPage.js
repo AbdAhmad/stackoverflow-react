@@ -19,9 +19,10 @@ const QuestionsPage = () => {
 
     const baseUrl = 'http://127.0.0.1:8000'
 
-
     const [questions, setQuestions] = useState([])
     const [questionOrder, setQuestionOrder] = useState('')
+
+    document.title = 'Stack Overflow - Where Developers Learn, Share, &amp; Build Careers'
  
     const getQuestions = async () => {
         const response = await api.get(`${baseUrl}/question/`)

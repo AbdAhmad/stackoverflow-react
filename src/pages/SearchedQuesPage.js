@@ -25,6 +25,8 @@ const SearchedQuesPage = () => {
  
     const [searchedQuestions, setSearchedQuestions] = useState([])
 
+    document.title = 'Stack Overflow - Where Developers Learn, Share, &amp; Build Careers'
+
     const getSearchedQues = async () => {
         const response = await api.get(`${baseUrl}/searched_ques/${search}`)
         if(response.status === 200){

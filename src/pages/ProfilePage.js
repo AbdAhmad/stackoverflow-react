@@ -28,6 +28,7 @@ const ProfilePage = () => {
     const [questions, setQuestions] = useState([])
     const [answers, setAnswers] = useState([])
 
+    document.title = 'Profile'
 
     const getProfile = useCallback(async () => {
         const response = await api.get(`${baseUrl}/profile/${username}/`)
