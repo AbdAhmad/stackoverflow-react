@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { Row, Col, Button, Form, Alert, Container } from 'react-bootstrap'
+import { Row, Col, Button, Form, Alert, Container, Card } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
 import CreatedInfo from '../components/CreatedInfo'
@@ -12,7 +12,7 @@ import '../css/questionPage.css'
 
 const QuestionPage = () => {
 
-    const {authTokens, nFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {numFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const api = useAxios()
 
@@ -167,7 +167,7 @@ const QuestionPage = () => {
 
 
     return (
-        <Container>
+        <div className='container'>
 
         {/* Question title */}
 
@@ -177,12 +177,11 @@ const QuestionPage = () => {
              : 
             null
         }
-
-            <h2>{quesTitle}</h2>
-            <p className="p-2">Viewed {nFormatter(quesViews)} times</p>
+            <h2 style={{padding: "0"}}>{quesTitle}</h2>
+            <p className="p-2">Viewed {numFormatter(quesViews)} times</p>
             <hr/>
             <Row>
-                <Col xs={2}>
+                <Col lg={2}>
                     <div className='votes-first-div'>
                         <div>
                             <div onClick={upVoteQues}><UpVoteTri/></div>
@@ -191,13 +190,11 @@ const QuestionPage = () => {
                         </div>
                     </div>
                 </Col>
-                <Col xs={10}>
-
-                {/* Question body */}
-
-                <div className='body'>{quesBody}</div>
+                <Col lg={10}>
+                    <div className='container' style={{whiteSpace: "preWrap", wordBreak: "breakWord", padding: "0"}}>{quesBody}</div>
                 </Col>
             </Row>
+            <br/>
             <Row>
 
             {/* Question tags */}
@@ -226,7 +223,7 @@ const QuestionPage = () => {
             { answers.map(ans => (
                 <React.Fragment key={ans.id}>
                     <Row>
-                        <Col xs={2}>
+                        <Col lg={2}>
                             <div className='votes-first-div'>
                                 <div>
                                     <div onClick={() => upVoteAns(ans.id)}><UpVoteTri /></div>
@@ -235,7 +232,7 @@ const QuestionPage = () => {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={10}>
+                        <Col lg={10}>
                         <div className='body'>{ans.answer}</div>
                         </Col>
                     </Row>
@@ -246,6 +243,7 @@ const QuestionPage = () => {
                             </div>
                         </Col>
                     </Row>
+                    <hr/>
                 </React.Fragment>
                 ))}
             <hr/>
@@ -260,7 +258,7 @@ const QuestionPage = () => {
                     <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
                 </div>
             </Form>
-        </Container>
+        </div>
 
     )
 }

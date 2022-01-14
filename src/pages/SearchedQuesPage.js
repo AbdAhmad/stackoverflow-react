@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 import {
     Link, 
     useParams
 } from "react-router-dom";
 
-import AuthContext from '../context/AuthContext'
 import useAxios from '../utils/useAxios'
 import CreatedInfo from '../components/CreatedInfo';
 import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
@@ -16,23 +15,25 @@ import '../css/questionsPage.css'
 
 const SearchedQuesPage = () => {
 
-    const {authTokens} = useContext(AuthContext)
-    const {search} = useParams()
+    const { search } = useParams()
 
     const api = useAxios()
 
     const baseUrl = 'http://127.0.0.1:8000'
  
     const [searchedQuestions, setSearchedQuestions] = useState([])
+    const [isQuestions, setIsQuestions] = useState(true)
 
     document.title = 'Stack Overflow - Where Developers Learn, Share, &amp; Build Careers'
 
     const getSearchedQues = async () => {
         const response = await api.get(`${baseUrl}/searched_ques/${search}`)
-        if(response.status === 200){
+        if(response['data'].status === 404){
+            setIsQuestions(false)
+        }else if(response.status === 200){
             const data = await response['data']
-            setSearchedQuestions(data)   
-        }
+            setSearchedQuestions(data)  
+        } 
     }
 
     useEffect(() => {
@@ -46,7 +47,7 @@ const SearchedQuesPage = () => {
 
             {/* If Question(s) not found */}
 
-            { searchedQuestions.length === 0 ?
+            { !isQuestions ?
             
             <React.Fragment>
                 <div><MagnifyingGlass /></div>

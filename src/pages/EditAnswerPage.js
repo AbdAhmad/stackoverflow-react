@@ -13,9 +13,9 @@ import '../css/editAnswerPage.css'
 
 const EditAnswerPage = () => {
 
-    const {authTokens, nFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {nFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
-    const {pk} = useParams()
+    const { pk } = useParams()
 
     const api = useAxios()
 

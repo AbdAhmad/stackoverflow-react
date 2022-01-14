@@ -36,6 +36,7 @@ const SignupPage = () => {
                 "confirmPassword": confirmPassword
             }),
         })
+
         if(response.status === 400){
             const data = await response.json()
             setAlertType('danger')
@@ -48,7 +49,11 @@ const SignupPage = () => {
         }else{
             loginUser(e)
         }
-        
+
+    }
+
+    const elementWidth = {
+        width: "355%"
     }
 
     return (
@@ -59,27 +64,29 @@ const SignupPage = () => {
                 : 
                 null
             }
+            <Card>
                 <Card.Body>
-                    <Card.Title><h4>Sign up</h4></Card.Title>
+                    <Card.Title className='title'><h4>Sign up</h4></Card.Title>
                     <br/>
                     <Card.Text>
                         <Form onSubmit={signUp}>
-                            <Form.Group className="mb-4">
+                            <Form.Group className="mb-4" style={elementWidth}>
                                 <Form.Control name='username' onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" required />
                             </Form.Group>
-                            <Form.Group className="mb-4">
+                            <Form.Group className="mb-4" style={elementWidth}>
                                 <Form.Control name='password' onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" required />
                             </Form.Group>
-                            <Form.Group className="mb-4">
+                            <Form.Group className="mb-4" style={elementWidth}>
                                 <Form.Control name='confirmPassword' onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" required />
                             </Form.Group>
-                            <div className="d-grid gap-2">
+                            <div className="d-grid gap-2" style={elementWidth}>
                                 <Button variant="outline-primary" type="submit" size="lg">Sign up</Button>
                             </div>
                         </Form>
                     </Card.Text>
                     Already have an account? <Card.Link style={{textDecoration: "none"}} href="login">Log in</Card.Link>
                 </Card.Body>
+            </Card>
         </Container>
     )
 }

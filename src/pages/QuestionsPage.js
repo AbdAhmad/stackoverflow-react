@@ -13,7 +13,7 @@ import '../css/questionsPage.css'
 
 const QuestionsPage = () => {
 
-    const {authTokens, nFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const {numFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
     const api = useAxios()
 
@@ -51,7 +51,7 @@ const QuestionsPage = () => {
     
     return (
        
-        <Container>
+        <React.Fragment>
             { show ?
 
             <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
@@ -59,11 +59,11 @@ const QuestionsPage = () => {
             null
             }
         
-            <div className="firstDiv">
+            <div className="first-div">
                 <h3>Questions</h3>
                 <Link to="/ask"><Button variant="primary">Ask</Button></Link>
             </div>
-            <nav className='navStyle'>
+            <nav className='nav-style'>
                 <ul className="pagination pagination-sm"> 
                     <React.Fragment>
                     <div onClick={latestQuestions}>
@@ -85,32 +85,37 @@ const QuestionsPage = () => {
                 <Row style={{marginTop: "1%"}} key={question.id}>
                     <Col>
                         <div className="text-center VAVDivStyle">
-                            <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
-                            <div style={{color: question.ans_count > 0 ? "#CC6600": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
-                            <div style={{color: question.views > 999 ? "#4C0099": "black", flex: "0.3"}}>{nFormatter(question.views)}<br/>Views</div> 
+                            <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                            <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
+                            <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{numFormatter(question.views)}<br/>Views</div> 
                         </div>
                     </Col>
                     <Col md={8}>
-                        <div>
-                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
-                        </div>
+
+                        <div className='box'>
+
+                            <h5 className='title'><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                         
                         {/* Question Tags */}
-
-                        <div>
+  
                         { question.tags.split(/\s+/).map((tag, index) => (
-                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
+                                <div className='tags-div'>
+                                    <button key={index} className="btn-block btn btn-outline-primary btn-sm tags">{tag}</button>
+                                </div>
                             ))
                         }
-                        </div> 
+
+                        </div>
+
                         <div className='info-div'>
                             <CreatedInfo user={question.user} time={question.created_at} />
                         </div>
+
                     </Col>
                     <hr/>
                 </Row>
             ))}
-        </Container>
+        </React.Fragment>
     )
 }
 

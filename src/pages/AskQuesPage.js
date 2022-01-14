@@ -11,7 +11,7 @@ import '../css/askQuestionPage.css'
 
 const AskQuesPage = () => {
 
-    const {authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const api = useAxios()
 
@@ -100,7 +100,7 @@ const AskQuesPage = () => {
             
 
             {/* Ask Question Form */}
-
+            <Card>
                 <Form onSubmit={handleSubmit}>
                     <Card.Body>
 
@@ -141,7 +141,7 @@ const AskQuesPage = () => {
                         </div>
                     </Card.Body>
                 </Form>
-            
+                </Card>
         </Container>
     )
 }

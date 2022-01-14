@@ -17,7 +17,7 @@ export const AuthProvider = ({children}) => {
 
     const navigate = useNavigate()
 
-    const loginUser = async (e) => {
+    const loginUser = async e => {
         e.preventDefault()
         const response = await fetch('http://127.0.0.1:8000/api/token/', {
             method:'POST',
@@ -49,7 +49,7 @@ export const AuthProvider = ({children}) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        setAlertType('success')
+        setAlertType('info')
         setAlertMsg('You have been logged out')
         handleVisibility()
         navigate('/login')
@@ -63,7 +63,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    function nFormatter(num) {
+    function numFormatter(num) {
         if (num >= 1000000) {
            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
         }
@@ -88,7 +88,7 @@ export const AuthProvider = ({children}) => {
         alertMsg: alertMsg,
         setAlertMsg: setAlertMsg,
         handleVisibility: handleVisibility,
-        nFormatter: nFormatter
+        numFormatter: numFormatter
     }
 
 

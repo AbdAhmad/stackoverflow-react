@@ -10,7 +10,7 @@ import '../css/profilePage.css'
 
 const ProfilePage = () => {
 
-    const {user, authTokens, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {user, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     const [isAuthorized, setIsAuthorized] = useState(false)
     const navigate = useNavigate()
 
@@ -32,16 +32,15 @@ const ProfilePage = () => {
 
     const getProfile = useCallback(async () => {
         const response = await api.get(`${baseUrl}/profile/${username}/`)
-        console.log(response)
         if(response.status === 200){
             const data = await response['data']
-            const userInfo = data['profile']
+            const userData = data['profile']
             const userQuestions = data['questions']
             const userAnswers = data['answers']
-            setFullName(userInfo.full_name)
-            setEmail(userInfo.email)
-            setLocation(userInfo.location)
-            setBio(userInfo.bio)
+            setFullName(userData.full_name)
+            setEmail(userData.email)
+            setLocation(userData.location)
+            setBio(userData.bio)
             setQuestions(userQuestions)
             setAnswers(userAnswers)
         }
@@ -88,6 +87,15 @@ const ProfilePage = () => {
         navigate(`/profile/${user['username']}`)
     }
 
+    const strFormatter = str => {
+        if(str.length > 200){
+            let newStr = str.substring(0, 200)
+            return `${newStr}...`
+        }
+        else{
+            return str
+        }
+    }
 
     return (
         <Container>
@@ -135,7 +143,7 @@ const ProfilePage = () => {
                         { questions.map(question => (
 
                             <React.Fragment key={question.id}>
-                                <Link className='link' to={`/question/${question.slug}/`}>{question.title}</Link>
+                                <Link className='link' to={`/question/${question.slug}/`}>{strFormatter(question.title)}</Link>
                                 
                                 { isAuthorized ? 
                                     <React.Fragment>
@@ -155,7 +163,7 @@ const ProfilePage = () => {
                             <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                             { answers.map(answer => (
                                 <React.Fragment key={answer.id}>
-                                    <Link className='link' to={`/question/${answer.question_slug}/`}>{answer.answer}</Link>
+                                    <Link className='link' to={`/question/${answer.question_slug}/`}>{strFormatter(answer.answer)}</Link>
                                     {
                                         isAuthorized ? 
                                         <React.Fragment>

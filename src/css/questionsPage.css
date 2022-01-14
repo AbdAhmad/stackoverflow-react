@@ -1,31 +1,35 @@
-.firstDiv {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 4%;
-  }
+.first-div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4%;
+}
   
-  .navStyle {
-    margin-top: 1%;
-    margin-left: 42.5%;
-  }
+.nav-style {
+  margin-top: 1%;
+  margin-left: 42.5%;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tags-div {
+  align-self: flex-start; 
+  display: inline-block;
+}
+
+.VAVDivStyle {
+  height: 120px;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: center; 
+  align-items: center;
+}
   
-  .VAVDivStyle {
-    height: 120px;
-    display: flex; 
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: center;
-  }
+/* .tagDiv {
+  margin-left: -10px;
+}  */
   
-  .info-div {
-    float: right;
-    padding-right: 2%
-  }
-  
-  .tagDiv {
-    margin-left: -10px;
-  }
-  
-  .tagButton {
-    margin-left: 1px;
-  }
+

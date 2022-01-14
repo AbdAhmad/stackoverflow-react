@@ -34,5 +34,10 @@
 }
 
 .btn-div {
-    display: "inline-block"
+    display: "inline-block";
 }
+
+.container {
+    max-width: 100%;
+  }
+

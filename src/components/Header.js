@@ -3,6 +3,8 @@ import { Form } from 'react-bootstrap'
 import { Link, } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
+import '../App.css'
+
 const Header = () => {
 
     let {user, logoutUser} = useContext(AuthContext)
@@ -11,7 +13,7 @@ const Header = () => {
 
 
     return (
-        <div  style={{marginBottom: "7.5%"}}>
+        <div style={{marginBottom: "7.5%"}} >
             <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div className="container-fluid">
 

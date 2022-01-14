@@ -21,6 +21,9 @@ const LoginPage = () => {
         loginUser(e)
     }
 
+    const elementWidth = {
+        width: "355%"
+    }
 
     return (
         <Container>
@@ -31,7 +34,7 @@ const LoginPage = () => {
             null
             }
       
-            
+            <Card>
                 <Card.Body>
                     <Card.Title><h4>Log in</h4></Card.Title>
                     <br/>
@@ -43,19 +46,19 @@ const LoginPage = () => {
 
                     {/* Username Field */}
 
-                        <Form.Group className="mb-4">
+                        <Form.Group className="mb-4" style={elementWidth}>
                             <Form.Control name="username" type="text" placeholder="Username" required />
                         </Form.Group>
 
                     {/* Password Field */}
 
-                        <Form.Group className="mb-4">
+                        <Form.Group className="mb-4" style={elementWidth}>
                             <Form.Control name="password" type="password" placeholder="Password" required />
                         </Form.Group>
 
                     {/* Login Button */}
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2" style={elementWidth}>
                             <Button type="submit" variant="outline-primary" size="lg">
                                 Log in
                             </Button>
@@ -64,7 +67,7 @@ const LoginPage = () => {
                     </Card.Text>
                     Don't have an account? <Card.Link style={{textDecoration: "none"}} href="/">Sign up</Card.Link>
                 </Card.Body>
-            
+            </Card>
         </Container>
     )
 }

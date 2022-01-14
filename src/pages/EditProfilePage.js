@@ -11,7 +11,7 @@ import '../css/editProfilePage.css'
 
 const EditProfilePage = () => {
 
-    const {user, authTokens, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {user, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
     
     const navigate = useNavigate()
 
@@ -102,19 +102,19 @@ const EditProfilePage = () => {
                 {/* Full Name Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={fullName} placeholder='Full Name' onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
+                        <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
                     </Form.Group>
 
                 {/* Email Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="email" value={email} placeholder='Email' onChange={e => setEmail(e.target.value)} placeholder="Email" />
+                        <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
                     </Form.Group>
 
                 {/* Location Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={location} placeholder='Location' onChange={e => setLocation(e.target.value)} placeholder="Location" />
+                        <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
                     </Form.Group>
 
                 {/* Bio Field */}
