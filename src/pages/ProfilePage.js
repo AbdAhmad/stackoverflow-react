@@ -88,8 +88,8 @@ const ProfilePage = () => {
     }
 
     const strFormatter = str => {
-        if(str.length > 200){
-            let newStr = str.substring(0, 200)
+        if(str.length >= 100){
+            let newStr = str.substring(0, 101)
             return `${newStr}...`
         }
         else{
@@ -105,25 +105,23 @@ const ProfilePage = () => {
                 : 
                 null
             }
-            
+            <Card>
                 <Card.Body>
                     <Card.Title><h3><i>{ fullName }</i></h3></Card.Title>
-                    <br/>
-                    <Card.Text >
-                        <p className="card-text"><i className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
-                        <p className="card-text"><i className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
-                        <p className="card-text"><i className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
+                    <Card.Text className='profile-info'>
+                        <p><i className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
+                        <p><i className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
+                        <p><i className="fa fa-info-circle profile_info"> {bio ? bio: "Bio not available"}</i></p>
                     </Card.Text>
-                    <br/>
-
+                
                     {/* Update Profile Button */}
 
                     { isAuthorized ?
                         <Link className='link' to='/edit_profile'>
                         <div className="d-grid gap-2">
-                        <Button variant="outline-secondary" size="lg">
-                            <i>Update Your Profile</i>
-                        </Button>
+                            <Button variant="outline-secondary" size="lg">
+                                <i>Update Your Profile</i>
+                            </Button>
                         </div>
                         </Link>
                         : 
@@ -131,55 +129,100 @@ const ProfilePage = () => {
                     }
 
                 </Card.Body>
-                <br/>
-            
-                    <Row>
+                
+                </Card>
+                
+                <Row>
 
-                        {/* Questions Column */}
+                    {/* Questions Column */}
 
-                        <Col>
-                        <h5>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
+                    <Col className='p-5'>
+                
+                    
+                    <h5>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
+                    <br/>
+                    { questions.map(question => (
+
+                        <React.Fragment key={question.id}>
+                                <Card className='p-3'>
+                                    
+                            <Link className='link' to={`/question/${question.slug}/`}>{strFormatter(question.title)}</Link>
+                            
+                            { isAuthorized ? 
+                                <React.Fragment>
+                                    <br/>
+                                   
+                                    <Row>
+                                        <Col className='p-1'>
+                                            <Link className='link' to={`/update_question/${question.slug}/`}>
+                                                <div className="d-grid gap-2">
+                                                    <Button variant='outline-success btn-sm'>Edit</Button>
+                                                </div>
+                                            </Link>
+                                        </Col>
+                                        <Col className='p-1'>
+                                            <div className="d-grid gap-2" onClick={() => deleteQues(question.slug)}>
+                                                <Button variant='outline-danger btn-sm'>Delete</Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                  
+                                </React.Fragment>   
+                                :
+                                null 
+                            }
+                             
+                             </Card>
+                             <br/>
+                        </React.Fragment>
+                       
+                    ))}
+                  
+                    </Col>
+
+                    {/* Answers Column */}
+
+                    <Col className='p-5'>
+                   
                         
-                        { questions.map(question => (
-
-                            <React.Fragment key={question.id}>
-                                <Link className='link' to={`/question/${question.slug}/`}>{strFormatter(question.title)}</Link>
-                                
-                                { isAuthorized ? 
+                        <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
+                        <br/>
+                        { answers.map(answer => (
+                            <React.Fragment key={answer.id}>
+                                 <Card className='p-3'>
+                                     
+                                <Link className='link' to={`/question/${answer.question_slug}/`}>{strFormatter(answer.answer)}</Link>
+                                {
+                                    isAuthorized ? 
                                     <React.Fragment>
-                                    <Link to={`/update_question/${question.slug}/`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
-                                    <div onClick={() => deleteQues(question.slug)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
-                                    </React.Fragment>   
+                                    <br/>
+                                    <Row>
+                                        <Col className='p-1'>
+                                    <Link className='link' to={`/edit_answer/${answer.id}`}>
+                                        <div className="d-grid gap-2">
+                                            <Button variant='outline-success btn-sm'>Edit</Button>
+                                        </div>
+                                    </Link>
+                                    </Col>
+                                    <Col className='p-1'>
+                                    <div className="d-grid gap-2" onClick={() => deleteAns(answer.id)}>
+                                        <Button variant='outline-danger btn-sm'>Delete</Button>
+                                    </div>
+                                    </Col>
+                                    </Row>
+                                    </React.Fragment>
                                     :
                                     null 
                                 }
-                            </React.Fragment>
+                                
+                                </Card>
+                                <br/>
+                            </React.Fragment>  
+                            
                         ))}
-                        </Col>
-
-                        {/* Answers Column */}
-
-                        <Col>
-                            <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
-                            { answers.map(answer => (
-                                <React.Fragment key={answer.id}>
-                                    <Link className='link' to={`/question/${answer.question_slug}/`}>{strFormatter(answer.answer)}</Link>
-                                    {
-                                        isAuthorized ? 
-                                        <React.Fragment>
-                                        <Link to={`/edit_answer/${answer.id}`}><Button variant='outline-success btn-sm'>Edit</Button></Link>
-                                        <div onClick={() => deleteAns(answer.id)}><Button variant='outline-danger btn-sm'>Delete</Button></div>
-                                        <br/>
-                                        </React.Fragment>
-                                        :
-                                        null 
-                                    }
-                                </React.Fragment>  
-                            ))}
-                        </Col>
-                    </Row>
-                
-            
+                        
+                    </Col>
+                </Row>
         </Container>
     )
 }
