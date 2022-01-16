@@ -52,10 +52,7 @@ const SignupPage = () => {
 
     }
 
-    const elementWidth = {
-        width: "355%"
-    }
-
+    
     return (
         <Container>
             { show ?
@@ -70,16 +67,16 @@ const SignupPage = () => {
                     <br/>
                     <Card.Text>
                         <Form onSubmit={signUp}>
-                            <Form.Group className="mb-4" style={elementWidth}>
+                            <Form.Group className="mb-4">
                                 <Form.Control name='username' onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" required />
                             </Form.Group>
-                            <Form.Group className="mb-4" style={elementWidth}>
+                            <Form.Group className="mb-4">
                                 <Form.Control name='password' onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" required />
                             </Form.Group>
-                            <Form.Group className="mb-4" style={elementWidth}>
+                            <Form.Group className="mb-4">
                                 <Form.Control name='confirmPassword' onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" required />
                             </Form.Group>
-                            <div className="d-grid gap-2" style={elementWidth}>
+                            <div className="d-grid gap-2">
                                 <Button variant="outline-primary" type="submit" size="lg">Sign up</Button>
                             </div>
                         </Form>

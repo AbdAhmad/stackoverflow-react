@@ -21,9 +21,6 @@ const LoginPage = () => {
         loginUser(e)
     }
 
-    const elementWidth = {
-        width: "355%"
-    }
 
     return (
         <Container>
@@ -46,19 +43,19 @@ const LoginPage = () => {
 
                     {/* Username Field */}
 
-                        <Form.Group className="mb-4" style={elementWidth}>
+                        <Form.Group className="mb-4">
                             <Form.Control name="username" type="text" placeholder="Username" required />
                         </Form.Group>
 
                     {/* Password Field */}
 
-                        <Form.Group className="mb-4" style={elementWidth}>
+                        <Form.Group className="mb-4">
                             <Form.Control name="password" type="password" placeholder="Password" required />
                         </Form.Group>
 
                     {/* Login Button */}
 
-                        <div className="d-grid gap-2" style={elementWidth}>
+                        <div className="d-grid gap-2">
                             <Button type="submit" variant="outline-primary" size="lg">
                                 Log in
                             </Button>
