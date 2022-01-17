@@ -93,7 +93,7 @@ const EditProfilePage = () => {
 
     return (
         <Container>
-            
+            <Card>
                 <br/>
                 <Card.Title><h3>Complete Your Profile</h3></Card.Title>
                 <br/>
@@ -129,7 +129,7 @@ const EditProfilePage = () => {
                         <Button variant="outline-primary" type='submit' size="lg">Save</Button>
                     </div>
                 </Form>
-            
+            </Card>
         </Container>
     )
 }

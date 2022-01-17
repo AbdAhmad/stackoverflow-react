@@ -30,14 +30,16 @@
 }
 
 .votes-first-div {
-    flex: 0.1; display: flex;
+    display: flex;
 }
 
 .btn-div {
     display: "inline-block";
 }
 
-.container {
-    max-width: 100%;
-  }
+.question-container {
+   padding-top: 1%;
+   padding-left: 5%;
+   padding-right: 5%;
+}
 

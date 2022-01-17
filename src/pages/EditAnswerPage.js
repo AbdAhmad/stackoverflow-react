@@ -13,7 +13,7 @@ import '../css/editAnswerPage.css'
 
 const EditAnswerPage = () => {
 
-    const {nFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {viewsFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const { pk } = useParams()
 
@@ -76,13 +76,13 @@ const EditAnswerPage = () => {
     }, [])
 
     return (
-        <Container>
+        <Container className='edit-ques-container'>
 
             {/* Question */}
 
             <React.Fragment>
                 <h2 className='h2-p'>{quesTitle}</h2>
-                <p className="h2-p">Viewed {nFormatter(quesViews)} times</p>
+                <p className="h2-p">Viewed {viewsFormatter(quesViews)} times</p>
                 <hr/>
                 <Row>
                     <Col xs={2}>

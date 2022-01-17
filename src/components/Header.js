@@ -18,44 +18,50 @@ const Header = () => {
     const { user } = useContext(AuthContext)
 
     return (
+
+        
        
         <Navbar sticky="top" bg='light' expand="lg">
-
-            <Container>
         
-                <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>
-            
-                <Navbar.Toggle aria-controls="navbarScroll" />
+        <Container>
 
-                <Navbar.Collapse className='justify-content-end' id="navbarScroll">                  
+            <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>
+        
+            <Navbar.Toggle aria-controls="navbarScroll" />
 
-                    { user ?
+            <Navbar.Collapse className='justify-content-end' id="navbarScroll">         
 
-                        <React.Fragment>
+            <Nav as="ul">         
 
-                            <SearchForm/>
+                { user ?
 
-                            <UserButton/>
+                    <React.Fragment>
 
-                            <LogoutButton/>
-                        
-                        </React.Fragment>
-                        :
-                        <React.Fragment>
-                        
-                            <SignupButton/>
-                        
-                            <LoginButton/>
+                        <SearchForm/>
+
+                        <Nav.Item as="li"><UserButton/></Nav.Item>
+
+                        <Nav.Item as="li"><LogoutButton/></Nav.Item>
                     
-                        </React.Fragment>
-                    }
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                    
+                        <Nav.Item as="li"><SignupButton/></Nav.Item>
+                    
+                        <Nav.Item as="li"><LoginButton/></Nav.Item>
+                
+                    </React.Fragment>
+                }
 
-                </Navbar.Collapse>
+                </Nav>
+
+            </Navbar.Collapse>
 
             </Container>
-            
+
         </Navbar>
-    
+
     )
 }
 

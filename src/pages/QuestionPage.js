@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { Row, Col, Button, Form, Alert, Container, Card } from 'react-bootstrap'
+import { Row, Col, Button, Form, Alert, Container } from 'react-bootstrap'
 import UpVoteTri from '../components/UpVoteTri'
 import DownVoteTri from '../components/DownVoteTri'
 import CreatedInfo from '../components/CreatedInfo'
@@ -12,7 +12,7 @@ import '../css/questionPage.css'
 
 const QuestionPage = () => {
 
-    const {numFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const {viewsFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
 
     const api = useAxios()
 
@@ -58,6 +58,7 @@ const QuestionPage = () => {
             navigate('/page-not-found')
         }
     }
+
 
     const clearAnswerTextField = () => document.getElementById('answer-field').value = '' 
 
@@ -167,18 +168,19 @@ const QuestionPage = () => {
 
 
     return (
-        <div className='container'>
+        <Container className='question-container'>
 
-        {/* Question title */}
+            {/* Question title */}
 
-        { show ?
-        
-            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
-             : 
-            null
-        }
-            <h2 style={{padding: "0"}}>{quesTitle}</h2>
-            <p className="p-2">Viewed {numFormatter(quesViews)} times</p>
+            { show ?
+            
+                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                : 
+                null
+            }
+
+            <h2>{quesTitle}</h2>
+            <p className="p-2">Viewed {viewsFormatter(quesViews)} times</p>
             <hr/>
             <Row>
                 <Col lg={2}>
@@ -191,7 +193,7 @@ const QuestionPage = () => {
                     </div>
                 </Col>
                 <Col lg={10}>
-                    <div className='container' style={{whiteSpace: "preWrap", wordBreak: "breakWord", padding: "0"}}>{quesBody}</div>
+                    <div style={{whiteSpace: "preWrap", wordBreak: "breakWord", padding: "0"}}>{quesBody}</div>
                 </Col>
             </Row>
             <br/>
@@ -208,6 +210,7 @@ const QuestionPage = () => {
                         </div> 
                         ))
                     }
+
                 </Col>
                 <Col>
                     <div className='info-div'>
@@ -217,9 +220,10 @@ const QuestionPage = () => {
             </Row>
             <hr/>
 
-        {/* Answers */}
+            {/* Answers */}
 
             <h3 className='p-2'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h3>
+
             { answers.map(ans => (
                 <React.Fragment key={ans.id}>
                     <Row>
@@ -245,8 +249,8 @@ const QuestionPage = () => {
                     </Row>
                     <hr/>
                 </React.Fragment>
-                ))}
-            <hr/>
+            ))}
+            
 
             {/* Post Your Answer */}
 
@@ -258,8 +262,7 @@ const QuestionPage = () => {
                     <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
                 </div>
             </Form>
-        </div>
-
+        </Container>
     )
 }
 

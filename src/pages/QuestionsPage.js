@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Button, Row, Col, Container, Alert } from 'react-bootstrap'
+import { Button, Row, Col, Container, Alert, Card } from 'react-bootstrap'
 import CreatedInfo from '../components/CreatedInfo';
 import {
     Link
@@ -13,7 +13,7 @@ import '../css/questionsPage.css'
 
 const QuestionsPage = () => {
 
-    const {numFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const {viewsFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
 
     const api = useAxios()
 
@@ -51,12 +51,12 @@ const QuestionsPage = () => {
     
     return (
        
-        <React.Fragment>
-            { show ?
+        <Container className='container'>
 
-            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
-            : 
-            null
+            { show ?
+                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                : 
+                null
             }
         
             <div className="first-div">
@@ -75,47 +75,48 @@ const QuestionsPage = () => {
                     </React.Fragment>
                 </ul>
             </nav>
-
             <br/>
 
-                {/* Questions List */}
+            {/* Questions List */}
 
-                { questions.map(question => (
-                
-                <Row style={{marginTop: "1%"}} key={question.id}>
+            <Card>
+            <br/>
+            { questions.map(question => (
+                <React.Fragment key={question.id}>
+                <Row>
                     <Col>
-                        <div className="text-center VAVDivStyle">
+                        <div className="text-center votes-ans-views-div">
                             <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
                             <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
-                            <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{numFormatter(question.views)}<br/>Views</div> 
+                            <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{viewsFormatter(question.views)}<br/>Views</div> 
                         </div>
                     </Col>
                     <Col md={8}>
 
-                        <div className='box'>
+                        {/* <div className='box'> */}
 
-                            <h5 className='title'><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
                         
                         {/* Question Tags */}
   
                         { question.tags.split(/\s+/).map((tag, index) => (
-                                <div className='tags-div'>
-                                    <button key={index} className="btn-block btn btn-outline-primary btn-sm tags">{tag}</button>
+                                <div className='tag-div'>
+                                    <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
                                 </div>
                             ))
                         }
 
-                        </div>
-
+                        {/* </div> */}
                         <div className='info-div'>
                             <CreatedInfo user={question.user} time={question.created_at} />
                         </div>
-
                     </Col>
-                    <hr/>
                 </Row>
+                <br/>
+                </React.Fragment>
             ))}
-        </React.Fragment>
+            </Card>
+        </Container>
     )
 }
 

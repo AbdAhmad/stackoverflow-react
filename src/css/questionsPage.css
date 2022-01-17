@@ -1,7 +1,9 @@
 .first-div {
   display: flex;
   justify-content: space-between;
-  margin-top: 4%;
+  margin-top: 1%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
   
 .nav-style {
@@ -9,27 +11,31 @@
   margin-left: 42.5%;
 }
 
-.box {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.tags-div {
-  align-self: flex-start; 
-  display: inline-block;
-}
-
-.VAVDivStyle {
+.votes-ans-views-div {
   height: 120px;
   display: flex; 
   flex-direction: row; 
   justify-content: center; 
   align-items: center;
 }
-  
-/* .tagDiv {
-  margin-left: -10px;
-}  */
+
+.info-div {
+  float: right; 
+  padding-right: 2%;
+}
+
+
+.tag-div {
+  align-self: flex-start; 
+  display: inline-block;
+}
+
+.tag-btn {
+  margin-left: 1px;
+} 
+
+.container {
+  max-width: 100%;
+}
   
 

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 import {
     Link, 
     useParams
 } from "react-router-dom";
 
+import AuthContext from '../context/AuthContext'
 import useAxios from '../utils/useAxios'
 import CreatedInfo from '../components/CreatedInfo';
 import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg'
@@ -14,6 +15,8 @@ import '../css/questionsPage.css'
 
 
 const SearchedQuesPage = () => {
+
+    const { viewsFormatter } = useContext(AuthContext)
 
     const { search } = useParams()
 
@@ -67,9 +70,9 @@ const SearchedQuesPage = () => {
                 <Row style={{marginTop: "1%"}} key={question.id}>
                     <Col>
                         <div className="text-center VAVDivStyle">
-                            <div style={{color: question.votes > 0 ? "green": question.votes < 0 ? "red": "grey", flex: "0.3"}}>{question.votes}<br/>Votes</div>
-                            <div style={{color: question.ans_count > 0 ? "green": "grey", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
-                            <div style={{flex: "0.3"}}>{question.views}<br/>Views</div> 
+                            <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                            <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
+                            <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{viewsFormatter(question.views)}<br/>Views</div> 
                         </div>
                     </Col>
                     <Col md={8}>

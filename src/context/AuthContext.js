@@ -63,7 +63,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    function numFormatter(num) {
+    function viewsFormatter(num) {
         if (num >= 1000000) {
            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
         }
@@ -88,7 +88,7 @@ export const AuthProvider = ({children}) => {
         alertMsg: alertMsg,
         setAlertMsg: setAlertMsg,
         handleVisibility: handleVisibility,
-        numFormatter: numFormatter
+        viewsFormatter: viewsFormatter
     }
 
 
