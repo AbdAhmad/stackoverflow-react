@@ -24,7 +24,6 @@ const AskQuesPage = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [tags, setTags] = useState('')
-    const [questionSlug, setQuestionSlug] = useState('')
 
     document.title = 'Ask a Question'
 
@@ -43,7 +42,6 @@ const AskQuesPage = () => {
         setTitle(questionData.title)
         setBody(questionData.body)
         setTags(questionData.tags)
-        setQuestionSlug(questionData.slug)
     }
 
 
@@ -84,12 +82,12 @@ const AskQuesPage = () => {
                 'Content-Type': 'application/json',
             }
         })
-
         if(response.status === 200){
+            const slug = response['data'].slug
             setAlertType('success')
             setAlertMsg('Question updated')
             handleVisibility()
-            navigate(`/question/${questionSlug}`)
+            navigate(`/question/${slug}`)
         }
     }
 
