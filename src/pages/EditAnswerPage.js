@@ -13,13 +13,15 @@ import '../css/editAnswerPage.css'
 
 const EditAnswerPage = () => {
 
-    const {viewsFormatter, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const { viewsFormatter, 
+            setAlertType, 
+            setAlertMsg, 
+            handleVisibility, 
+            baseUrl } = useContext(AuthContext)
 
     const { pk } = useParams()
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 

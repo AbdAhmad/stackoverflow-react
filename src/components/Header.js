@@ -18,12 +18,11 @@ const Header = () => {
     const { user } = useContext(AuthContext)
 
     return (
-
-        
        
+        
         <Navbar sticky="top" bg='light' expand="lg">
         
-        <Container>
+      
 
             <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>
         
@@ -31,7 +30,7 @@ const Header = () => {
 
             <Navbar.Collapse className='justify-content-end' id="navbarScroll">         
 
-            <Nav as="ul">         
+            <Nav>         
 
                 { user ?
 
@@ -39,17 +38,17 @@ const Header = () => {
 
                         <SearchForm/>
 
-                        <Nav.Item as="li"><UserButton/></Nav.Item>
+                        <Nav.Item><UserButton/></Nav.Item>
 
-                        <Nav.Item as="li"><LogoutButton/></Nav.Item>
+                        <Nav.Item><LogoutButton/></Nav.Item>
                     
                     </React.Fragment>
                     :
                     <React.Fragment>
                     
-                        <Nav.Item as="li"><SignupButton/></Nav.Item>
+                        <Nav.Item><SignupButton/></Nav.Item>
                     
-                        <Nav.Item as="li"><LoginButton/></Nav.Item>
+                        <Nav.Item><LoginButton/></Nav.Item>
                 
                     </React.Fragment>
                 }
@@ -58,9 +57,8 @@ const Header = () => {
 
             </Navbar.Collapse>
 
-            </Container>
-
         </Navbar>
+      
 
     )
 }

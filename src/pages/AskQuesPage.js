@@ -11,11 +11,12 @@ import '../css/askQuestionPage.css'
 
 const AskQuesPage = () => {
 
-    const {setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const { setAlertType, 
+            setAlertMsg, 
+            handleVisibility, 
+            baseUrl } = useContext(AuthContext)
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 
@@ -31,7 +32,7 @@ const AskQuesPage = () => {
         if(slug){
             getQuestion()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

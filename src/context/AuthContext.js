@@ -15,11 +15,13 @@ export const AuthProvider = ({children}) => {
     const [alertType, setAlertType] = useState('')
     const[alertMsg, setAlertMsg] = useState('')
 
+    const baseUrl = 'http://127.0.0.1:8000'
+
     const navigate = useNavigate()
 
     const loginUser = async e => {
         e.preventDefault()
-        const response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch(`${baseUrl}/api/token/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -63,7 +65,7 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    function viewsFormatter(num) {
+    const viewsFormatter = num => {
         if (num >= 1000000) {
            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
         }
@@ -72,6 +74,17 @@ export const AuthProvider = ({children}) => {
         }
         return num;
    }
+
+
+   const strFormatter = str => {
+        if(str.length >= 150){
+            let newStr = str.substring(0, 151)
+            return `${newStr}...`
+        }
+        else{
+            return str
+        }
+    }
 
 
     const contextData = {
@@ -88,7 +101,9 @@ export const AuthProvider = ({children}) => {
         alertMsg: alertMsg,
         setAlertMsg: setAlertMsg,
         handleVisibility: handleVisibility,
-        viewsFormatter: viewsFormatter
+        viewsFormatter: viewsFormatter,
+        baseUrl: baseUrl,
+        strFormatter: strFormatter
     }
 
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Button, Row, Col, Container, Alert, Card } from 'react-bootstrap'
-import CreatedInfo from '../components/CreatedInfo';
 import {
     Link
-} from "react-router-dom";
+} from "react-router-dom"
+
 import AuthContext from '../context/AuthContext'
+import CreatedInfo from '../components/CreatedInfo'
 import useAxios from '../utils/useAxios'
 
 import '../App.css'
@@ -13,11 +14,15 @@ import '../css/questionsPage.css'
 
 const QuestionsPage = () => {
 
-    const {viewsFormatter, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const { viewsFormatter, 
+            show, 
+            alertType, 
+            alertMsg, 
+            setShow, 
+            baseUrl,
+            strFormatter } = useContext(AuthContext)
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const [questions, setQuestions] = useState([])
     const [questionOrder, setQuestionOrder] = useState('')
@@ -33,12 +38,7 @@ const QuestionsPage = () => {
         setQuestionOrder(viewBy)
     }
 
-    useEffect(() => {
-        getQuestions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
-    
     const latestQuestions = async () => {
         const response = await api.get(`${baseUrl}/question?q=latest`)
         const data = await response['data']
@@ -47,6 +47,12 @@ const QuestionsPage = () => {
         setQuestions(questions)
         setQuestionOrder(viewBy)
     }
+
+
+    useEffect(() => {
+        getQuestions()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     
     return (
@@ -93,9 +99,7 @@ const QuestionsPage = () => {
                     </Col>
                     <Col md={8}>
 
-                        {/* <div className='box'> */}
-
-                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
+                        <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{strFormatter(question.title)}</Link></h5>
                         
                         {/* Question Tags */}
   
@@ -106,7 +110,6 @@ const QuestionsPage = () => {
                             ))
                         }
 
-                        {/* </div> */}
                         <div className='info-div'>
                             <CreatedInfo user={question.user} time={question.created_at} />
                         </div>

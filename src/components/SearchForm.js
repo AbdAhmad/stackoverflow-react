@@ -15,8 +15,7 @@ const SearchForm = () => {
                     type="search" 
                     placeholder="Search Question" 
                     aria-label="Search"  
-                    className='mb-3 mt-1'
-                    style={{width: "100%"}}
+                    className='mb-3 mt-1 me-2'
                 />
             </Form.Group>
         </Form>

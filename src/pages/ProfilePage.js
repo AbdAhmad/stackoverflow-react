@@ -1,22 +1,30 @@
 import React, { useContext, useEffect, useState, useCallback} from 'react'
 import { Card, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
+
 import AuthContext from '../context/AuthContext'
 import useAxios from '../utils/useAxios'
-
 
 import '../App.css'
 import '../css/profilePage.css'
 
 const ProfilePage = () => {
 
-    const {user, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const { user, 
+            show, 
+            alertType, 
+            alertMsg, 
+            setShow, 
+            setAlertType, 
+            setAlertMsg, 
+            handleVisibility, 
+            baseUrl,
+            strFormatter } = useContext(AuthContext)
+
     const [isAuthorized, setIsAuthorized] = useState(false)
     const navigate = useNavigate()
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const { username } = useParams()
 
@@ -87,15 +95,10 @@ const ProfilePage = () => {
         navigate(`/profile/${user['username']}`)
     }
 
-    const strFormatter = str => {
-        if(str.length >= 100){
-            let newStr = str.substring(0, 101)
-            return `${newStr}...`
-        }
-        else{
-            return str
-        }
-    }
+
+
+
+
 
     return (
         <Container>
@@ -144,7 +147,7 @@ const ProfilePage = () => {
                     { questions.map(question => (
 
                         <React.Fragment key={question.id}>
-                                <Card className='p-3'>
+                            <Card className='p-3'>
                                     
                             <Link className='link' to={`/question/${question.slug}/`}>{strFormatter(question.title)}</Link>
                             

@@ -12,11 +12,17 @@ import '../css/questionPage.css'
 
 const QuestionPage = () => {
 
-    const {viewsFormatter, show, alertType, alertMsg, setShow, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const { viewsFormatter, 
+            show, 
+            alertType, 
+            alertMsg, 
+            setShow, 
+            setAlertType, 
+            setAlertMsg, 
+            handleVisibility, 
+            baseUrl } = useContext(AuthContext)
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const navigate = useNavigate()
 

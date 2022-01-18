@@ -11,13 +11,15 @@ import '../css/editProfilePage.css'
 
 const EditProfilePage = () => {
 
-    const {user, setAlertType, setAlertMsg, handleVisibility} = useContext(AuthContext)
+    const { user, 
+            setAlertType, 
+            setAlertMsg, 
+            handleVisibility,
+            baseUrl } = useContext(AuthContext)
     
     const navigate = useNavigate()
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
 
     const [update, setUpdate] = useState(false)
 

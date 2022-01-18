@@ -7,7 +7,12 @@ import '../App.css'
 
 const LoginPage = () => {
     
-    const {loginUser, user, show, alertType, alertMsg, setShow} = useContext(AuthContext)
+    const { loginUser, 
+            user, 
+            show, 
+            alertType, 
+            alertMsg, 
+            setShow } = useContext(AuthContext)
 
     const navigate = useNavigate()
 

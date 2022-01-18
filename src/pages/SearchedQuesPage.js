@@ -16,13 +16,12 @@ import '../css/questionsPage.css'
 
 const SearchedQuesPage = () => {
 
-    const { viewsFormatter } = useContext(AuthContext)
+    const { viewsFormatter,
+            baseUrl } = useContext(AuthContext)
 
     const { search } = useParams()
 
     const api = useAxios()
-
-    const baseUrl = 'http://127.0.0.1:8000'
  
     const [searchedQuestions, setSearchedQuestions] = useState([])
     const [isQuestions, setIsQuestions] = useState(true)
@@ -69,24 +68,23 @@ const SearchedQuesPage = () => {
                
                 <Row style={{marginTop: "1%"}} key={question.id}>
                     <Col>
-                        <div className="text-center VAVDivStyle">
+                        <div className="text-center votes-ans-views-div">
                             <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
                             <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
                             <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{viewsFormatter(question.views)}<br/>Views</div> 
                         </div>
                     </Col>
                     <Col md={8}>
-                        <div style={{display: "flex"}}>
-                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
-                        </div>
+
+                        <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{question.title}</Link></h5>
 
                         {/* Question Tags */}
 
                         {question.tags.split(/\s+/).map((tag, index) => (
 
-                        <div className='quesTag' key={index}>
-                            <button className="btn-block btn btn-outline-primary btn-sm tagButton">{tag}</button>
-                        </div> 
+                        <div className='tag-div'>
+                            <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                        </div>
                             ))
                         }
                         <div className='info-div'>

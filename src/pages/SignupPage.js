@@ -7,9 +7,16 @@ import '../App.css'
 
 const SignupPage = () => {
 
-    const {user, loginUser, alertMsg, alertType, setAlertMsg, setAlertType, show, setShow, handleVisibility} = useContext(AuthContext)
-
-    const baseUrl = 'http://localhost:8000'
+    const { user, 
+            loginUser, 
+            alertMsg, 
+            alertType, 
+            setAlertMsg, 
+            setAlertType, 
+            show, 
+            setShow, 
+            handleVisibility, 
+            baseUrl } = useContext(AuthContext)
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
