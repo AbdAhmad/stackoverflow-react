@@ -18,48 +18,28 @@ const Header = () => {
     const { user } = useContext(AuthContext)
 
     return (
-       
-        
         <Navbar sticky="top" bg='light' expand="lg">
-        
-      
-
-            <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>
-        
+            <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>        
             <Navbar.Toggle aria-controls="navbarScroll" />
-
-            <Navbar.Collapse className='justify-content-end' id="navbarScroll">         
-
+            <Navbar.Collapse className='justify-content-end' id="navbarScroll">  
             <Nav>         
-
                 { user ?
-
                     <React.Fragment>
-
-                        <SearchForm/>
-
-                        <Nav.Item><UserButton/></Nav.Item>
-
-                        <Nav.Item><LogoutButton/></Nav.Item>
-                    
+                        <div className='header-box'>
+                            <SearchForm/>
+                            <Nav.Item><UserButton/></Nav.Item>
+                            <Nav.Item><LogoutButton/></Nav.Item>
+                        </div>                    
                     </React.Fragment>
                     :
                     <React.Fragment>
-                    
                         <Nav.Item><SignupButton/></Nav.Item>
-                    
                         <Nav.Item><LoginButton/></Nav.Item>
-                
                     </React.Fragment>
                 }
-
                 </Nav>
-
             </Navbar.Collapse>
-
         </Navbar>
-      
-
     )
 }
 

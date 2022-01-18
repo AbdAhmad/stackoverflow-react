@@ -8,5 +8,9 @@
   margin-left: 5%;
 }
 
+.header-box {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 

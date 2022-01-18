@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Button, Form, Container } from 'react-bootstrap'
+import { Card, Button, Form, Container, Alert } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import AuthContext from '../context/AuthContext'
@@ -13,6 +13,10 @@ const AskQuesPage = () => {
 
     const { setAlertType, 
             setAlertMsg, 
+            show,
+            alertType,
+            setShow,
+            alertMsg,
             handleVisibility, 
             baseUrl } = useContext(AuthContext)
 
@@ -63,14 +67,17 @@ const AskQuesPage = () => {
                 'Content-Type': 'application/json',
             }
         })
-       
-        if(response.status === 201){
+        if(response['data'].status === 201){
             const data = await response['data']
             const questionSlug = data.slug
             setAlertType('success')
             setAlertMsg('Question posted')
             handleVisibility()
             navigate(`/question/${questionSlug}`)
+        }else{
+            setAlertType('danger')
+            setAlertMsg("This question can't be posted")
+            handleVisibility()
         }
 
     }
@@ -95,8 +102,15 @@ const AskQuesPage = () => {
 
     return (
         <Container>
-            <h3>Ask a public question</h3>
+
+            { show ?
             
+            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+            : 
+            null
+            }
+
+            <h3>Ask a public question</h3>
 
             {/* Ask Question Form */}
             <Card>
