@@ -1,5 +1,5 @@
 import React, {useContext,} from 'react'
-import { Container, Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 
 import AuthContext from '../context/AuthContext'
 
@@ -22,7 +22,7 @@ const Header = () => {
             <Navbar.Brand><StackoverflowLogo/></Navbar.Brand>        
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse className='justify-content-end' id="navbarScroll">  
-            <Nav>         
+                <Nav>         
                 { user ?
                     <React.Fragment>
                         <div className='header-box'>

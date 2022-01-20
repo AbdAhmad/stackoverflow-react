@@ -31,14 +31,14 @@ const LoginPage = () => {
         <Container>
             { show ?
 
-            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+            <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
             : 
             null
             }
       
             <Card>
                 <Card.Body>
-                    <Card.Title><h4>Log in</h4></Card.Title>
+                    <Card.Title className='text-center'><h4>Log in</h4></Card.Title>
                     <br/>
                     <Card.Text>
 
@@ -67,7 +67,7 @@ const LoginPage = () => {
                         </div>
                     </Form>
                     </Card.Text>
-                    Don't have an account? <Card.Link style={{textDecoration: "none"}} href="/">Sign up</Card.Link>
+                    <div className='text-center'>Don't have an account? <Card.Link style={{textDecoration: "none"}} href="/">Sign up</Card.Link></div>
                 </Card.Body>
             </Card>
         </Container>

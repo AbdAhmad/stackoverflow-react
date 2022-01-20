@@ -104,13 +104,13 @@ const ProfilePage = () => {
         <Container>
             { show ?
         
-                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
                 : 
                 null
             }
             <Card>
                 <Card.Body>
-                    <Card.Title><h3><i>{ fullName }</i></h3></Card.Title>
+                    <Card.Title className='text-center'><h3><i>{ fullName }</i></h3></Card.Title>
                     <Card.Text className='profile-info'>
                         <p><i className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
                         <p><i className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
@@ -142,7 +142,7 @@ const ProfilePage = () => {
                     <Col className='p-5'>
                 
                     
-                    <h5>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
+                    <h5 className='text-center'>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
                     <br/>
                     { questions.map(question => (
 
@@ -188,7 +188,7 @@ const ProfilePage = () => {
                     <Col className='p-5'>
                    
                         
-                        <h5>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
+                        <h5 className='text-center'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                         <br/>
                         { answers.map(answer => (
                             <React.Fragment key={answer.id}>

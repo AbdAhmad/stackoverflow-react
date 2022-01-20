@@ -68,7 +68,7 @@ const AskQuesPage = () => {
             }
         })
         if(response['data'].status === 201){
-            const data = await response['data']
+            const data = await response['data'].data
             const questionSlug = data.slug
             setAlertType('success')
             setAlertMsg('Question posted')
@@ -76,10 +76,9 @@ const AskQuesPage = () => {
             navigate(`/question/${questionSlug}`)
         }else{
             setAlertType('danger')
-            setAlertMsg("This question can't be posted")
+            setAlertMsg("This question can't be posted. Try something different")
             handleVisibility()
         }
-
     }
 
 
@@ -105,12 +104,12 @@ const AskQuesPage = () => {
 
             { show ?
             
-            <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+            <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
             : 
             null
             }
 
-            <h3>Ask a public question</h3>
+            <h3 className='text-center'>Ask a public question</h3>
 
             {/* Ask Question Form */}
             <Card>

@@ -2,15 +2,11 @@
     display: flex;
 }
 
-.pt-1 {
+.votes {
     width: 100%;
     text-align: center;
 }
 
-.body {
-    white-space: pre-wrap; 
-    word-break: break-word;
-}
 
 .info-div {
     float: right; 
@@ -21,9 +17,6 @@
     margin-left: 1px;
 }
 
-.btn-div {
-    display: inline-block;
-}
 
 .mb-3 {
     padding: 10px;
@@ -33,13 +26,12 @@
     display: flex;
 }
 
-.btn-div {
-    display: "inline-block";
-}
-
 .question-container {
    padding-top: 1%;
    padding-left: 5%;
    padding-right: 5%;
+ 
 }
+
+
 

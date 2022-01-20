@@ -97,32 +97,32 @@ const EditProfilePage = () => {
         <Container>
             <Card>
                 <br/>
-                <Card.Title><h3>Complete Your Profile</h3></Card.Title>
+                <Card.Title className='text-center'><h3>Complete Your Profile</h3></Card.Title>
                 <br/>
                 <Form onSubmit={handleSubmit}>
 
                 {/* Full Name Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" />
+                        <Form.Control type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="Full Name" required />
                     </Form.Group>
 
                 {/* Email Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
+                        <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
                     </Form.Group>
 
                 {/* Location Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" />
+                        <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location" required />
                     </Form.Group>
 
                 {/* Bio Field */}
 
                     <Form.Group className="mb-3">
-                        <Form.Control placeholder="About me" value={bio} onChange={e => setBio(e.target.value)} as="textarea" rows={4} />
+                        <Form.Control placeholder="About me" value={bio} onChange={e => setBio(e.target.value)} as="textarea" rows={4} required />
                     </Form.Group>
 
                 {/* Submit Button */}

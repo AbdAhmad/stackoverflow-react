@@ -105,13 +105,11 @@ const EditAnswerPage = () => {
                     {/* Question tags */}
 
                     <Col>
-                    {quesTags.split(/\s+/).map((tag) => (
-
-                        <div style={{display: "inline-block"}}>
-                            <button style={{marginLeft: "1px"}} className="btn-block btn btn-outline-primary btn-sm">{tag}</button>
-                        </div> 
-                        ))
-                    }
+                    <div className='tags-div'>
+                            { quesTags.split(/\s+/).map((tag, index) => (
+                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                            ))}
+                        </div>
                     </Col>
                     <Col>
                         <div className='createdComponent'>

@@ -51,14 +51,14 @@ const SearchedQuesPage = () => {
 
             { !isQuestions ?
             
-            <React.Fragment>
+            <div className='text-center'>
                 <div><MagnifyingGlass /></div>
                 <br/>
                 <br/>
                 <h4>We couldn't find anything for <strong>{search}</strong></h4>
                 <h5>Try different or less specific keywords</h5>
                 <h5>Browse our <Link style={{textDecoration: "none"}} to="/questions">questions</Link></h5>
-            </React.Fragment>
+            </div>
             :
             <React.Fragment>
 
@@ -80,13 +80,11 @@ const SearchedQuesPage = () => {
 
                         {/* Question Tags */}
 
-                        {question.tags.split(/\s+/).map((tag, index) => (
-
-                        <div className='tag-div'>
-                            <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                        <div className='tags-div'>
+                            { question.tags.split(/\s+/).map((tag, index) => (
+                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                            ))}
                         </div>
-                            ))
-                        }
                         <div className='info-div'>
                             <CreatedInfo user={question.user} time={question.created_at} />
                         </div>

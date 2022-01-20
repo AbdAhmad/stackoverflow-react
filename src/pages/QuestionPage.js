@@ -174,13 +174,14 @@ const QuestionPage = () => {
 
 
     return (
+
         <Container className='question-container'>
 
             {/* Question title */}
 
             { show ?
             
-                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
                 : 
                 null
             }
@@ -188,36 +189,38 @@ const QuestionPage = () => {
             <h2>{quesTitle}</h2>
             <p className="p-2">Viewed {viewsFormatter(quesViews)} times</p>
             <hr/>
+  
             <Row>
-                <Col lg={2}>
+                <Col lg={1}>
                     <div className='votes-first-div'>
                         <div>
                             <div onClick={upVoteQues}><UpVoteTri/></div>
-                            <div className="pt-1 pb-1">{quesVotes}</div>
+                            <div className="pt-1 pb-1 votes">{quesVotes}</div>
                             <div onClick={downVoteQues}><DownVoteTri/></div>
                         </div>
                     </div>
                 </Col>
-                <Col lg={10}>
-                    <div style={{whiteSpace: "preWrap", wordBreak: "breakWord", padding: "0"}}>{quesBody}</div>
+       
+                <Col lg={11}>
+                    <pre className='ques-body'>{quesBody}</pre>
                 </Col>
+                
             </Row>
+          
             <br/>
             <Row>
 
             {/* Question tags */}
 
                 <Col>
-
-                    {quesTags.split(/\s+/).map((tag, index) => (
-
-                        <div className='btn-div' key={index}>
-                            <button className="btn-block btn btn-outline-primary btn-sm tag">{tag}</button>
-                        </div> 
-                        ))
-                    }
-
+                    <div className='tags-div'>
+                        { quesTags.split(/\s+/).map((tag, index) => (
+                            <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                        ))}
+                    </div>
                 </Col>
+            </Row>
+            <Row>
                 <Col>
                     <div className='info-div'>
                         <CreatedInfo user={quesUser} time={quesCreatedAt}/>
@@ -231,19 +234,19 @@ const QuestionPage = () => {
             <h3 className='p-2'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h3>
 
             { answers.map(ans => (
-                <React.Fragment key={ans.id}>
+                <div key={ans.id} className='mb-3'>
                     <Row>
-                        <Col lg={2}>
+                        <Col lg={1}>
                             <div className='votes-first-div'>
                                 <div>
                                     <div onClick={() => upVoteAns(ans.id)}><UpVoteTri /></div>
-                                    <div className="pt-1 pb-1">{ans.votes}</div>
+                                    <div className="pt-1 pb-1 votes">{ans.votes}</div>
                                     <div onClick={() => downVoteAns(ans.id)}><DownVoteTri/></div>
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={10}>
-                        <div className='body'>{ans.answer}</div>
+                        <Col lg={11}>
+                            <div>{ans.answer}</div>
                         </Col>
                     </Row>
                     <Row>
@@ -253,8 +256,7 @@ const QuestionPage = () => {
                             </div>
                         </Col>
                     </Row>
-                    <hr/>
-                </React.Fragment>
+                </div>
             ))}
             
 
@@ -269,6 +271,7 @@ const QuestionPage = () => {
                 </div>
             </Form>
         </Container>
+        
     )
 }
 

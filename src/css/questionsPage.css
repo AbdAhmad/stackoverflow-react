@@ -2,13 +2,12 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
 }
   
 .nav-style {
   margin-top: 1%;
-  margin-left: 42.5%;
 }
 
 .votes-ans-views-div {
@@ -25,17 +24,22 @@
 }
 
 
-.tag-div {
-  align-self: flex-start; 
-  display: inline-block;
+.tags-div {
+  display: flex;
+
 }
 
 .tag-btn {
   margin-left: 1px;
 } 
 
+.tag-btn:hover {
+  text-decoration: none;
+  color: rgb(13, 110, 253);
+  background-color: white;
+}
+
+
 .container {
   max-width: 100%;
 }
-  
-

@@ -64,13 +64,13 @@ const SignupPage = () => {
         <Container>
             { show ?
 
-                <Alert variant={alertType} onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
                 : 
                 null
             }
             <Card>
                 <Card.Body>
-                    <Card.Title className='title'><h4>Sign up</h4></Card.Title>
+                    <Card.Title className='text-center'><h4>Sign up</h4></Card.Title>
                     <br/>
                     <Card.Text>
                         <Form onSubmit={signUp}>
@@ -88,7 +88,7 @@ const SignupPage = () => {
                             </div>
                         </Form>
                     </Card.Text>
-                    Already have an account? <Card.Link style={{textDecoration: "none"}} href="login">Log in</Card.Link>
+                    <div className='text-center'>Already have an account? <Card.Link style={{textDecoration: "none"}} href="login">Log in</Card.Link></div>
                 </Card.Body>
             </Card>
         </Container>
