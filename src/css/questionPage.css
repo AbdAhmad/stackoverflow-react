@@ -1,5 +1,10 @@
 .p-2 {
     display: flex;
+   
+}
+
+.views {
+    flex-direction: row-reverse;
 }
 
 .votes {
@@ -30,8 +35,12 @@
    padding-top: 1%;
    padding-left: 5%;
    padding-right: 5%;
- 
 }
 
+.ques-ans-body {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 
 

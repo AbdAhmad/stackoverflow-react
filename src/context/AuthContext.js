@@ -77,8 +77,8 @@ export const AuthProvider = ({children}) => {
 
 
    const strFormatter = str => {
-        if(str.length >= 150){
-            let newStr = str.substring(0, 151)
+        if(str.length >= 175){
+            let newStr = str.substring(0, 176)
             return `${newStr}...`
         }
         else{

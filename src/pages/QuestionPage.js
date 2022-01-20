@@ -187,11 +187,11 @@ const QuestionPage = () => {
             }
 
             <h2>{quesTitle}</h2>
-            <p className="p-2">Viewed {viewsFormatter(quesViews)} times</p>
-            <hr/>
+            <p className="p-2 views">Viewed {viewsFormatter(quesViews)} times</p>
+            <br/>
   
             <Row>
-                <Col lg={1}>
+                <Col xs={2} lg={1}>
                     <div className='votes-first-div'>
                         <div>
                             <div onClick={upVoteQues}><UpVoteTri/></div>
@@ -201,17 +201,17 @@ const QuestionPage = () => {
                     </div>
                 </Col>
        
-                <Col lg={11}>
-                    <pre className='ques-body'>{quesBody}</pre>
+                <Col xs={10} lg={11}>
+                    <div className='ques-ans-body'>{quesBody}</div>
                 </Col>
                 
             </Row>
           
             <br/>
+
+            {/* Question tags and created info */}
+
             <Row>
-
-            {/* Question tags */}
-
                 <Col>
                     <div className='tags-div'>
                         { quesTags.split(/\s+/).map((tag, index) => (
@@ -246,7 +246,7 @@ const QuestionPage = () => {
                             </div>
                         </Col>
                         <Col lg={11}>
-                            <div>{ans.answer}</div>
+                            <div className='ques-ans-body'>{ans.answer}</div>
                         </Col>
                     </Row>
                     <Row>

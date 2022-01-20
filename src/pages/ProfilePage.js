@@ -107,6 +107,7 @@ const ProfilePage = () => {
             <Card>
                 <Card.Body>
                     <Card.Title className='text-center'><h3><i>{ fullName }</i></h3></Card.Title>
+                    <br/>
                     <Card.Text className='profile-info'>
                         <p><i className="fa fa-envelope profile_info"> {email ? email : "Email not available"}</i></p>
                         <p><i className="fa fa-map-marker profile_info"> {location ? location : "Location not available"}</i></p>
@@ -117,11 +118,11 @@ const ProfilePage = () => {
 
                     { isAuthorized ?
                         <Link className='link' to='/edit_profile'>
-                        <div className="d-grid gap-2">
-                            <Button variant="outline-secondary" size="lg">
-                                <i>Update Your Profile</i>
-                            </Button>
-                        </div>
+                            <div className="d-grid gap-2">
+                                <Button variant="outline-secondary" size="lg">
+                                    <i>Update Your Profile</i>
+                                </Button>
+                            </div>
                         </Link>
                         : 
                         null
@@ -137,7 +138,6 @@ const ProfilePage = () => {
 
                     <Col className='p-5'>
                 
-                    
                     <h5 className='text-center'>{questions.length}{questions.length === 1 ? ' Question' : ' Questions'}</h5>
                     <br/>
                     { questions.map(question => (
@@ -145,7 +145,7 @@ const ProfilePage = () => {
                         <React.Fragment key={question.id}>
                             <Card className='p-3'>
                                     
-                            <Link className='link' to={`/question/${question.slug}/`}>{strFormatter(question.title)}</Link>
+                            <Link className='link' to={`/question/${question.slug}/`}><div className='ques-ans-body'>{strFormatter(question.title)}</div></Link>
                             
                             { isAuthorized ? 
                                 <React.Fragment>
@@ -182,7 +182,6 @@ const ProfilePage = () => {
                     {/* Answers Column */}
 
                     <Col className='p-5'>
-                   
                         
                         <h5 className='text-center'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h5>
                         <br/>
@@ -190,7 +189,7 @@ const ProfilePage = () => {
                             <React.Fragment key={answer.id}>
                                  <Card className='p-3'>
                                      
-                                <Link className='link' to={`/question/${answer.question_slug}/`}>{strFormatter(answer.answer)}</Link>
+                                <Link className='link' to={`/question/${answer.question_slug}/`}><div className='ques-ans-body'>{strFormatter(answer.answer)}</div></Link>
                                 {
                                     isAuthorized ? 
                                     <React.Fragment>

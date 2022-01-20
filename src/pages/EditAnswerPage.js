@@ -72,6 +72,8 @@ const EditAnswerPage = () => {
         navigate(`/question/${quesSlug}`)
     }
 
+
+
     useEffect(() => {
         getAnswer()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,34 +85,30 @@ const EditAnswerPage = () => {
             {/* Question */}
 
             <React.Fragment>
-                <h2 className='h2-p'>{quesTitle}</h2>
-                <p className="h2-p">Viewed {viewsFormatter(quesViews)} times</p>
-                <hr/>
+
+                <h2>{quesTitle}</h2>
+                <p className="p-2 views">Viewed {viewsFormatter(quesViews)} times</p>
+                <br/>
                 <Row>
-                    <Col xs={2}>
-                        <div className='h2-p' style={{flex: "0.1"}}>
-                            <div>
-                                <UpVoteTri />
-                                <div className="votes">{quesVotes}</div>
-                                <DownVoteTri />
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xs={10}>
-                        <span>{quesBody}</span>
+                    <Col>
+                        <div className='ques-ans-body'>{quesBody}</div>
                     </Col>
                 </Row>
+
+                <br/>
+
+                {/* Question tags and created info */}
+
                 <Row>
-
-                    {/* Question tags */}
-
                     <Col>
-                    <div className='tags-div'>
+                        <div className='tags-div'>
                             { quesTags.split(/\s+/).map((tag, index) => (
                                 <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
                             ))}
                         </div>
                     </Col>
+                </Row>
+                <Row>
                     <Col>
                         <div className='createdComponent'>
                             <CreatedInfo user={quesUser} time={quesCreatedAt}/>
