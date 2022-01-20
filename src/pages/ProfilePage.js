@@ -40,7 +40,10 @@ const ProfilePage = () => {
 
     const getProfile = useCallback(async () => {
         const response = await api.get(`${baseUrl}/profile/${username}/`)
-        if(response.status === 200){
+        if(response['data'].status === 404){
+            navigate('/page-not-found')
+        }
+        else if(response.status === 200){
             const data = await response['data']
             const userData = data['profile']
             const userQuestions = data['questions']
@@ -51,9 +54,6 @@ const ProfilePage = () => {
             setBio(userData.bio)
             setQuestions(userQuestions)
             setAnswers(userAnswers)
-        }
-        else{
-            navigate('/page-not-found')
         }
     }, [username])
 
@@ -94,10 +94,6 @@ const ProfilePage = () => {
         }
         navigate(`/profile/${user['username']}`)
     }
-
-
-
-
 
 
     return (

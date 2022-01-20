@@ -45,7 +45,10 @@ const QuestionPage = () => {
 
     const getQuestion = async () => {
         const response = await api.get(`${baseUrl}/question/${slug}`)
-        if(response.status === 200){
+        if(response['data'].status === 404){
+            navigate('/page-not-found')
+        }
+        else if(response.status === 200){
             const data = await response['data']
             const quesData = data['question']
             setQuesId(quesData.id)
@@ -59,9 +62,6 @@ const QuestionPage = () => {
             setQuesVotes(quesData.votes)
             
             setAnswers(data['answers'])
-        }
-        else{
-            navigate('/page-not-found')
         }
     }
 
