@@ -15,7 +15,11 @@ export const AuthProvider = ({children}) => {
     const [alertType, setAlertType] = useState('')
     const[alertMsg, setAlertMsg] = useState('')
 
-    const baseUrl = 'http://127.0.0.1:8000'
+    const [spinnerLoading, setSpinnerLoading] = useState(true)
+
+    // const baseUrl = 'http://127.0.0.1:8000'
+
+    const baseUrl = 'https://abdulla5.pythonanywhere.com/'
 
     const navigate = useNavigate()
 
@@ -103,7 +107,9 @@ export const AuthProvider = ({children}) => {
         handleVisibility: handleVisibility,
         viewsFormatter: viewsFormatter,
         baseUrl: baseUrl,
-        strFormatter: strFormatter
+        strFormatter: strFormatter,
+        spinnerLoading: spinnerLoading,
+        setSpinnerLoading: setSpinnerLoading
     }
 
 

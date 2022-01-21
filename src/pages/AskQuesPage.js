@@ -8,6 +8,8 @@ import useAxios from '../utils/useAxios'
 import '../App.css'
 import '../css/askQuestionPage.css'
 
+import Loader from '../components/Loader'
+
 
 const AskQuesPage = () => {
 
@@ -30,10 +32,14 @@ const AskQuesPage = () => {
     const [body, setBody] = useState('')
     const [tags, setTags] = useState('')
 
+    const [loading, setLoading] = useState(false)
+
+
     document.title = 'Ask a Question'
 
     useEffect(() => {
         if(slug){
+            setLoading(true)
             getQuestion()
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,6 +53,8 @@ const AskQuesPage = () => {
         setTitle(questionData.title)
         setBody(questionData.body)
         setTags(questionData.tags)
+
+        setLoading(false)
     }
 
 
@@ -102,6 +110,11 @@ const AskQuesPage = () => {
     return (
         <Container>
 
+            { loading ?
+            <Loader/>
+            :
+            <>
+
             { show ?
             
             <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
@@ -154,6 +167,10 @@ const AskQuesPage = () => {
                     </Card.Body>
                 </Form>
                 </Card>
+                </>
+            }
+
+
         </Container>
     )
 }

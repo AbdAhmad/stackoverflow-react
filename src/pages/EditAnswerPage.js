@@ -1,7 +1,5 @@
 import React, {useEffect, useContext, useState} from 'react'
 import { Row, Col, Button, Form, Container  } from 'react-bootstrap'
-import UpVoteTri from '../components/UpVoteTri'
-import DownVoteTri from '../components/DownVoteTri'
 import { useParams, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import CreatedInfo from '../components/CreatedInfo'
@@ -10,6 +8,7 @@ import useAxios from '../utils/useAxios'
 import '../App.css'
 import '../css/editAnswerPage.css'
 
+import Loader from '../components/Loader'
 
 const EditAnswerPage = () => {
 
@@ -32,9 +31,10 @@ const EditAnswerPage = () => {
     const [quesSlug, setQuesSlug] = useState('')
     const [quesCreatedAt, setQuesCreatedAt] = useState('')
     const [quesViews, setQuesViews] = useState(0)
-    const [quesVotes, setQuesVotes] = useState(0)
 
     const [answer, setAnswer] = useState('')
+
+    const [loading, setLoading] = useState(true)
 
     document.title = quesTitle
 
@@ -49,9 +49,10 @@ const EditAnswerPage = () => {
         setQuesSlug(quesData.slug)
         setQuesCreatedAt(quesData.created_at)
         setQuesViews(quesData.views)
-        setQuesVotes(quesData.votes)
 
         setAnswer(data['answer'].answer)
+
+        setLoading(false)
         
     }
 
@@ -62,7 +63,6 @@ const EditAnswerPage = () => {
             headers:{
                 'Content-Type': 'application/json',
             },
-    
         })
         if(response.status === 200){
             setAlertType('success')
@@ -82,9 +82,13 @@ const EditAnswerPage = () => {
     return (
         <Container className='edit-ques-container'>
 
-            {/* Question */}
+            { loading ?
+            <Loader/>
+            :
+            <>
+                {/* Question */}
 
-            <React.Fragment>
+                <React.Fragment>
 
                 <h2>{quesTitle}</h2>
                 <p className="p-2 views">Viewed {viewsFormatter(quesViews)} times</p>
@@ -120,7 +124,7 @@ const EditAnswerPage = () => {
         
 
             {/* Answer Form */}
-  
+
             <Form onSubmit={updateAnswer}>  
 
                 {/* Answer Field */}
@@ -135,6 +139,8 @@ const EditAnswerPage = () => {
                     <Button variant="outline-success" type='submit' size="lg">Update Answer</Button>
                 </div>
             </Form>
+            </>
+            }
         </Container>
     )
 }

@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import useAxios from '../utils/useAxios'
 
-
 import '../App.css'
 import '../css/editProfilePage.css'
+
+import Loader from '../components/Loader'
 
 const EditProfilePage = () => {
 
@@ -27,6 +28,8 @@ const EditProfilePage = () => {
     const [email, setEmail] = useState('')
     const [location, setLocation] = useState('')
     const [bio, setBio] = useState('')
+
+    const [loading, setLoading] = useState(true)
 
     document.title = 'Update Your Profile'
 
@@ -84,6 +87,8 @@ const EditProfilePage = () => {
         setEmail(data['profile'].email)
         setLocation(data['profile'].location)
         setBio(data['profile'].bio)
+
+        setLoading(false)
     }
 
 
@@ -95,7 +100,11 @@ const EditProfilePage = () => {
 
     return (
         <Container>
-            <Card>
+            { loading ?
+            <Loader/>
+                :
+            <>
+                <Card>
                 <br/>
                 <Card.Title className='text-center'><h3>Complete Your Profile</h3></Card.Title>
                 <br/>
@@ -132,6 +141,8 @@ const EditProfilePage = () => {
                     </div>
                 </Form>
             </Card>
+            </>
+            }
         </Container>
     )
 }

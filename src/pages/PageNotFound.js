@@ -7,7 +7,6 @@ const PageNotFound = () => {
 
     document.title = 'Page not found'
 
-
     return (
         <Container className='text-center'>
             <div><NotFound /></div>

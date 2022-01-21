@@ -11,6 +11,7 @@ import useAxios from '../utils/useAxios'
 import '../App.css'
 import '../css/questionsPage.css'
 
+import Loader from '../components/Loader'
 
 const QuestionsPage = () => {
 
@@ -27,25 +28,38 @@ const QuestionsPage = () => {
     const [questions, setQuestions] = useState([])
     const [questionOrder, setQuestionOrder] = useState('')
 
+    const [loading, setLoading] = useState(true)
+
+
     document.title = 'Stack Overflow - Where Developers Learn, Share, &amp; Build Careers'
  
     const getQuestions = async () => {
+
+        setLoading(true)
+
         const response = await api.get(`${baseUrl}/question/`)
         const data = response['data']
         const questions = data['questions']
         const viewBy = data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
+
+        setLoading(false)
     }
 
 
     const latestQuestions = async () => {
+
+        setLoading(true)
+
         const response = await api.get(`${baseUrl}/question?q=latest`)
         const data = await response['data']
         const questions = await data['questions']
         const viewBy = await data['question_order']
         setQuestions(questions)
         setQuestionOrder(viewBy)
+
+        setLoading(false)
     }
 
 
@@ -79,41 +93,51 @@ const QuestionsPage = () => {
             </Navbar>
             <br/>
 
-            {/* Questions List */}
+            { loading ?
+                <Loader/>
+                :
+                <>
 
-            { questions.map(question => (
-                <React.Fragment key={question.id}>
-                <Row>
-                    <Col lg={4}>
-                        <div className="text-center votes-ans-views-div">
-                            <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
-                            <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
-                            <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{viewsFormatter(question.views)}<br/>Views</div> 
-                        </div>
-                    </Col>
-                    <Col lg={8}>
-
-                        {/* Question Title */}
-                   
-                        <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{strFormatter(question.title)}</Link></h5>
-                 
-                        {/* Question Tags */}
-                        
-                        <div className='tags-div'>
-                            { question.tags.split(/\s+/).map((tag, index) => (
-                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
-                            ))}
-                        </div>
+                {/* Questions List */}
+    
+                { questions.map(question => (
+                    <React.Fragment key={question.id}>
+                    <Row>
+                        <Col lg={4}>
+                            <div className="text-center votes-ans-views-div">
+                                <div style={{color: question.votes > 0 ? "#009900": question.votes < 0 ? "#FF3333": "#404040", flex: "0.3"}}>{question.votes}<br/>Votes</div>
+                                <div style={{color: question.ans_count > 0 ? "#FF8000": "#404040", flex: "0.3"}}>{question.ans_count}<br/>Answers</div>
+                                <div style={{color: question.views > 999 ? "#994C00": "#404040", flex: "0.3"}}>{viewsFormatter(question.views)}<br/>Views</div> 
+                            </div>
+                        </Col>
+                        <Col lg={8}>
+    
+                            {/* Question Title */}
+                       
+                            <h5><Link style={{textDecoration: "none"}} to={`/question/${question.slug}`}>{strFormatter(question.title)}</Link></h5>
+                     
+                            {/* Question Tags */}
                             
-                        <div className='info-div'>
-                            <CreatedInfo user={question.user} time={question.created_at} />
-                        </div>
+                            <div className='tags-div'>
+                                { question.tags.split(/\s+/).map((tag, index) => (
+                                    <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                                ))}
+                            </div>
+                                
+                            <div className='info-div'>
+                                <CreatedInfo user={question.user} time={question.created_at} />
+                            </div>
+    
+                        </Col>
+                    </Row>
+                    <br/>
+                    </React.Fragment>
+                ))}
+    
+                </>
+            }
 
-                    </Col>
-                </Row>
-                <br/>
-                </React.Fragment>
-            ))}
+
             
         </Container>
     )

@@ -10,6 +10,8 @@ import useAxios from '../utils/useAxios'
 import '../App.css'
 import '../css/questionPage.css'
 
+import Loader from '../components/Loader'
+
 const QuestionPage = () => {
 
     const { viewsFormatter, 
@@ -41,6 +43,8 @@ const QuestionPage = () => {
     const [answers, setAnswers] = useState([])
     const [answer, setAnswer] = useState('')
 
+    const [loading, setLoading] = useState(true)
+
     document.title = quesTitle
 
     const getQuestion = async () => {
@@ -62,6 +66,8 @@ const QuestionPage = () => {
             setQuesVotes(quesData.votes)
             
             setAnswers(data['answers'])
+
+            setLoading(false)
         }
     }
 
@@ -72,6 +78,7 @@ const QuestionPage = () => {
     const answerCreate = async (e) => {
         e.preventDefault()   
 
+        setLoading(true)
         clearAnswerTextField()
 
         const formData = JSON.stringify({'answer': answer})
@@ -92,6 +99,9 @@ const QuestionPage = () => {
 
 
     const upVoteQues = async () => {
+
+        setLoading(true)
+
         const response = await api.post(`${baseUrl}/upvote_ques/${quesId}/`,{
             headers:{
                 'Content-Type': 'application/json',
@@ -103,6 +113,7 @@ const QuestionPage = () => {
             setAlertMsg('You have upvoted this question')             
         }
         else if(response.status === 208){
+            getQuestion()
             setAlertType('info')
             setAlertMsg('You have already upvoted this question')
         }
@@ -111,6 +122,9 @@ const QuestionPage = () => {
 
 
     const downVoteQues = async () => {
+
+        setLoading(true)
+
         const response = await api.post(`${baseUrl}/downvote_ques/${quesId}/`,{
             headers:{
                 'Content-Type': 'application/json',
@@ -122,6 +136,7 @@ const QuestionPage = () => {
             setAlertMsg('You have downvoted this question')             
         }
         else if(response.status === 208){
+            getQuestion()
             setAlertType('info')
             setAlertMsg('You have already downvoted this question')
         }
@@ -130,6 +145,9 @@ const QuestionPage = () => {
 
 
     const upVoteAns= async (ansId) => {
+
+        setLoading(true)
+
         const response = await api.post(`${baseUrl}/upvote_ans/${ansId}/`,{
             method: 'POST',
             headers:{
@@ -142,6 +160,7 @@ const QuestionPage = () => {
             setAlertMsg('You have upvoted this Answer')             
         }
         else if(response.status === 208){
+            getQuestion()
             setAlertType('info')
             setAlertMsg('You have already upvoted this answer')
         }
@@ -149,6 +168,9 @@ const QuestionPage = () => {
     }
 
     const downVoteAns = async (ansId) => {
+
+        setLoading(true)
+
         const response = await api.post(`${baseUrl}/downvote_ans/${ansId}/`,{
             headers:{
                 'Content-Type': 'application/json',
@@ -160,6 +182,7 @@ const QuestionPage = () => {
             setAlertMsg('You have downvoted this Answer')             
         }
         else if(response.status === 208){
+            getQuestion()
             setAlertType('info')
             setAlertMsg('You have already downvoted this answer')
         }
@@ -177,99 +200,108 @@ const QuestionPage = () => {
 
         <Container className='question-container'>
 
-            {/* Question title */}
+            { loading ? 
+                <Loader/>
+                :    
+                <>
 
-            { show ?
-            
-                <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
-                : 
-                null
+                { show ?
+                
+                    <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
+                    : 
+                    null
+                }
+    
+                {/* Question title */}
+    
+                <h2>{quesTitle}</h2>
+                <p className="p-2 views">Viewed {viewsFormatter(quesViews)} times</p>
+                <br/>
+      
+                <Row>
+                    <Col xs={2} lg={1}>
+                        <div className='votes-first-div'>
+                            <div>
+                                <div onClick={upVoteQues}><UpVoteTri/></div>
+                                <div className="pt-1 pb-1 votes">{quesVotes}</div>
+                                <div onClick={downVoteQues}><DownVoteTri/></div>
+                            </div>
+                        </div>
+                    </Col>
+           
+                    <Col xs={10} lg={11}>
+                        <div className='ques-ans-body'>{quesBody}</div>
+                    </Col>
+                    
+                </Row>
+              
+                <br/>
+    
+                {/* Question tags and created info */}
+    
+                <Row>
+                    <Col>
+                        <div className='tags-div'>
+                            { quesTags.split(/\s+/).map((tag, index) => (
+                                <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
+                            ))}
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <div className='info-div'>
+                            <CreatedInfo user={quesUser} time={quesCreatedAt}/>
+                        </div>
+                    </Col>
+                </Row>
+                <hr/>
+    
+                {/* Answers */}
+    
+                <h3 className='p-2'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h3>
+    
+                { answers.map(ans => (
+                    <div key={ans.id} className='mb-3'>
+                        <Row>
+                            <Col lg={1}>
+                                <div className='votes-first-div'>
+                                    <div>
+                                        <div onClick={() => upVoteAns(ans.id)}><UpVoteTri /></div>
+                                        <div className="pt-1 pb-1 votes">{ans.votes}</div>
+                                        <div onClick={() => downVoteAns(ans.id)}><DownVoteTri/></div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col lg={11}>
+                                <div className='ques-ans-body'>{ans.answer}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <div className='info-div'>
+                                    <CreatedInfo user={ans.user} time={ans.created_at}/>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                ))}
+                
+    
+                {/* Post Your Answer */}
+    
+                <Form onSubmit={answerCreate}>
+                    <Form.Group className="mb-3">
+                        <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
+                    </Form.Group>
+                    <div className="d-grid gap-2">
+                        <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
+                    </div>
+                </Form>
+                </>
             }
 
-            <h2>{quesTitle}</h2>
-            <p className="p-2 views">Viewed {viewsFormatter(quesViews)} times</p>
-            <br/>
-  
-            <Row>
-                <Col xs={2} lg={1}>
-                    <div className='votes-first-div'>
-                        <div>
-                            <div onClick={upVoteQues}><UpVoteTri/></div>
-                            <div className="pt-1 pb-1 votes">{quesVotes}</div>
-                            <div onClick={downVoteQues}><DownVoteTri/></div>
-                        </div>
-                    </div>
-                </Col>
-       
-                <Col xs={10} lg={11}>
-                    <div className='ques-ans-body'>{quesBody}</div>
-                </Col>
-                
-            </Row>
-          
-            <br/>
 
-            {/* Question tags and created info */}
-
-            <Row>
-                <Col>
-                    <div className='tags-div'>
-                        { quesTags.split(/\s+/).map((tag, index) => (
-                            <button key={index} className="btn-block btn btn-outline-primary btn-sm tag-btn">{tag}</button>
-                        ))}
-                    </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <div className='info-div'>
-                        <CreatedInfo user={quesUser} time={quesCreatedAt}/>
-                    </div>
-                </Col>
-            </Row>
-            <hr/>
-
-            {/* Answers */}
-
-            <h3 className='p-2'>{answers.length}{answers.length === 1 ? ' Answer' : ' Answers'}</h3>
-
-            { answers.map(ans => (
-                <div key={ans.id} className='mb-3'>
-                    <Row>
-                        <Col lg={1}>
-                            <div className='votes-first-div'>
-                                <div>
-                                    <div onClick={() => upVoteAns(ans.id)}><UpVoteTri /></div>
-                                    <div className="pt-1 pb-1 votes">{ans.votes}</div>
-                                    <div onClick={() => downVoteAns(ans.id)}><DownVoteTri/></div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col lg={11}>
-                            <div className='ques-ans-body'>{ans.answer}</div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <div className='info-div'>
-                                <CreatedInfo user={ans.user} time={ans.created_at}/>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            ))}
-            
-
-            {/* Post Your Answer */}
-
-            <Form onSubmit={answerCreate}>
-                <Form.Group className="mb-3">
-                    <Form.Control id='answer-field' onChange={e => setAnswer(e.target.value)} placeholder="Your Answer" as="textarea" rows={8} required />
-                </Form.Group>
-                <div className="d-grid gap-2">
-                    <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
-                </div>
-            </Form>
         </Container>
         
     )

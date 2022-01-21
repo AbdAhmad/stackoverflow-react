@@ -13,6 +13,8 @@ import { ReactComponent as MagnifyingGlass } from '../assets/MagnifyingGlass.svg
 import '../App.css'
 import '../css/questionsPage.css'
 
+import Loader from '../components/Loader'
+
 
 const SearchedQuesPage = () => {
 
@@ -26,6 +28,8 @@ const SearchedQuesPage = () => {
     const [searchedQuestions, setSearchedQuestions] = useState([])
     const [isQuestions, setIsQuestions] = useState(true)
 
+    const [loading, setLoading] = useState(true)
+
     document.title = 'Stack Overflow - Where Developers Learn, Share, &amp; Build Careers'
 
     const getSearchedQues = async () => {
@@ -36,6 +40,7 @@ const SearchedQuesPage = () => {
             const data = await response['data']
             setSearchedQuestions(data)  
         } 
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -45,7 +50,11 @@ const SearchedQuesPage = () => {
 
     return (
         <Container>
-            <br/>
+            { loading ?
+            <Loader/>
+        :
+        <>
+        <br/>
 
             {/* If Question(s) not found */}
 
@@ -93,6 +102,8 @@ const SearchedQuesPage = () => {
                 </Row>
                 ))}
             </React.Fragment>
+        }
+        </>
         }
         </Container>
     )
