@@ -101,9 +101,9 @@ const EditProfilePage = () => {
     return (
         <Container>
             { loading ?
-            <Loader/>
+                <Loader/>
                 :
-            <>
+            <React.Fragment>
                 <Card>
                 <br/>
                 <Card.Title className='text-center'><h3>Complete Your Profile</h3></Card.Title>
@@ -141,7 +141,7 @@ const EditProfilePage = () => {
                     </div>
                 </Form>
             </Card>
-            </>
+            </React.Fragment>
             }
         </Container>
     )

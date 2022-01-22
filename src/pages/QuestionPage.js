@@ -203,7 +203,7 @@ const QuestionPage = () => {
             { loading ? 
                 <Loader/>
                 :    
-                <>
+                <React.Fragment>
 
                 { show ?
                 
@@ -298,10 +298,8 @@ const QuestionPage = () => {
                         <Button type="submit" variant="outline-primary" size="lg">Post Your Answer</Button>
                     </div>
                 </Form>
-                </>
+                </React.Fragment>
             }
-
-
         </Container>
         
     )

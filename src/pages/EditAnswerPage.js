@@ -83,9 +83,9 @@ const EditAnswerPage = () => {
         <Container className='edit-ques-container'>
 
             { loading ?
-            <Loader/>
+                <Loader/>
             :
-            <>
+            <React.Fragment>
                 {/* Question */}
 
                 <React.Fragment>
@@ -120,7 +120,7 @@ const EditAnswerPage = () => {
                     </Col>
                 </Row>
                 <hr/>
-            </React.Fragment>
+                </React.Fragment>
         
 
             {/* Answer Form */}
@@ -139,7 +139,7 @@ const EditAnswerPage = () => {
                     <Button variant="outline-success" type='submit' size="lg">Update Answer</Button>
                 </div>
             </Form>
-            </>
+            </React.Fragment>
             }
         </Container>
     )

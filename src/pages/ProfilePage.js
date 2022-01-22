@@ -117,7 +117,7 @@ const ProfilePage = () => {
             { loading ?
                 <Loader/>
                 :
-                <>
+                <React.Fragment>
                 { show ?
         
                     <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
@@ -242,10 +242,8 @@ const ProfilePage = () => {
                             
                         </Col>
                     </Row>
-                    </>
+                    </React.Fragment>
             }
-
-            
         </Container>
     )
 }

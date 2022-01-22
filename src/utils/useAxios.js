@@ -19,7 +19,6 @@ const useAxios = () => {
     
         const user = jwt_decode(authTokens.access)
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-
         if(!isExpired) return req
     
         const response = await axios.post(`${baseUrl}/api/token/refresh/`, {

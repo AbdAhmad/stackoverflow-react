@@ -36,9 +36,11 @@ const SearchedQuesPage = () => {
         const response = await api.get(`${baseUrl}/searched_ques/${search}`)
         if(response['data'].status === 404){
             setIsQuestions(false)
+       
         }else if(response.status === 200){
             const data = await response['data']
             setSearchedQuestions(data)  
+           
         } 
         setLoading(false)
     }
@@ -53,8 +55,8 @@ const SearchedQuesPage = () => {
             { loading ?
             <Loader/>
         :
-        <>
-        <br/>
+        <React.Fragment>
+            <br/>
 
             {/* If Question(s) not found */}
 
@@ -103,7 +105,7 @@ const SearchedQuesPage = () => {
                 ))}
             </React.Fragment>
         }
-        </>
+        </React.Fragment>
         }
         </Container>
     )

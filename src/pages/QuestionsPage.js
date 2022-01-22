@@ -96,7 +96,7 @@ const QuestionsPage = () => {
             { loading ?
                 <Loader/>
                 :
-                <>
+                <React.Fragment>
 
                 {/* Questions List */}
     
@@ -134,11 +134,8 @@ const QuestionsPage = () => {
                     </React.Fragment>
                 ))}
     
-                </>
+                </React.Fragment>
             }
-
-
-            
         </Container>
     )
 }

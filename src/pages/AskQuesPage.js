@@ -111,9 +111,9 @@ const AskQuesPage = () => {
         <Container>
 
             { loading ?
-            <Loader/>
+                <Loader/>
             :
-            <>
+            <React.Fragment>
 
             { show ?
             
@@ -167,7 +167,7 @@ const AskQuesPage = () => {
                     </Card.Body>
                 </Form>
                 </Card>
-                </>
+                </React.Fragment>
             }
 
 

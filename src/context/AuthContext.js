@@ -19,7 +19,7 @@ export const AuthProvider = ({children}) => {
 
     // const baseUrl = 'http://127.0.0.1:8000'
 
-    const baseUrl = 'https://abdulla5.pythonanywhere.com/'
+    const baseUrl = 'https://abdulla5.pythonanywhere.com'
 
     const navigate = useNavigate()
 
