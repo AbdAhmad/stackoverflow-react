@@ -1,6 +1,6 @@
 import {React, useState, useContext} from 'react'
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
 import '../App.css'
@@ -88,7 +88,7 @@ const SignupPage = () => {
                             </div>
                         </Form>
                     </Card.Text>
-                    <div className='text-center'>Already have an account? <Card.Link style={{textDecoration: "none"}} href="login">Log in</Card.Link></div>
+                    <div className='text-center'>Already have an account? <Link style={{textDecoration: "none"}} to="/login">Log in</Link></div>
                 </Card.Body>
             </Card>
         </Container>

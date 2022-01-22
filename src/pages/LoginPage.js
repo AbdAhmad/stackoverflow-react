@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { Card, Form, Button, Alert, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import '../App.css'
 
@@ -67,7 +67,7 @@ const LoginPage = () => {
                         </div>
                     </Form>
                     </Card.Text>
-                    <div className='text-center'>Don't have an account? <Card.Link style={{textDecoration: "none"}} href="/">Sign up</Card.Link></div>
+                    <div className='text-center'>Don't have an account? <Link style={{textDecoration: "none"}} to="/signup">Sign up</Link></div>
                 </Card.Body>
             </Card>
         </Container>
