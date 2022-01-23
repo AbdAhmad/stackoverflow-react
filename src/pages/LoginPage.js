@@ -39,10 +39,17 @@ const LoginPage = () => {
             },
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
+        console.log(response)
         if(response.status === 404){
             setLoading(false)
             setAlertType('danger')
-            setAlertMsg('Wrong credentials')
+            setAlertMsg('User does not exists')
+            handleVisibility()
+        }
+        else if(response.status === 400){
+            setLoading(false)
+            setAlertType('danger')
+            setAlertMsg('Password is incorrect')
             handleVisibility()
         }
         else if(response.status === 200){

@@ -22,7 +22,7 @@ import QuestionsPage from './pages/QuestionsPage';
 import PageNotFound from './pages/PageNotFound';
 
 
-export default function App() {
+function App() {
 
   return (
       <div className="App">
@@ -59,4 +59,4 @@ export default function App() {
     );
   }
 
-// export default App;
+export default App;
