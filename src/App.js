@@ -39,7 +39,7 @@ export default function App() {
               {/* Private Routes */}
 
               <Route>
-                  {["/", "/questions"].map((path, index) => 
+                  {["/", "/questions", "stackoverflow-react"].map((path, index) => 
                       <Route path={path} element={<PrivateRoute><QuestionsPage /></PrivateRoute>} key={index} />
                   )}
               </Route>
