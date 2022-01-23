@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/stackoverflow-react/static/css/main.468fad48.chunk.css",
+    "main.js": "/stackoverflow-react/static/js/main.7da78478.chunk.js",
+    "main.js.map": "/stackoverflow-react/static/js/main.7da78478.chunk.js.map",
+    "runtime-main.js": "/stackoverflow-react/static/js/runtime-main.1a9b3a8e.js",
+    "runtime-main.js.map": "/stackoverflow-react/static/js/runtime-main.1a9b3a8e.js.map",
+    "static/css/2.383c0125.chunk.css": "/stackoverflow-react/static/css/2.383c0125.chunk.css",
+    "static/js/2.6a1094a9.chunk.js": "/stackoverflow-react/static/js/2.6a1094a9.chunk.js",
+    "static/js/2.6a1094a9.chunk.js.map": "/stackoverflow-react/static/js/2.6a1094a9.chunk.js.map",
+    "index.html": "/stackoverflow-react/index.html",
+    "static/css/2.383c0125.chunk.css.map": "/stackoverflow-react/static/css/2.383c0125.chunk.css.map",
+    "static/css/main.468fad48.chunk.css.map": "/stackoverflow-react/static/css/main.468fad48.chunk.css.map",
+    "static/js/2.6a1094a9.chunk.js.LICENSE.txt": "/stackoverflow-react/static/js/2.6a1094a9.chunk.js.LICENSE.txt",
+    "static/media/MagnifyingGlass.827eaf72.svg": "/stackoverflow-react/static/media/MagnifyingGlass.827eaf72.svg",
+    "static/media/NotFound.6e7cfd1a.svg": "/stackoverflow-react/static/media/NotFound.6e7cfd1a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1a9b3a8e.js",
+    "static/css/2.383c0125.chunk.css",
+    "static/js/2.6a1094a9.chunk.js",
+    "static/css/main.468fad48.chunk.css",
+    "static/js/main.7da78478.chunk.js"
+  ]
+}
