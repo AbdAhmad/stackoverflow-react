@@ -58,6 +58,7 @@ const EditAnswerPage = () => {
 
     const updateAnswer = async (e) => {
         e.preventDefault()
+        setLoading(true)
         const formData = JSON.stringify({'answer': answer})
         const response = await api.put(`${baseUrl}/answer/${pk}/`, formData, {
             headers:{
@@ -65,6 +66,7 @@ const EditAnswerPage = () => {
             },
         })
         if(response.status === 200){
+            setLoading(false)
             setAlertType('success')
             setAlertMsg('Answer Updated')
             handleVisibility()

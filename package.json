@@ -1,7 +1,6 @@
 {
   "name": "stack_frontend",
   "version": "0.1.0",
-  "homepage": "https://AbdAhmad.github.io/stackoverflow-react",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
@@ -20,8 +19,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

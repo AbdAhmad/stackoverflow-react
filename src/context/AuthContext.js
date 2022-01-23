@@ -13,13 +13,11 @@ export const AuthProvider = ({children}) => {
 
     const [show, setShow] = useState(false)
     const [alertType, setAlertType] = useState('')
-    const[alertMsg, setAlertMsg] = useState('')
+    const [alertMsg, setAlertMsg] = useState('')
 
-    const [spinnerLoading, setSpinnerLoading] = useState(true)
+    const baseUrl = 'http://127.0.0.1:8000'
 
-    // const baseUrl = 'http://127.0.0.1:8000'
-
-    const baseUrl = 'https://abdulla5.pythonanywhere.com'
+    // const baseUrl = 'https://abdulla5.pythonanywhere.com'
 
     const navigate = useNavigate()
 
@@ -33,7 +31,6 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
         const data = await response.json()
-
         if(response.status === 200){
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
@@ -42,11 +39,6 @@ export const AuthProvider = ({children}) => {
             setAlertMsg(`Welcome ${jwt_decode(data.access).username}`)
             handleVisibility()
             navigate('/questions')
-        }
-        else{
-            setAlertType('danger')
-            setAlertMsg('Wrong credentials')
-            handleVisibility()
         }
     }
 
@@ -108,8 +100,6 @@ export const AuthProvider = ({children}) => {
         viewsFormatter: viewsFormatter,
         baseUrl: baseUrl,
         strFormatter: strFormatter,
-        spinnerLoading: spinnerLoading,
-        setSpinnerLoading: setSpinnerLoading
     }
 
 

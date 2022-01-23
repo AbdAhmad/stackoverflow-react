@@ -60,6 +60,7 @@ const AskQuesPage = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
+        setLoading(true)
         if(slug){
             updateQuestion()
         }else{
@@ -80,9 +81,11 @@ const AskQuesPage = () => {
             const questionSlug = data.slug
             setAlertType('success')
             setAlertMsg('Question posted')
+            setLoading(false)
             handleVisibility()
             navigate(`/question/${questionSlug}`)
         }else{
+            setLoading(false)
             setAlertType('danger')
             setAlertMsg("This question can't be posted. Try something different")
             handleVisibility()
@@ -99,6 +102,7 @@ const AskQuesPage = () => {
         })
         if(response.status === 200){
             const slug = response['data'].slug
+            setLoading(false)
             setAlertType('success')
             setAlertMsg('Question updated')
             handleVisibility()

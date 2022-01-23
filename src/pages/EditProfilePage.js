@@ -35,6 +35,7 @@ const EditProfilePage = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
+        setLoading(true)
         if(update){
             updateProfile()
         }else{
@@ -44,6 +45,7 @@ const EditProfilePage = () => {
 
  
     const createProfile = async () => {
+
         const formData = JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         const response = await api.post(`${baseUrl}/profile/`, formData, {
             headers:{
@@ -52,6 +54,7 @@ const EditProfilePage = () => {
         })
 
         if(response.status === 200){
+            setLoading(false)
             setAlertType('success')
             setAlertMsg('Profile updated')
             handleVisibility()
@@ -61,6 +64,7 @@ const EditProfilePage = () => {
 
 
     const updateProfile = async () => {
+      
         const formData = JSON.stringify({'full_name':fullName, 'email':email, 'location':location, 'bio':bio})
         const response = await api.put(`${baseUrl}/profile/${user['username']}/`, formData, {
             headers:{
@@ -69,10 +73,12 @@ const EditProfilePage = () => {
         })
 
         if(response.status === 200){
+            setLoading(false)
             setAlertType('success')
             setAlertMsg('Profile updated')
             handleVisibility()
         }
+        setLoading(false)
         navigate(`/profile/${user['username']}`)
     }
 

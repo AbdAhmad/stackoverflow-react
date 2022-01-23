@@ -1,7 +1,9 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { Card, Form, Button, Alert, Container } from 'react-bootstrap'
 import AuthContext from '../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
+
+import Loader from '../components/Loader'
 
 import '../App.css'
 
@@ -12,7 +14,13 @@ const LoginPage = () => {
             show, 
             alertType, 
             alertMsg, 
-            setShow } = useContext(AuthContext)
+            setShow,
+            setAlertType,
+            setAlertMsg,
+            baseUrl,
+            handleVisibility } = useContext(AuthContext)
+
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -22,20 +30,45 @@ const LoginPage = () => {
         navigate('/questions')
     }
 
+    const checkCredentials = async (e) => {
+        e.preventDefault()
+        const response = await fetch(`${baseUrl}/check_credentials/`,{
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json"
+            },
+            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+        })
+        if(response.status === 404){
+            setLoading(false)
+            setAlertType('danger')
+            setAlertMsg('Wrong credentials')
+            handleVisibility()
+        }
+        else if(response.status === 200){
+            loginUser(e)
+        }
+    }
+
     const handleClick = (e) => {
-        loginUser(e)
+        setLoading(true)
+        checkCredentials(e)
     }
 
 
     return (
         <Container>
+            { loading ? 
+            <Loader/>
+            :
+            <>
             { show ?
 
             <Alert variant={alertType} className='text-center' onClose={() => setShow(false)} dismissible>{alertMsg}</Alert>
             : 
             null
             }
-      
+
             <Card>
                 <Card.Body>
                     <Card.Title className='text-center'><h4>Log in</h4></Card.Title>
@@ -70,6 +103,8 @@ const LoginPage = () => {
                     <div className='text-center'>Don't have an account? <Link style={{textDecoration: "none"}} to="/signup">Sign up</Link></div>
                 </Card.Body>
             </Card>
+            </>
+            }
         </Container>
     )
 }

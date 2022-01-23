@@ -33,23 +33,23 @@ export default function App() {
 
               {/* Public Routes */}
 
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup/" element={<SignupPage />} />
+              <Route path="/login/" element={<LoginPage />} />
 
               {/* Private Routes */}
 
               <Route>
-                  {["/", "/questions", "stackoverflow-react"].map((path, index) => 
+                  {["/", "/questions"].map((path, index) => 
                       <Route path={path} element={<PrivateRoute><QuestionsPage /></PrivateRoute>} key={index} />
                   )}
               </Route>
-              <Route path='/questions/:search' element={<PrivateRoute><SearchedQuesPage /></PrivateRoute>} />
-              <Route path="/ask" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
-              <Route path="/update_question/:slug" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
-              <Route path="/profile/:username" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-              <Route path="/edit_profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
-              <Route path="/question/:slug" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
-              <Route path="/edit_answer/:pk" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
+              <Route path='/questions/:search/' element={<PrivateRoute><SearchedQuesPage /></PrivateRoute>} />
+              <Route path="/ask/" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
+              <Route path="/update_question/:slug/" element={<PrivateRoute><AskQuesPage /></PrivateRoute>} />
+              <Route path="/profile/:username/" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+              <Route path="/edit_profile/" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
+              <Route path="/question/:slug/" element={<PrivateRoute><QuestionPage /></PrivateRoute>} />
+              <Route path="/edit_answer/:pk/" element={<PrivateRoute><EditAnswerPage /></PrivateRoute>} />
               <Route path="*" element={<PrivateRoute><PageNotFound /></PrivateRoute>} />
               
             </Routes>
